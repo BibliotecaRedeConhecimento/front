@@ -5,13 +5,24 @@ import { CiEdit } from "react-icons/ci";
 import { BsEye } from "react-icons/bs";
 
 import { TableStyle } from "./styles.jsx";
-import SearchComponent from "../TableSearch/index.jsx";
 import PaginationComponent from "../TablePagination/index.jsx";
+import SearchComponentCategory from "../TableSearchCategory/index.jsx";
+import SearchComponentDomain from "../TableSearchDomain/index.jsx";
+import { Col, Container, Row } from "react-bootstrap";
 
 function TableComponent() {
   return (
     <>
-    <SearchComponent/>
+     <Container fluid>
+      <Row>
+        <Col xs={12} md={6}>
+          <SearchComponentCategory />
+        </Col>
+        <Col xs={12} md={6}>
+          <SearchComponentDomain />
+        </Col>
+      </Row>
+    </Container>
     <TableStyle>
       <div className="table-area">
         <Table striped bordered hover responsive>

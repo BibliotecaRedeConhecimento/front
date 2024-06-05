@@ -7,8 +7,6 @@ import PageHeaderContainer from "../../components/PageHeaderContainer";
 import PageContentContainer from "../../components/PageContentContainer";
 import { useNavigate } from "react-router-dom";
 import TableComponent from "../../components/Table";
-import SearchComponent from "../../components/TableSearch";
-import PaginationComponent from "../../components/TablePagination";
 
 
 const Home = () => {
@@ -33,7 +31,6 @@ const navigateTo = (path) => {
 
   return (
     <div className="container-fluid">
-      <div className="row">
           <Sidebar windowSize={windowSize} />
         <div className="col">
           <PageContainer>
@@ -47,7 +44,6 @@ const navigateTo = (path) => {
            </PageContentContainer>
           </PageContainer>
         </div>
-      </div>
     </div>
   );
 };

@@ -12,5 +12,5 @@ export const PageContainerStyle = styled.div`
     overflow: hidden;
     margin-left: auto; 
     margin-right: 1rem;
-    height: 100vh;
+    height: calc(100vh - 2rem);
 `;

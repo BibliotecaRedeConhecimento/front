@@ -52,7 +52,7 @@ function SidebarMobile({ logOut }) {
             </div>
           </div>
           <Offcanvas show={show} onHide={handleClose}>
-            <Offcanvas.Header>
+            <Offcanvas.Header style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
               <Offcanvas.Title>
                 <LogoArea>
                   <img src={LogoT2m} alt="Logo T2M" />

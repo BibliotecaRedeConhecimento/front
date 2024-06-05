@@ -7,6 +7,7 @@ export const TableStyle = styled.div`
     width: 100%;
     background-color: var(--branco) !important;
     overflow-x: auto; /* Permite rolagem horizontal em telas menores */
+    
   }
 
   .table {
@@ -15,6 +16,8 @@ export const TableStyle = styled.div`
     thead {
         th {
           text-align: left;
+          background-color: #CDE8E9;
+          
         }
       }
     tbody {

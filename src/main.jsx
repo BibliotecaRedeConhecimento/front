@@ -11,6 +11,7 @@ import RegisterDomain from './pages/RegisterDomain/Index.jsx';
 import SearchDomain from './pages/SearchDomain/Index.jsx';
 import RegisterKnowledge from './pages/RegisterKnowledge/Index.jsx';
 import SearchKnowledge from './pages/SearchKnowledge/Index.jsx';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 // O router vai servir para puxar as pages que precisamos utilizar e definir uma rota para elas
 const router = createBrowserRouter([
