@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import Sidebar from "../components/SideBar";
-import '../Global.css'
+import Sidebar from "../../components/SideBar";
+import '../../Global.css'
 
-import PageContainer from "../components/PageContainer";
-import PageHeaderContainer from "../components/PageHeaderContainer";
-import PageContentContainer from "../components/PageContentContainer";
+import PageContainer from "../../components/PageContainer";
+import PageHeaderContainer from "../../components/PageHeaderContainer";
+import PageContentContainer from "../../components/PageContentContainer";
 import { useNavigate } from "react-router-dom";
 
 
