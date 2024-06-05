@@ -6,6 +6,9 @@ import PageContainer from "../../components/PageContainer";
 import PageHeaderContainer from "../../components/PageHeaderContainer";
 import PageContentContainer from "../../components/PageContentContainer";
 import { useNavigate } from "react-router-dom";
+import TableComponent from "../../components/Table";
+import SearchComponent from "../../components/TableSearch";
+import PaginationComponent from "../../components/TablePagination";
 
 
 const Home = () => {
@@ -36,10 +39,11 @@ const navigateTo = (path) => {
           <PageContainer>
             <PageHeaderContainer title='Bem-Vindo, Fulano!'/>
             <PageContentContainer>
-              <h1>ESSA É A HOME</h1>
+              <TableComponent/>
+              {/* <h1>ESSA É A HOME</h1>
               <button onClick={() => navigateTo("/homeDomain")}>HomeDomain</button>
               <button onClick={() => navigateTo("/homeCategory")}>HomeCategory</button>
-              <button onClick={() => navigateTo("/homeKnowledge")}>HomeKnowledge</button>
+              <button onClick={() => navigateTo("/homeKnowledge")}>HomeKnowledge</button> */}
            </PageContentContainer>
           </PageContainer>
         </div>
