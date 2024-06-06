@@ -2,6 +2,10 @@
 
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import PageContainer from "../../components/PageContainer";
+import PageHeaderContainer from "../../components/PageHeaderContainer";
+import PageContentContainer from "../../components/PageContentContainer";
+import ButtonRoutes from "../../components/ButtonRoutes";
 
 const HomeKnowledge = () => {
   const navigate = useNavigate();
@@ -11,15 +15,20 @@ const HomeKnowledge = () => {
   };
 
   return (
-    <div>
-      <h1>ESSA É O HOMEKNOWLEDGE(conhecimento)</h1>
-      <button onClick={() => navigateTo("/registerKnowledge")}>
-        RegisterKnowledge
-      </button>
-      <button onClick={() => navigateTo("/searchKnowledge")}>
-        SearchKnowledge
-      </button>
-    </div>
+    <div className="col">
+        <PageContainer>
+          <PageHeaderContainer title='Bem-Vindo, Fulano!'/>
+          <PageContentContainer>
+         
+          <ButtonRoutes buttonText="Cadastrar Conhecimento" onClick={() => navigateTo("/registerKnowledge")} /> 
+          <ButtonRoutes buttonText="Buscar Dominio" onClick={() => navigateTo("/SearchKnowledge")} />
+          
+           
+           
+           
+         </PageContentContainer>
+        </PageContainer>
+      </div>
   );
 };
 

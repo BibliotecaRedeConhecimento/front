@@ -12,7 +12,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import { useContext } from "react";
 import { FontSizeContext } from "../../Context/FontSizeProvider.jsx";
 
-function TableComponent() {
+function TableKnowledge() {
     const { fontSize } = useContext(FontSizeContext);
 
     return (
@@ -64,4 +64,4 @@ function TableComponent() {
     );
 }
 
-export default TableComponent;
+export default TableKnowledge;

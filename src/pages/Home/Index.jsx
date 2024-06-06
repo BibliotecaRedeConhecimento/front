@@ -8,6 +8,7 @@ import PageContentContainer from "../../components/PageContentContainer";
 import { useNavigate } from "react-router-dom";
 import TableComponent from "../../components/TableInativeCategory";
 // import  Modal  from "../../components/Modal";
+import ButtonRoutes from "../../components/ButtonRoutes";
 
 
 const Home = () => {
@@ -17,32 +18,22 @@ const navigateTo = (path) => {
   navigate(path);
  };
 
-  const [windowSize, setWindowSize] = useState(window.innerWidth);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowSize(window.innerWidth);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  
 
   return (
     <div className="container-fluid">
-          {/* <Sidebar windowSize={windowSize} /> */}
+          
         <div className="col">
           <PageContainer>
             <PageHeaderContainer title='Bem-Vindo, Fulano!'/>
             <PageContentContainer>
-              <TableComponent/>
-              
-              <h1>ESSA É A HOME</h1>
-              <button onClick={() => navigateTo("/homeDomain")}>HomeDomain</button>
-              <button onClick={() => navigateTo("/homeCategory")}>HomeCategory</button>
-              <button onClick={() => navigateTo("/homeKnowledge")}>HomeKnowledge</button>
+           
+            <ButtonRoutes buttonText="Domínio" onClick={() => navigateTo("/homeDomain")} /> 
+            <ButtonRoutes buttonText="Categoria" onClick={() => navigateTo("/homeCategory")} />
+            <ButtonRoutes buttonText="Conhecimento" onClick={() => navigateTo("/homeKnowledge")}/>
+             
+             
+             
            </PageContentContainer>
           </PageContainer>
         </div>

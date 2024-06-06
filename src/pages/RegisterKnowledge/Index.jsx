@@ -1,9 +1,31 @@
 import React from "react";
+import PageContainer from "../../components/PageContainer";
+import PageHeaderContainer from "../../components/PageHeaderContainer";
+import PageContentContainer from "../../components/PageContentContainer";
+import { Form } from "react-bootstrap"
 
 const RegisterKnowledge = () => {
   return (
     <div>
-      <h1>ESSE É O REGISTERKNOWLEDGE(registrar conhecimento)</h1>
+      <PageContainer>
+          <PageHeaderContainer title='Cadastrar Conhecimento'/>
+          <PageContentContainer>
+
+          <Form.Group controlId="NameKnowledge">
+              <Form.Label>Título</Form.Label>
+              <Form.Control type="string" placeholder="como autenticar..." />
+             
+            </Form.Group>
+
+        
+         
+          
+          
+           
+           
+           
+         </PageContentContainer>
+        </PageContainer>
     </div>
   );
 };

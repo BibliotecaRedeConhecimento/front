@@ -1,7 +1,11 @@
 // Aqui vai conter os botões que levam para as pages: RegisterDomain e SearchDomain
 
 import React from "react";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import PageContainer from "../../components/PageContainer";
+import PageHeaderContainer from "../../components/PageHeaderContainer";
+import PageContentContainer from "../../components/PageContentContainer";
+import ButtonRoutes from "../../components/ButtonRoutes";
 
 const HomeDomain = () => {
 
@@ -12,15 +16,23 @@ const HomeDomain = () => {
     }
 
     return (
-        <div>
-            <h1>ESSE É A HOMEDOMAIN(domínio)</h1>
-            <button onClick = {() => navigateTo('/registerDomain')}>
-        RegisterDomain
-      </button>
-      <button onClick = {() => navigateTo('/searchDomain')}>
-        SearchDomain
-      </button>
-        </div>
+      <div className="container-fluid">
+          
+      <div className="col">
+        <PageContainer>
+          <PageHeaderContainer title='Bem-Vindo, Fulano!'/>
+          <PageContentContainer>
+         
+          <ButtonRoutes buttonText="Cadastrar Dominio" onClick={() => navigateTo("/registerDomain")} /> 
+          <ButtonRoutes buttonText="Buscar Dominio" onClick={() => navigateTo("/SearchDomain")} />
+          
+           
+           
+           
+         </PageContentContainer>
+        </PageContainer>
+      </div>
+  </div>
     );
 };
 
