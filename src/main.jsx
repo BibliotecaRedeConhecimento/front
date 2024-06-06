@@ -12,49 +12,100 @@ import SearchDomain from './pages/SearchDomain/Index.jsx';
 import RegisterKnowledge from './pages/RegisterKnowledge/Index.jsx';
 import SearchKnowledge from './pages/SearchKnowledge/Index.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import App from './App.jsx';
 
 // O router vai servir para puxar as pages que precisamos utilizar e definir uma rota para elas
+// const router = createBrowserRouter([
+//   {
+//     path: '/',
+//     element: <Home />,
+//   },
+//   {
+//     path: 'homeCategory',
+//     element: <HomeCategory />,
+//   },
+//   {
+//     path: 'homeDomain',
+//     element: <HomeDomain />,
+//   },
+//   {
+//     path: 'homeKnowledge',
+//     element: <HomeKnowledge />,
+//   },
+//   {
+//     path: 'registerCategory',
+//     element: <RegisterCategory />,
+//   },
+//   {
+//     path: 'searchCategory',
+//     element: <SearchCategory />,
+//   },
+//   {
+//     path: 'registerDomain',
+//     element: <RegisterDomain />,
+//   },
+//   {
+//     path: 'searchDomain',
+//     element: <SearchDomain />,
+//   },
+//   {
+//     path: 'registerKnowledge',
+//     element: <RegisterKnowledge />,
+//   },
+//   {
+//     path: 'searchKnowledge',
+//     element: <SearchKnowledge />,
+//   },
+// ]);
+
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Home />,
+    element: <App />,
+    children: [
+      {
+        path: '/',
+        element: <Home />,
+      },
+      {
+        path: 'homeCategory',
+        element: <HomeCategory />,
+      },
+      {
+        path: 'homeDomain',
+        element: <HomeDomain />,
+      },
+      {
+        path: 'homeKnowledge',
+        element: <HomeKnowledge />,
+      },
+      {
+        path: 'registerCategory',
+        element: <RegisterCategory />,
+      },
+      {
+        path: 'searchCategory',
+        element: <SearchCategory />,
+      },
+      {
+        path: 'registerDomain',
+        element: <RegisterDomain />,
+      },
+      {
+        path: 'searchDomain',
+        element: <SearchDomain />,
+      },
+      {
+        path: 'registerKnowledge',
+        element: <RegisterKnowledge />,
+      },
+      {
+        path: 'searchKnowledge',
+        element: <SearchKnowledge />,
+      },
+    ]
   },
-  {
-    path: 'homeCategory',
-    element: <HomeCategory />,
-  },
-  {
-    path: 'homeDomain',
-    element: <HomeDomain />,
-  },
-  {
-    path: 'homeKnowledge',
-    element: <HomeKnowledge />,
-  },
-  {
-    path: 'registerCategory',
-    element: <RegisterCategory />,
-  },
-  {
-    path: 'searchCategory',
-    element: <SearchCategory />,
-  },
-  {
-    path: 'registerDomain',
-    element: <RegisterDomain />,
-  },
-  {
-    path: 'searchDomain',
-    element: <SearchDomain />,
-  },
-  {
-    path: 'registerKnowledge',
-    element: <RegisterKnowledge />,
-  },
-  {
-    path: 'searchKnowledge',
-    element: <SearchKnowledge />,
-  },
+  
 ]);
 
 // As rotas são feitas através do router, chamado como props no RouterProvider

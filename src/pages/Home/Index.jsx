@@ -7,6 +7,7 @@ import PageHeaderContainer from "../../components/PageHeaderContainer";
 import PageContentContainer from "../../components/PageContentContainer";
 import { useNavigate } from "react-router-dom";
 import TableComponent from "../../components/Table";
+// import  Modal  from "../../components/Modal";
 
 
 const Home = () => {
@@ -31,16 +32,17 @@ const navigateTo = (path) => {
 
   return (
     <div className="container-fluid">
-          <Sidebar windowSize={windowSize} />
+          {/* <Sidebar windowSize={windowSize} /> */}
         <div className="col">
           <PageContainer>
             <PageHeaderContainer title='Bem-Vindo, Fulano!'/>
             <PageContentContainer>
               <TableComponent/>
-              {/* <h1>ESSA É A HOME</h1>
+              
+              <h1>ESSA É A HOME</h1>
               <button onClick={() => navigateTo("/homeDomain")}>HomeDomain</button>
               <button onClick={() => navigateTo("/homeCategory")}>HomeCategory</button>
-              <button onClick={() => navigateTo("/homeKnowledge")}>HomeKnowledge</button> */}
+              <button onClick={() => navigateTo("/homeKnowledge")}>HomeKnowledge</button>
            </PageContentContainer>
           </PageContainer>
         </div>
