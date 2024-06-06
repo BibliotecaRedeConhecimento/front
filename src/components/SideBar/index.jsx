@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import LogoT2m from "../../assets/logo_t2m.png";
@@ -17,9 +17,12 @@ import Col from "react-bootstrap/Col";
 
 import { SidebarStyle } from "./styles.jsx";
 import SidebarMobile from "../SideBarMobile/index.jsx";
+import { FontSizeContext } from "../../Context/FontSizeProvider.jsx";
 
 function Sidebar({ logOut, windowSize }) {
   const [sideBarCollapse, setSideBarCollapse] = useState(true);
+  const { increaseFontSize, decreaseFontSize } = useContext(FontSizeContext);
+  
   const navigate = useNavigate();
 
   function navigateTo(route) {
@@ -29,6 +32,7 @@ function Sidebar({ logOut, windowSize }) {
   }
 
   const isMobile = windowSize <= 768;
+
 
   return (
     <div>
@@ -111,7 +115,7 @@ function Sidebar({ logOut, windowSize }) {
                 </div>
                 <div className="sidebar-nav">
                 <div className="sidebar-nav-item">
-                    <div onClick={() => logOut()}>
+                    <div onClick={increaseFontSize}>
                       <div className="area-icons-label">
                         <MdOutlineTextIncrease title="Aumentar" />
                         {sideBarCollapse ? (
@@ -124,7 +128,7 @@ function Sidebar({ logOut, windowSize }) {
                   </div>
 
                   <div className="sidebar-nav-item">
-                    <div onClick={() => logOut()}>
+                    <div onClick={decreaseFontSize}>
                       <div className="area-icons-label">
                         <MdOutlineTextDecrease title="Diminuir" />
                         {sideBarCollapse ? (

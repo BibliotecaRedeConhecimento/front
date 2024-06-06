@@ -9,8 +9,12 @@ import PaginationComponent from "../TablePagination/index.jsx";
 import SearchComponentCategory from "../TableSearchCategory/index.jsx";
 import SearchComponentDomain from "../TableSearchDomain/index.jsx";
 import { Col, Container, Row } from "react-bootstrap";
+import { useContext } from "react";
+import { FontSizeContext } from "../../Context/FontSizeProvider.jsx";
 
 function TableComponent() {
+  const { fontSize } = useContext(FontSizeContext);
+
   return (
     <>
      <Container fluid>
@@ -25,8 +29,8 @@ function TableComponent() {
     </Container>
     <TableStyle>
       <div className="table-area">
-        <Table striped bordered hover responsive>
-          <thead>
+        <Table striped hover responsive>
+          <thead style={{ fontSize: `${fontSize}px`}}>
             <tr>
               <th colSpan="1">Registro</th>
               <th colSpan="1">Nome</th>

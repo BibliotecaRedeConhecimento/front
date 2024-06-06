@@ -13,6 +13,7 @@ import RegisterKnowledge from './pages/RegisterKnowledge/Index.jsx';
 import SearchKnowledge from './pages/SearchKnowledge/Index.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App.jsx';
+import { FontSizeProvider } from './Context/FontSizeProvider.jsx';
 
 // O router vai servir para puxar as pages que precisamos utilizar e definir uma rota para elas
 // const router = createBrowserRouter([
@@ -105,12 +106,14 @@ const router = createBrowserRouter([
       },
     ]
   },
-  
+
 ]);
 
 // As rotas são feitas através do router, chamado como props no RouterProvider
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+  <FontSizeProvider>
+    <React.StrictMode>
+      <RouterProvider router={router} />
+    </React.StrictMode>
+  </FontSizeProvider>
 );

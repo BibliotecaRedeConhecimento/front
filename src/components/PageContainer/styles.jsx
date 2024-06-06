@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const PageContainerStyle = styled.div`
-     
 
     width: 90%;
     background-color: var(--branco);    
