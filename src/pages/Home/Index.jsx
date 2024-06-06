@@ -6,7 +6,7 @@ import PageContainer from "../../components/PageContainer";
 import PageHeaderContainer from "../../components/PageHeaderContainer";
 import PageContentContainer from "../../components/PageContentContainer";
 import { useNavigate } from "react-router-dom";
-import TableComponent from "../../components/Table";
+import TableComponent from "../../components/TableInativeCategory";
 // import  Modal  from "../../components/Modal";
 
 
