@@ -3,8 +3,19 @@ import PageContainer from "../../components/PageContainer";
 import PageHeaderContainer from "../../components/PageHeaderContainer";
 import PageContentContainer from "../../components/PageContentContainer";
 import { Form } from "react-bootstrap"
+import { useState } from "react";
+import ButtonModal from "../../components/ButtonModal";
+import ModalComponent from "../../components/ModalComponent";
+
 
 const RegisterCategory = () => {
+
+  const [showModal, setShowModal] = useState(false);
+
+  const handleOpenModal = () => { setShowModal(true);};
+
+  const handleCloseModal = () => { setShowModal(false);};
+
   return (
     <div>
       <PageContainer>
@@ -16,6 +27,10 @@ const RegisterCategory = () => {
               <Form.Control type="string" placeholder="Insira a categoria" />
              
             </Form.Group>
+
+            <ButtonModal buttonText="Confirmar Cadastro" onClick={handleOpenModal}/>
+
+            <ModalComponent bodyContent={'Deseja cadastrar a Categoria?'} show={showModal} handleClose={handleCloseModal}/>
 
         
          

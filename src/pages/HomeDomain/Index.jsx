@@ -21,7 +21,7 @@ const HomeDomain = () => {
       <div className="col">
         <PageContainer>
           <PageHeaderContainer title='Bem-Vindo, Fulano!'/>
-          <PageContentContainer width="100%" height="100vh" flexDirection= 'column' justifyContent='center' alignItems='center'>
+          <PageContentContainer width="100%" height="100vh" flexDirection= 'column' justifyContent='center' alignItems='center' display='flex'>
          
           <ButtonRoutes buttonText="Cadastrar Dominio" onClick={() => navigateTo("/registerDomain")} /> 
           <ButtonRoutes buttonText="Buscar Dominio" onClick={() => navigateTo("/SearchDomain")} />
