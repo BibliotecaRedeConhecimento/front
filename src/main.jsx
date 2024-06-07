@@ -16,48 +16,7 @@ import App from './App.jsx';
 import { FontSizeProvider } from './Context/FontSizeProvider.jsx';
 
 // O router vai servir para puxar as pages que precisamos utilizar e definir uma rota para elas
-// const router = createBrowserRouter([
-//   {
-//     path: '/',
-//     element: <Home />,
-//   },
-//   {
-//     path: 'homeCategory',
-//     element: <HomeCategory />,
-//   },
-//   {
-//     path: 'homeDomain',
-//     element: <HomeDomain />,
-//   },
-//   {
-//     path: 'homeKnowledge',
-//     element: <HomeKnowledge />,
-//   },
-//   {
-//     path: 'registerCategory',
-//     element: <RegisterCategory />,
-//   },
-//   {
-//     path: 'searchCategory',
-//     element: <SearchCategory />,
-//   },
-//   {
-//     path: 'registerDomain',
-//     element: <RegisterDomain />,
-//   },
-//   {
-//     path: 'searchDomain',
-//     element: <SearchDomain />,
-//   },
-//   {
-//     path: 'registerKnowledge',
-//     element: <RegisterKnowledge />,
-//   },
-//   {
-//     path: 'searchKnowledge',
-//     element: <SearchKnowledge />,
-//   },
-// ]);
+
 
 const router = createBrowserRouter([
   {
