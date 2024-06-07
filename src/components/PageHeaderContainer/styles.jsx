@@ -8,7 +8,7 @@ export const PageHeaderContainerStyle = styled.div`
     justify-content: center;
     gap: 0.5rem;
     width: 100%;
-    background-color: var(--verde-secundario);
+    background-color: #013D32;
     color: var(--branco);   
     height: 100px;
     

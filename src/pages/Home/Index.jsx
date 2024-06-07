@@ -26,7 +26,7 @@ const navigateTo = (path) => {
         <div className="col">
           <PageContainer>
             <PageHeaderContainer title='Bem-Vindo, Fulano!'/>
-            <PageContentContainer>
+            <PageContentContainer width="100%" height="100vh" flexDirection= 'column' justifyContent='center' alignItems='center'  >
            
             <ButtonRoutes buttonText="Domínio" onClick={() => navigateTo("/homeDomain")} /> 
             <ButtonRoutes buttonText="Categoria" onClick={() => navigateTo("/homeCategory")} />

@@ -9,7 +9,7 @@ const RegisterCategory = () => {
     <div>
       <PageContainer>
           <PageHeaderContainer title='Cadastrar Categoria'/>
-          <PageContentContainer>
+          <PageContentContainer >
 
           <Form.Group controlId="NameCategory">
               <Form.Label>Nome</Form.Label>
