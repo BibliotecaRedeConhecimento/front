@@ -12,50 +12,60 @@ import { Col, Container, Row } from "react-bootstrap";
 import { useContext } from "react";
 import { FontSizeContext } from "../../Context/FontSizeProvider.jsx";
 
-function TableCategory() {
+  function TableCategory({category}) {
   const { fontSize } = useContext(FontSizeContext);
+
+
+
 
   return (
     <>
-     <Container fluid>
-      <Row>
-        <Col xs={12} md={6}>
-          <SearchComponentCategory />
-        </Col>
-        <Col xs={12} md={6}>
-          <SearchComponentDomain />
-        </Col>
-      </Row>
-    </Container>
-    <TableStyle>
-      <div style={{ fontSize: `${fontSize}px`}} className="table-area">
-        <Table striped hover responsive>
-          <thead>
-            <tr>
-              <th colSpan="1">Categoria</th>
-              <th colSpan="1">Domínio</th>
-              <th style={{paddingLeft:20}} colSpan="3">Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Front-end</td>
-              <td>Desenvolvimento de Software</td>
-              <td className="action-column">
-                <BsEye />
-              </td>
-              <td className="action-column">
-                <CiEdit />
-              </td>
-              <td className="action-column">
-                <RiDeleteBin6Line id="delete-icon" />
-              </td>
-            </tr>
-          </tbody>
-        </Table>
-      </div>
-    </TableStyle>
-    <PaginationComponent/>
+      <Container fluid>
+        <Row>
+          <Col xs={12} md={6}>
+            <SearchComponentCategory />
+          </Col>
+          <Col xs={12} md={6}>
+            <SearchComponentDomain />
+          </Col>
+        </Row>
+      </Container>
+      <TableStyle>
+        <div style={{ fontSize: `${fontSize}px` }} className="table-area">
+          <Table striped hover responsive>
+            <thead>
+              <tr>
+                <th colSpan="1">Categoria</th>
+                <th colSpan="1">Domínio</th>
+                <th style={{ paddingLeft: 20 }} colSpan="3">
+                  Ações
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {Array.isArray(category) &&
+                category?.map((item) => (
+                  <tr key={item.id}>
+                    <td>{item.name}</td>
+                    <td>{item.id}</td>
+                    <td className="action-column">
+                      <BsEye />
+                    </td>
+                    <td className="action-column">
+                      <button>
+                      <CiEdit />
+                      </button>
+                    </td>
+                    <td className="action-column">
+                      <RiDeleteBin6Line id="delete-icon" />
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </Table>
+        </div>
+      </TableStyle>
+      <PaginationComponent />
     </>
   );
 }
