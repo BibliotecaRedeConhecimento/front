@@ -30,6 +30,10 @@ function Sidebar({ logOut, windowSize }) {
     window.scrollTo(0, 0);
     navigate(route);
   }
+ function dark (){
+  const html = document.querySelector('html')
+  html.classList.toggle('dark-mode')
+ }
 
   const isMobile = windowSize <= 768;
 
@@ -141,7 +145,9 @@ function Sidebar({ logOut, windowSize }) {
                   </div>
 
                   <div className="sidebar-nav-item">
-                    <div onClick={() => logOut()}>
+                    <div onClick={() => dark()}
+                    
+                    >
                       <div className="area-icons-label">
                         <IoMdContrast title="Contraste" />
                         {sideBarCollapse ? (
