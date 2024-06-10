@@ -16,7 +16,7 @@ function ModalComponent({show, handleClose, bodyContent}) {
     >
     
         <Modal show={show} onHide={handleClose} size='sm' centered >
-      <Modal.Header style={{backgroundColor: '#013D32', height: '4rem'}} >
+      <Modal.Header style={{backgroundColor:  `var(--verde-primario)`, height: '4rem'}} >
         
       </Modal.Header>
       <Modal.Body style={{ borderBottom: 'none' , display: 'flex', justifyContent: 'center' }}>
@@ -24,12 +24,12 @@ function ModalComponent({show, handleClose, bodyContent}) {
       </Modal.Body>
       <Modal.Footer style={{ borderTop: 'none', display: 'flex', justifyContent: 'space-between' }}>
         <Row>
-        <Button variant="dark" onClick={handleClose} >
+        <Button variant="dark" onClick={handleClose} style={{backgroundColor: `var(--cinza-primario)`}}>
           Cancelar 
         </Button>
         </Row>
         <Row>
-        <Button  onClick={handleClose} style={{backgroundColor: '#013D32'}}>
+      <Button  onClick={handleClose} style={{backgroundColor: `var(--verde-primario)`}}>
           Cadastrar </Button>
         </Row>
       </Modal.Footer>
