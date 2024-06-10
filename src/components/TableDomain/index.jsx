@@ -12,7 +12,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import { useContext } from "react";
 import { FontSizeContext } from "../../Context/FontSizeProvider.jsx";
 
-function TableDomain() {
+function TableDomain({domain}) {
   const { fontSize } = useContext(FontSizeContext);
 
   return (
@@ -37,8 +37,9 @@ function TableDomain() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Desenvolvimento  de Software</td>
+            {Array.isArray(domain) && domain.map((item) => (
+            <tr key={item.id}>
+              <td>{item.name}</td>
               <td className="action-column">
                 <BsEye />
               </td>
@@ -49,6 +50,7 @@ function TableDomain() {
                 <RiDeleteBin6Line id="delete-icon" />
               </td>
             </tr>
+            ))}
           </tbody>
         </Table>
       </div>

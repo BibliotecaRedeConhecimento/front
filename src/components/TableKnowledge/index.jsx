@@ -12,56 +12,61 @@ import { Col, Container, Row } from "react-bootstrap";
 import { useContext } from "react";
 import { FontSizeContext } from "../../Context/FontSizeProvider.jsx";
 
-function TableKnowledge() {
-    const { fontSize } = useContext(FontSizeContext);
+function TableKnowledge({ knowledge }) {
+  const { fontSize } = useContext(FontSizeContext);
 
-    return (
-        <>
-            <Container fluid>
-                <Row>
-                    <Col xs={12} md={6}>
-                        <SearchComponentCategory />
-                    </Col>
-                    <Col xs={12} md={6}>
-                        <SearchComponentDomain />
-                    </Col>
-                </Row>
-            </Container>
-            <TableStyle>
-                <div style={{ fontSize: `${fontSize}px` }} className="table-area">
-                    <Table striped hover responsive>
-                        <thead>
-                            <tr>
-                                <th colSpan="1">Título</th>
-                                <th colSpan="1">Domínio</th>
-                                <th colSpan="1">Categoria</th>
-                                <th colSpan="1">Colaborador</th>
-                                <th style={{ paddingLeft: 20 }} colSpan="3">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Terraform</td>
-                                <td>DevOps</td>
-                                <td>Infraestrutura como Código - IaC</td>
-                                <td>Jorge</td>
-                                <td className="action-column">
-                                    <BsEye />
-                                </td>
-                                <td className="action-column">
-                                    <CiEdit />
-                                </td>
-                                <td className="action-column">
-                                    <RiDeleteBin6Line id="delete-icon" />
-                                </td>
-                            </tr>
-                        </tbody>
-                    </Table>
-                </div>
-            </TableStyle>
-            <PaginationComponent />
-        </>
-    );
+  return (
+    <>
+      <Container fluid>
+        <Row>
+          <Col xs={12} md={6}>
+            <SearchComponentCategory />
+          </Col>
+          <Col xs={12} md={6}>
+            <SearchComponentDomain />
+          </Col>
+        </Row>
+      </Container>
+      <TableStyle>
+        <div style={{ fontSize: `${fontSize}px` }} className="table-area">
+          <Table striped hover responsive>
+            <thead>
+              <tr>
+                <th colSpan="1">Título</th>
+                <th colSpan="1">Domínio</th>
+                <th colSpan="1">Categoria</th>
+                <th colSpan="1">Colaborador</th>
+                <th style={{ paddingLeft: 20 }} colSpan="3">
+                  Ações
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {Array.isArray(knowledge) &&
+                knowledge.map((item) => (
+                  <tr key={item.id}>
+                    <td>{item.title}</td>
+                    <td>{item.text}</td>
+                    <td>{item.category}</td>
+                    <td>{item.domain}</td>
+                    <td className="action-column">
+                      <BsEye />
+                    </td>
+                    <td className="action-column">
+                      <CiEdit />
+                    </td>
+                    <td className="action-column">
+                      <RiDeleteBin6Line id="delete-icon" />
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </Table>
+        </div>
+      </TableStyle>
+      <PaginationComponent />
+    </>
+  );
 }
 
 export default TableKnowledge;

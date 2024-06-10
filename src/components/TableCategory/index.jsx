@@ -12,7 +12,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import { useContext } from "react";
 import { FontSizeContext } from "../../Context/FontSizeProvider.jsx";
 
-function TableCategory() {
+function TableCategory({category}) {
   const { fontSize } = useContext(FontSizeContext);
 
   return (
@@ -38,9 +38,10 @@ function TableCategory() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Front-end</td>
-              <td>Desenvolvimento de Software</td>
+            {Array.isArray(category) && category.map((item) => (
+            <tr key={item.id}>
+              <td>{item.name}</td>
+              <td>{item.domain}</td>
               <td className="action-column">
                 <BsEye />
               </td>
@@ -51,6 +52,7 @@ function TableCategory() {
                 <RiDeleteBin6Line id="delete-icon" />
               </td>
             </tr>
+            ))}
           </tbody>
         </Table>
       </div>
