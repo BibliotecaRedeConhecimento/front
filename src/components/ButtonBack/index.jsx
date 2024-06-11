@@ -1,12 +1,27 @@
-import React from 'react';
-import { Button } from 'react-bootstrap';
+import { React } from "react";
+import Button from "react-bootstrap/Button";
 
-const ButtonBack= () => {
+import { ButtonStyle } from "./styles.jsx";
+
+function ButtonComponent({ size, bgColor, textColor, action, alternativeText, children }) {
+  const handleButtonClick = () => {
+    window.history.back();
+  };
   return (
-    <Button variant="primary" aria-label="Voltar">
-      voltar
-    </Button>
+    <ButtonStyle size={size} bgColor={bgColor} textColor={textColor}>
+      <Button
+        role="button"
+        aria-label={alternativeText}
+        title={alternativeText}
+        variant={bgColor}
+        className="botao-default"
+        style={{ maxWidth: "100%" }}
+        onClick={handleButtonClick}
+      >
+        {children}
+      </Button>
+    </ButtonStyle>
   );
-};
+}
 
-export default ButtonBack;
+export default ButtonComponent;

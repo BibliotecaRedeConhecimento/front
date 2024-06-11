@@ -21,7 +21,7 @@ const HomeKnowledge = () => {
           <PageContentContainer width="100%" height="100vh" flexDirection= 'column' justifyContent='center' alignItems='center' display='flex'>
          
           <ButtonRoutes buttonText="Cadastrar Conhecimento" onClick={() => navigateTo("/registerKnowledge")} /> 
-          <ButtonRoutes buttonText="Buscar Dominio" onClick={() => navigateTo("/SearchKnowledge")} />
+          <ButtonRoutes buttonText="Buscar Conhecimento" onClick={() => navigateTo("/SearchKnowledge")} />
           
            
            

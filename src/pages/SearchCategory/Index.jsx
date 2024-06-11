@@ -4,6 +4,9 @@ import PageHeaderContainer from "../../components/PageHeaderContainer";
 import PageContentContainer from "../../components/PageContentContainer";
 import TableCategory from "../../components/TableCategory";
 import { getAllCategories } from "../../services/CategoryServices";
+import { IoIosArrowBack } from "react-icons/io";
+
+import ButtonComponent from "../../components/ButtonBack";
 
 const SearchCategory = () => {
   const [categoryData, setCategoryData] = useState([]);
@@ -24,7 +27,17 @@ const SearchCategory = () => {
         <PageHeaderContainer title="Categorias" />
         <PageContentContainer>
           <TableCategory category={categoryData}/>
+          <div style={{marginTop: 20}}>
+          <ButtonComponent
+           size="10rem"
+           bgColor="#585859"
+           textColor="white"
+           alternativeText="Voltar">
+            <IoIosArrowBack style={{marginRight: 5, width: 12}}/>
+            Voltar</ButtonComponent>
+           </div>
         </PageContentContainer>
+        
       </PageContainer>
     </div>
   );
