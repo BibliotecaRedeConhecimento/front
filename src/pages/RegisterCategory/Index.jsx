@@ -6,15 +6,24 @@ import { Form } from "react-bootstrap"
 import { useState } from "react";
 import ButtonModal from "../../components/ButtonModal";
 import ModalComponent from "../../components/ModalComponent";
+import { addCategory } from "../../services/CategoryServices";
 
 
 const RegisterCategory = () => {
 
   const [showModal, setShowModal] = useState(false);
-
+  const [categoryName, setCategoryName] = useState()
   const handleOpenModal = () => { setShowModal(true);};
 
   const handleCloseModal = () => { setShowModal(false);};
+
+  const registerCategory = async (event) => {
+    event.preventDefault();
+    const response = await addCategory({
+      name: categoryName,
+    });
+    console.log(response);
+  };
 
   return (
     <div>
@@ -30,7 +39,7 @@ const RegisterCategory = () => {
 
             <ButtonModal buttonText="Confirmar Cadastro" onClick={handleOpenModal}/>
 
-            <ModalComponent bodyContent={'Deseja cadastrar a Categoria?'} show={showModal} handleClose={handleCloseModal}/>
+            <ModalComponent bodyContent={'Deseja cadastrar a Categoria?'} show={showModal} handleClose={handleCloseModal}  confirm={registerCategory}/>
 
         
          
