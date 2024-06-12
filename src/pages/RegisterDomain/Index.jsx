@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 import React, { useState } from "react";
-=======
-// eslint-disable-next-line no-unused-vars
-import React from "react";
->>>>>>> db4659c44b9ee1cf65b9a48900cb449f71392341
 import PageContainer from "../../components/PageContainer";
 import PageHeaderContainer from "../../components/PageHeaderContainer";
 import PageContentContainer from "../../components/PageContentContainer";
@@ -61,7 +56,6 @@ const RegisterDomain = () => {
             />
           </Form.Group>
 
-<<<<<<< HEAD
           <div className="d-flex justify-content-between mt-3">
             <ButtonComponent
               size="10rem"
@@ -83,12 +77,6 @@ const RegisterDomain = () => {
               <IoIosArrowForward style={{ marginLeft: 5, width: 12 }} />
             </ButtonConfirmRegistration>
           </div>
-=======
-          <ButtonModal tabIndex="2"
-            buttonText="Confirmar Cadastro"
-            onClick={handleOpenModal}
-          />
->>>>>>> db4659c44b9ee1cf65b9a48900cb449f71392341
 
           <ModalComponent tabIndex="-1"
             bodyContent={"Deseja cadastrar o Domínio?"}

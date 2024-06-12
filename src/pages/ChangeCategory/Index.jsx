@@ -6,7 +6,7 @@ import { Form } from "react-bootstrap"
 import { useState } from "react";
 import ButtonModal from "../../components/ButtonModal";
 import ModalComponent from "../../components/ModalComponent";
-import { addCategory, getCategoryById, updateCategory } from "../../services/CategoryServices";
+import { getCategoryById, updateCategory } from "../../services/CategoryServices";
 import { useParams } from "react-router-dom";
 
 

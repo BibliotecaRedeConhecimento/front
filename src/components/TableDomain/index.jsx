@@ -11,9 +11,12 @@ import SearchComponentCategory from "../SearchBar/index.jsx";
 import { Container } from "react-bootstrap";
 import { useContext } from "react";
 import { FontSizeContext } from "../../Context/FontSizeProvider.jsx";
+import { useNavigate } from "react-router-dom";
 
 function TableDomain({domain}) {
   const { fontSize } = useContext(FontSizeContext);
+
+  const navigate = useNavigate()
 
   return (
     <>
@@ -33,11 +36,12 @@ function TableDomain({domain}) {
             {Array.isArray(domain) && domain.map((item) => (
             <tr key={item.id}>
               <td>{item.name}</td>
+              <td>{item.domain}</td>
               <td className="action-column">
-                <BsEye />
-              </td>
-              <td className="action-column">
+                <button onClick={() => navigate(`changeDomain/` + item.id)} >
+                
                 <CiEdit />
+                </button>
               </td>
               <td className="action-column">
                 <RiDeleteBin6Line id="delete-icon" />

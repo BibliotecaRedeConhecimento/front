@@ -15,6 +15,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App.jsx';
 import { FontSizeProvider } from './Context/FontSizeProvider.jsx';
 import ChangeCategory from './pages/ChangeCategory/Index.jsx';
+import ChangeDomain from './pages/ChangeDomain/index.jsx';
 
 // O router vai servir para puxar as pages que precisamos utilizar e definir uma rota para elas
 
@@ -48,6 +49,11 @@ const router = createBrowserRouter([
         path: '/searchCategory/changeCategory/:id',
         element: <ChangeCategory />
       },
+      {
+        path: '/searchDomain/changeDomain/:id',
+        element: <ChangeDomain />,
+      },
+      
       
       {
         path: 'searchCategory',
