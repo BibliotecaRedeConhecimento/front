@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React from "react";
 import PageContainer from "../../components/PageContainer";
 import PageHeaderContainer from "../../components/PageHeaderContainer";
@@ -36,17 +37,18 @@ const RegisterDomain = () => {
             <Form.Label>Nome</Form.Label>
             <Form.Control
               type="string"
+              tabIndex="1"
               placeholder="Nome do Domínio"
               onChange={(event) => setDomainName(event.target.value)}
             />
           </Form.Group>
 
-          <ButtonModal
+          <ButtonModal tabIndex="2"
             buttonText="Confirmar Cadastro"
             onClick={handleOpenModal}
           />
 
-          <ModalComponent
+          <ModalComponent tabIndex="-1"
             bodyContent={"Deseja cadastrar o Domínio?"}
             show={showModal}
             handleClose={handleCloseModal}

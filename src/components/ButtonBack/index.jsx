@@ -8,7 +8,7 @@ function ButtonComponent({ size, bgColor, textColor, action, alternativeText, ch
     window.history.back();
   };
   return (
-    <ButtonStyle size={size} bgColor={bgColor} textColor={textColor}>
+    <ButtonStyle size={size} bgColor={bgColor} textColor={textColor} >
       <Button
         role="button"
         aria-label={alternativeText}
