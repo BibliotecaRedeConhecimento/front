@@ -5,6 +5,7 @@ import PageContentContainer from "../../components/PageContentContainer";
 import TableCategory from "../../components/TableCategory";
 import { getAllCategories } from "../../services/CategoryServices";
 import { IoIosArrowBack } from "react-icons/io";
+import { TfiMenuAlt } from "react-icons/tfi";
 
 import ButtonComponent from "../../components/ButtonBack";
 
@@ -24,7 +25,7 @@ const SearchCategory = () => {
   return (
     <div>
       <PageContainer>
-        <PageHeaderContainer title="Categorias" />
+        <PageHeaderContainer icon={<TfiMenuAlt style={{width: 34, marginRight: 5}} />} title="Buscar Categoria" />
         <PageContentContainer>
           <TableCategory category={categoryData}/>
           <div style={{marginTop: 20}}>

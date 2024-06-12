@@ -6,6 +6,7 @@ import PageContentContainer from "../../components/PageContentContainer";
 import { getAllKnowledges } from "../../services/KnowledgeServices";
 import { IoIosArrowBack } from "react-icons/io";
 import ButtonComponent from "../../components/ButtonBack";
+import { TfiMenuAlt } from "react-icons/tfi";
 
 
 const SearchKnowledge = () => {
@@ -25,7 +26,7 @@ useEffect(() => {
   return (
     <div>
       <PageContainer>
-          <PageHeaderContainer title='Conhecimento'/>
+          <PageHeaderContainer  icon={<TfiMenuAlt style={{width: 34, marginRight: 5}} />} title='Buscar Conhecimento'/>
           <PageContentContainer>
 
         <TableKnowledge  knowledge={knowledgeData} />

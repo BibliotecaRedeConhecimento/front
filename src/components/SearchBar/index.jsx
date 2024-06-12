@@ -1,20 +1,20 @@
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
-import { RiArrowDownSFill } from "react-icons/ri";
+import { AiOutlineSearch } from "react-icons/ai";
 import { SearchStyle } from "./styles.jsx";
 
-function SearchComponentDomain() {
+function SearchComponentCategory() {
   return (
     <SearchStyle style={{marginBottom: 40}}>
       <InputGroup className="mb-3">
-        <Form.Control placeholder="Selecione um domínio..." />
+        <Form.Control placeholder="Ex: Engenharia de Software" />
         <Button variant="outline-secondary">
-          <RiArrowDownSFill />
+          <AiOutlineSearch />
         </Button>
       </InputGroup>
     </SearchStyle>
   );
 }
 
-export default SearchComponentDomain;
+export default SearchComponentCategory;

@@ -17,7 +17,7 @@ const HomeKnowledge = () => {
   return (
     <div className="col">
         <PageContainer>
-          <PageHeaderContainer title='Bem-Vindo, Fulano!'/>
+          <PageHeaderContainer title='Menu Conhecimento'/>
           <PageContentContainer width="100%" height="88vh"  flexDirection= 'column' justifyContent='center' alignItems='center' display='flex'>
          
           <ButtonRoutes buttonText="Cadastrar Conhecimento" onClick={() => navigateTo("/registerKnowledge")} /> 

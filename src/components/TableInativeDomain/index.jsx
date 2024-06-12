@@ -6,9 +6,8 @@ import { BsEye } from "react-icons/bs";
 
 import { TableStyle } from "./styles.jsx";
 import PaginationComponent from "../TablePagination/index.jsx";
-import SearchComponentCategory from "../SearchCategory/index.jsx";
-import SearchComponentDomain from "../SelectDomain/index.jsx";
-import { Col, Container, Row } from "react-bootstrap";
+import SearchComponentCategory from "../SearchBar/index.jsx";
+import { Container } from "react-bootstrap";
 import { useContext } from "react";
 import { FontSizeContext } from "../../Context/FontSizeProvider.jsx";
 
@@ -18,15 +17,8 @@ function TableComponent() {
   return (
     <>
      <Container fluid>
-      <Row>
-        <Col xs={12} md={6}>
-          <SearchComponentCategory />
-        </Col>
-        <Col xs={12} md={6}>
-          <SearchComponentDomain />
-        </Col>
-      </Row>
-    </Container>
+            <SearchComponentCategory />
+      </Container>
     <TableStyle>
       <div style={{ fontSize: `${fontSize}px`}} className="table-area">
         <Table striped hover responsive>

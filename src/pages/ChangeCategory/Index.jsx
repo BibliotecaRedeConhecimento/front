@@ -59,14 +59,7 @@ handleName()
 
             <ButtonModal buttonText="Confirmar Cadastro" onClick={handleOpenModal}/>
 
-            <ModalComponent bodyContent={'Deseja cadastrar a Categoria?'} show={showModal} handleClose={handleCloseModal}  confirm={handleEdit}/>
-
-        
-         
-          
-          
-           
-           
+            <ModalComponent bodyContent={'Deseja cadastrar a Categoria?'} show={showModal} handleClose={handleCloseModal}  confirm={handleEdit}/>   
            
          </PageContentContainer>
         </PageContainer>

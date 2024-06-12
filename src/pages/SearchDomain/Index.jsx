@@ -7,6 +7,7 @@ import TableDomain from "../../components/TableDomain";
 import { getAllDomains } from "../../services/DomainServices";
 import ButtonComponent from "../../components/ButtonBack";
 import { IoIosArrowBack } from "react-icons/io";
+import { TfiMenuAlt } from "react-icons/tfi";
 
 const SearchDomain = () => {
   const [domainData, setDomainData] = useState([]);
@@ -24,7 +25,7 @@ useEffect(() => {
   return (
     <div>
       <PageContainer>
-        <PageHeaderContainer title="Domínios" />
+        <PageHeaderContainer  icon={<TfiMenuAlt style={{width: 34, marginRight: 5}} />} title="Buscar Domínio" />
         <PageContentContainer>
           <TableDomain domain={domainData}/>
           <div style={{marginTop: 20}}>

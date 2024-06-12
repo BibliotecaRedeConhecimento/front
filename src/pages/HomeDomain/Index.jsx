@@ -20,7 +20,7 @@ const HomeDomain = () => {
           
       <div className="col">
         <PageContainer>
-          <PageHeaderContainer title='Bem-Vindo, Fulano!'/>
+          <PageHeaderContainer title='Menu Domínio'/>
           <PageContentContainer width="100%" height="88vh"  flexDirection= 'column' justifyContent='center' alignItems='center' display='flex'>
          
           <ButtonRoutes buttonText="Cadastrar Dominio" onClick={() => navigateTo("/registerDomain")} /> 
