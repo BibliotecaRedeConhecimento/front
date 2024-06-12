@@ -9,7 +9,7 @@ function ButtonModal({ buttonText, onClick }) {
   return (
     <Container fluid>
       <Row className="justify-content-end">
-        <ButtonModalStyle  size="lg"  className="ButtonModal" onClick={onClick}>{buttonText}</ButtonModalStyle>
+        <ButtonModalStyle className="ButtonModal" onClick={onClick}>{buttonText}</ButtonModalStyle>
       </Row>
     </Container>
   );

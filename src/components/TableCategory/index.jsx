@@ -11,9 +11,11 @@ import SearchComponentDomain from "../SelectDomain/index.jsx";
 import { Col, Container, Row } from "react-bootstrap";
 import { useContext } from "react";
 import { FontSizeContext } from "../../Context/FontSizeProvider.jsx";
+import { useNavigate } from "react-router-dom";
 
 function TableCategory({category}) {
   const { fontSize } = useContext(FontSizeContext);
+const navigate = useNavigate()
 
   return (
     <>
@@ -46,7 +48,9 @@ function TableCategory({category}) {
                 <BsEye />
               </td>
               <td className="action-column">
+                <button onClick={() => navigate(`changeCategory/` + item.id)}>
                 <CiEdit />
+                </button>
               </td>
               <td className="action-column">
                 <RiDeleteBin6Line id="delete-icon" />

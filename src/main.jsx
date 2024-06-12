@@ -14,6 +14,7 @@ import SearchKnowledge from './pages/SearchKnowledge/Index.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App.jsx';
 import { FontSizeProvider } from './Context/FontSizeProvider.jsx';
+import ChangeCategory from './pages/ChangeCategory/Index.jsx';
 
 // O router vai servir para puxar as pages que precisamos utilizar e definir uma rota para elas
 
@@ -43,6 +44,11 @@ const router = createBrowserRouter([
         path: 'registerCategory',
         element: <RegisterCategory />,
       },
+      {
+        path: '/searchCategory/changeCategory/:id',
+        element: <ChangeCategory />
+      },
+      
       {
         path: 'searchCategory',
         element: <SearchCategory />,
