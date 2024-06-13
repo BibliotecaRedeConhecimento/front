@@ -31,7 +31,7 @@ const SearchCategory = () => {
           <div style={{marginTop: 20}}>
           <ButtonComponent
            size="10rem"
-           bgColor="#585859"
+           bgColor="var(--cinza-primario)"
            textColor="white"
            alternativeText="Voltar">
             <IoIosArrowBack style={{marginRight: 5, width: 12}}/>

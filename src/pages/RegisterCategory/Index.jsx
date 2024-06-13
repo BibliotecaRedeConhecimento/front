@@ -60,7 +60,7 @@ const RegisterCategory = () => {
             <div className="d-flex justify-content-between mt-3">
             <ButtonComponent
               size="10rem"
-              bgColor="#585859"
+              bgColor="var(--cinza-primario)"
               textColor="white"
               alternativeText="Voltar"
             >
@@ -69,7 +69,7 @@ const RegisterCategory = () => {
             </ButtonComponent>
             <ButtonConfirmRegistration
               size="10rem"
-              bgColor="#013d32"
+              bgColor="var(--verde-primario)"
               textColor="white"
               alternativeText="Cadastrar"
               action={handleOpenModal}
