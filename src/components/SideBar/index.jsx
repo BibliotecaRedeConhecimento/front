@@ -33,7 +33,10 @@ function Sidebar({ logOut, windowSize }) {
  function dark (){
   const html = document.querySelector('html')
   html.classList.toggle('dark-mode')
+  
  }
+
+
 
   const isMobile = windowSize <= 768;
 
