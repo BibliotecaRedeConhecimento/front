@@ -1,35 +1,61 @@
-import './Global.css'
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import { Outlet } from 'react-router-dom';
-import Slidebar from './components/SideBar';
-import { useEffect, useState } from "react";
-
+import React from "react";
+import { ThemeProvider } from "styled-components";
+import GlobalStyle from "./style/GlobalStyle.js";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import VLibras from "@djpfs/react-vlibras/";
+import { useState } from "react";
+import Root from "./routes/root";
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import useFontSize from "./utils/hooks/useFontSize";
+import { darkTheme, lightTheme } from "./utils/Themes";
+import { AuthenticationProvider } from "./services/context/AuthContext.jsx";
 
 function App() {
-  const [windowSize, setWindowSize] = useState(window.innerWidth);
+  const savedDarkMode = localStorage.getItem("darkMode");
+  const [darkMode, setDarkMode] = useState(savedDarkMode === "true");
+  const { size, increaseFontSize, decreaseFontSize } = useFontSize();
 
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowSize(window.innerWidth);
-    };
+  const HandledarkMode = () => {
+    setDarkMode(!darkMode);
+  };
 
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  const theme = {
+    ...(darkMode ? darkTheme : lightTheme),
+    font: {
+      size: `${size}px`,
+    },
+  };
 
   return (
-    <div className='App'>
-    {/* Tudo que estiver fora de outlet, será persistido em todas as telas/rotas do projeto */}
+    <AuthenticationProvider>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
 
-    <Slidebar windowSize={windowSize} />
-    {/* Tudo dentro de Outlet, será considerado children, declarado na main.jsx, e será reutilizado as rotas com base nisso */}
-      <Outlet />
-      
+        <Root
+          increaseFontSize={increaseFontSize}
+          decreaseFontSize={decreaseFontSize}
+          HandledarkMode={HandledarkMode}
+          isDarkMode={darkMode}
+        />
 
-    </div>
-  )
+        <VLibras forceOnload={true} />
+
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
+      </ThemeProvider>
+    </AuthenticationProvider>
+  );
 }
 
-export default App
+export default App;

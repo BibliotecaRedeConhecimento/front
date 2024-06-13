@@ -1,37 +1,60 @@
-// Aqui vai conter os botões que levam para as pages: RegisterCategory e SearchCategory
+import { React } from "react";
 
-import React from "react";
-import { useNavigate } from "react-router-dom";
 import PageContainer from "../../components/PageContainer";
 import PageHeaderContainer from "../../components/PageHeaderContainer";
 import PageContentContainer from "../../components/PageContentContainer";
-import ButtonRoutes from "../../components/ButtonRoutes";
 
-const HomeCategory = () => {
+import { ContainerWithSidebar } from "../../components/ContainerWithSidebar";
+import ButtonRoutes from "../../components/ButtonRoutes";
+import { useNavigate } from "react-router-dom";
+import ButtonComponent from "../../components/ButtonBack";
+
+import { IoIosArrowBack } from "react-icons/io";
+
+function HomeCategory({
+  HandledarkMode,
+  isDarkMode,
+  decreaseFontSize,
+  increaseFontSize,
+  logOut,
+}) {
+
   const navigate = useNavigate();
 
   const navigateTo = (path) => {
     navigate(path);
-  };
+   };
+
+
   return (
-    <div className="container-fluid">
-          
-        <div className="col">
-          <PageContainer>
-            <PageHeaderContainer title='Bem-Vindo, Fulano!'/>
-            <PageContentContainer width="100%" height="100vh" flexDirection= 'column' justifyContent='center' alignItems='center' display='flex'>
-           
-            <ButtonRoutes buttonText="Cadastrar Categoria" onClick={() => navigateTo("/registerCategory")} /> 
-            <ButtonRoutes buttonText="Buscar Categoria" onClick={() => navigateTo("/SearchCategory")} />
-            
-             
-             
-             
-           </PageContentContainer>
-          </PageContainer>
-        </div>
-    </div>
+    <ContainerWithSidebar
+      increaseFontSize={increaseFontSize}
+      decreaseFontSize={decreaseFontSize}
+      HandledarkMode={HandledarkMode}
+      isDarkMode={isDarkMode}
+      logOut={logOut}
+    >
+      <PageContainer>
+        <PageHeaderContainer title={`Menu de Categoria`} />
+        <PageContentContainer>
+
+          <ButtonRoutes buttonText="Cadastrar Categoria" onClick={() => navigateTo("/cadastrarCategoria")} />
+          <ButtonRoutes buttonText="Buscar Categoria" onClick={() => navigateTo("/buscarCategoria")} />
+
+          <ButtonComponent
+              size="10rem"
+              bgColor="#585859"
+              textColor="white"
+              alternativeText="Voltar"
+            >
+              <IoIosArrowBack style={{ marginRight: 5, width: 12 }} />
+              Voltar
+            </ButtonComponent>          
+
+        </PageContentContainer>
+      </PageContainer>
+    </ContainerWithSidebar>
   );
-};
+}
 
 export default HomeCategory;

@@ -6,62 +6,74 @@ import { BsEye } from "react-icons/bs";
 
 import { TableStyle } from "./styles.jsx";
 import PaginationComponent from "../TablePagination/index.jsx";
-import SearchComponentCategory from "../SearchCategory/index.jsx";
-import SearchComponentDomain from "../SelectDomain/index.jsx";
-import { Col, Container, Row } from "react-bootstrap";
-import { useContext } from "react";
-import { FontSizeContext } from "../../Context/FontSizeProvider.jsx";
+import SearchComponentCategory from "../SearchBar/index.jsx";
+import {  Container,} from "react-bootstrap";
+import ButtonInative from "../ButtonInative/index.jsx";
+import { useNavigate } from "react-router-dom";
 
-function TableKnowledge() {
-    const { fontSize } = useContext(FontSizeContext);
+function TableKnowledge({ knowledge }) {
 
-    return (
-        <>
-            <Container fluid>
-                <Row>
-                    <Col xs={12} md={6}>
-                        <SearchComponentCategory />
-                    </Col>
-                    <Col xs={12} md={6}>
-                        <SearchComponentDomain />
-                    </Col>
-                </Row>
-            </Container>
-            <TableStyle>
-                <div style={{ fontSize: `${fontSize}px` }} className="table-area">
-                    <Table striped hover responsive>
-                        <thead>
-                            <tr>
-                                <th colSpan="1">Título</th>
-                                <th colSpan="1">Domínio</th>
-                                <th colSpan="1">Categoria</th>
-                                <th colSpan="1">Colaborador</th>
-                                <th style={{ paddingLeft: 20 }} colSpan="3">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Terraform</td>
-                                <td>DevOps</td>
-                                <td>Infraestrutura como Código - IaC</td>
-                                <td>Jorge</td>
-                                <td className="action-column">
-                                    <BsEye />
-                                </td>
-                                <td className="action-column">
-                                    <CiEdit />
-                                </td>
-                                <td className="action-column">
-                                    <RiDeleteBin6Line id="delete-icon" />
-                                </td>
-                            </tr>
-                        </tbody>
-                    </Table>
-                </div>
-            </TableStyle>
-            <PaginationComponent />
-        </>
-    );
+  const navigate = useNavigate()
+const navigateTo = (path) => {
+  navigate(path);
+ };
+
+  return (
+    <>
+      <Container fluid>
+            <SearchComponentCategory />
+            <div className="d-flex justify-content-end mb-4">
+          <ButtonInative
+            size="10rem"
+            bgColor="var(--verde-primario3)"
+            textColor="white"
+            alternativeText="Categorias Inativas"
+            action={() => navigateTo("/conhecimentoInativo")}
+          >
+            Inativos
+          </ButtonInative>
+        </div>
+      </Container>
+      <TableStyle>
+        <div className="table-area">
+          <Table striped hover responsive>
+            <thead>
+              <tr>
+                <th colSpan="1">Título</th>
+                <th colSpan="1">Domínio</th>
+                <th colSpan="1">Categoria</th>
+                <th colSpan="1">Colaborador</th>
+                <th style={{ paddingLeft: 20 }} colSpan="3">
+                  Ações
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {Array.isArray(knowledge) &&
+                knowledge.map((item) => (
+                  <tr key={item.id}>
+                    <td>{item.title}</td>
+                    <td>{item.text}</td>
+                    <td>{item.category}</td>
+                    <td>{item.domain}</td>
+                    <td className="action-column">
+                      <BsEye />
+                    </td>
+                    <td className="action-column">
+                      <CiEdit />
+                    </td>
+                    <td className="action-column">
+                      <RiDeleteBin6Line id="delete-icon" />
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </Table>
+        </div>
+      </TableStyle>
+      <PaginationComponent />
+    </>
+  );
 }
 
 export default TableKnowledge;

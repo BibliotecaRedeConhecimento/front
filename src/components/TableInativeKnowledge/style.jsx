@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import '../../Global.css'
-import '../../css/colors.css'
 
 export const TableStyle = styled.div`
   .table-area {
@@ -16,7 +14,6 @@ export const TableStyle = styled.div`
     thead {
         th {
           text-align: left;
-          background-color: #CDE8E9;
           
         }
       }

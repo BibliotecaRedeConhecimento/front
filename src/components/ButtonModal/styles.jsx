@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Button from 'react-bootstrap/Button';
 
 export const ButtonModalStyle = styled(Button)`
-    background-color: #013D32;
+    background-color: var( --verde-primario);
     color: white;
     border: none;
     border-radius: 4px;
@@ -14,6 +14,6 @@ export const ButtonModalStyle = styled(Button)`
     margin-bottom: 1rem;
     justify-content: flex-end;
     &:hover {
-        background-color: #0F6E58;
+        background-color: var( --verde-terceario);
     }
 `;

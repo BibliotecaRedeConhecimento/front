@@ -1,28 +1,35 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Offcanvas from "react-bootstrap/Offcanvas";
-import LogoT2m from "../../assets/logo_t2m.png";
 
-import { BiBookOpen } from "react-icons/bi";
-import { MdOutlineTextIncrease } from "react-icons/md";
-import { MdOutlineTextDecrease } from "react-icons/md";
-import { IoMdContrast } from "react-icons/io";
 import { CgHome } from "react-icons/cg";
 import { BsArrowBarLeft } from "react-icons/bs";
 import { CgMenuRound } from "react-icons/cg";
 import { BiUserCircle } from "react-icons/bi";
-import { MdOutlineExitToApp } from "react-icons/md";
+import {
+  MdContrast,
+  MdOutlineExitToApp,
+  MdOutlineTextDecrease,
+  MdOutlineTextIncrease,
+} from "react-icons/md";
 import {
   SidebarMobileStyle,
   SidebarMobileNavStyle,
   LogoArea,
   CloseIconArea,
-} from "./styles.jsx";
+} from "./style.js";
+import { SystemInfo } from "../../utils/SystemInfo.jsx";
 
-function SidebarMobile({ logOut }) {
+function SidebarMobile({
+  logOut,
+  HandledarkMode,
+  isDarkMode,
+  decreaseFontSize,
+  increaseFontSize,
+}) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -36,6 +43,57 @@ function SidebarMobile({ logOut }) {
     navigate(route);
   }
 
+  const RenderSystemLogo = () => {
+    return isDarkMode ? (
+      <img
+        src={SystemInfo.logoWhite}
+        alt="T2M"
+        style={{ cursor: "pointer" }}
+        onClick={() => navigateTo("/")}
+      />
+    ) : (
+      <img
+        src={SystemInfo.logo}
+        alt="T2M"
+        style={{ cursor: "pointer" }}
+        onClick={() => navigateTo("/")}
+      />
+    );
+  };
+
+  const SideBarMobileItem = ({ title, icon, action, value }) => {
+    return (
+      <div className="sidebar-nav-item">
+        <div onClick={() => action(value)}>
+          <div className="area-icons-label">
+            {icon}
+            <span>{title}</span>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const UserInfo = () => {
+    return (
+      <div className="user-container mt-3">
+        <BiUserCircle />
+        <div className="user-info">
+          <span title="User" className="label-sidebar">
+            Breno M.
+          </span>
+          <span
+            id="user-department"
+            className="label-sidebar"
+            title="Departamento Pessoal"
+          >
+            Departamento pessoal
+          </span>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <SidebarMobileStyle>
       <Row>
@@ -44,100 +102,63 @@ function SidebarMobile({ logOut }) {
             <div className="button-show">
               <CgMenuRound onClick={handleShow} />
             </div>
-            <div className="central-area">
-              <img src={LogoT2m} alt="Logo T2M" />
-            </div>
+            <div className="central-area">{RenderSystemLogo()}</div>
             <div className="right-area">
               <BiUserCircle />
             </div>
           </div>
           <Offcanvas show={show} onHide={handleClose}>
-            <Offcanvas.Header style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+            <Offcanvas.Header
+              style={{ backgroundColor: "var(--branco-primario)" }}
+            >
               <Offcanvas.Title>
                 <LogoArea>
-                  <img src={LogoT2m} alt="Logo T2M" />
-                  <span>Sistema de Biblioteca</span> 
+                  <div className="area-central">{RenderSystemLogo()}</div>
+                  <span>{SystemInfo.title}</span>
                 </LogoArea>
               </Offcanvas.Title>
               <CloseIconArea>
                 <BsArrowBarLeft onClick={handleClose} />
               </CloseIconArea>
             </Offcanvas.Header>
-            <Offcanvas.Body>
+            <Offcanvas.Body
+              style={{ backgroundColor: "var(--branco-primario)" }}
+            >
               <SidebarMobileNavStyle>
                 <div className="flex-column sidebar-mobile-nav">
-                  <div className="sidebar-nav-item">
-                    <div onClick={() => navigateTo("/")}>
-                      <div className="area-icons-label">
-                        <CgHome />
-                        <span>Início</span>
-                      </div>
-                    </div>
-                  </div>
+                  <SideBarMobileItem
+                    title={"Alto Contraste"}
+                    icon={<MdContrast title="Alto Contraste" size={28} />}
+                    action={HandledarkMode}
+                  />
+                  <SideBarMobileItem
+                    title={"Aumentar Fonte"}
+                    icon={
+                      <MdOutlineTextIncrease title="Aumentar Fonte" size={28} />
+                    }
+                    action={increaseFontSize}
+                  />
+
+                  <SideBarMobileItem
+                    title={"Diminuir Fonte"}
+                    icon={
+                      <MdOutlineTextDecrease title="Diminuir Fonte" size={24} />
+                    }
+                    action={decreaseFontSize}
+                  />
                 </div>
                 <div className="flex-column sidebar-mobile-nav">
-                  <div className="sidebar-nav-item">
-                    <div onClick={() => navigateTo("/")}>
-                      <div className="area-icons-label">
-                        <BiBookOpen />
-                        <span>Conhecimento</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="user-container mt-3">
-                  <BiUserCircle />
-                  <div className="user-info">
-                    <span title="Larissa Santos" className="label-sidebar">
-                      Larissa S.
-                    </span>
-                    <span
-                      id="user-department"
-                      className="label-sidebar"
-                      title="Departamento Pessoal"
-                    >
-                      Departamento pessoal
-                    </span>
-                  </div>
-                </div>
-                <div className="sidebar-mobile-nav">
-                  
-                  <div className="sidebar-nav-item mt-3">
-                    <div onClick={() => logOut()}>
-                      <div className="area-icons-label">
-                        <MdOutlineTextIncrease />
-                        <span>Aumentar</span>
-                      </div>
-                    </div>
-                  </div>
+                  <SideBarMobileItem
+                    title={"Início"}
+                    icon={<CgHome />}
+                    action={navigateTo}
+                    value={"/"}
+                  />
                 </div>
 
-                <div className="sidebar-mobile-nav">
-                  
-                  <div className="sidebar-nav-item mt-3">
-                    <div onClick={() => logOut()}>
-                      <div className="area-icons-label">
-                        <MdOutlineTextDecrease />
-                        <span>Diminuir</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <UserInfo />
 
                 <div className="sidebar-mobile-nav">
-                  
-                  <div className="sidebar-nav-item mt-3">
-                    <div onClick={() => logOut()}>
-                      <div className="area-icons-label">
-                        <IoMdContrast />
-                        <span>Contraste</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="sidebar-mobile-nav">
-                  
                   <div className="sidebar-nav-item mt-3">
                     <div onClick={() => logOut()}>
                       <div className="area-icons-label">
@@ -147,7 +168,6 @@ function SidebarMobile({ logOut }) {
                     </div>
                   </div>
                 </div>
-
               </SidebarMobileNavStyle>
             </Offcanvas.Body>
           </Offcanvas>

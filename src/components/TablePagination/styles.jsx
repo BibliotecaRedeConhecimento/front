@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import '../../Global.css'
-import '../../css/colors.css'
+
 
 export const PaginationStyle = styled.div`
    

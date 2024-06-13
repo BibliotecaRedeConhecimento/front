@@ -5,11 +5,11 @@ import { ButtonModalStyle } from "./styles";
 
 
 
-function ButtonModal({ buttonText, onClick }) {
+function ButtonModal({ buttonText, onClick, tabIndex }) {
   return (
     <Container fluid>
       <Row className="justify-content-end">
-        <ButtonModalStyle  size="lg"  className="ButtonModal" onClick={onClick}>{buttonText}</ButtonModalStyle>
+            <ButtonModalStyle className="ButtonModal" onClick={onClick} tabIndex={tabIndex}>{buttonText}</ButtonModalStyle>
       </Row>
     </Container>
   );

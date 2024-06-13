@@ -1,39 +1,61 @@
-// Aqui vai conter os botões que levam para as pages: RegisterDomain e SearchDomain
+import { React } from "react";
 
-import React from "react";
-import { useNavigate } from "react-router-dom";
 import PageContainer from "../../components/PageContainer";
 import PageHeaderContainer from "../../components/PageHeaderContainer";
 import PageContentContainer from "../../components/PageContentContainer";
+
+import { ContainerWithSidebar } from "../../components/ContainerWithSidebar";
 import ButtonRoutes from "../../components/ButtonRoutes";
+import { useNavigate } from "react-router-dom";
 
-const HomeDomain = () => {
+import { IoIosArrowBack } from "react-icons/io";
+import ButtonComponent from "../../components/ButtonBack";
 
-    const navigate = useNavigate();
+function HomeDomain({
+  HandledarkMode,
+  isDarkMode,
+  decreaseFontSize,
+  increaseFontSize,
+  logOut,
+}) {
 
-    const navigateTo = (path) => {
-        navigate(path);
-    }
+  const navigate = useNavigate();
 
-    return (
-      <div className="container-fluid">
-          
-      <div className="col">
-        <PageContainer>
-          <PageHeaderContainer title='Bem-Vindo, Fulano!'/>
-          <PageContentContainer width="100%" height="100vh" flexDirection= 'column' justifyContent='center' alignItems='center' display='flex'>
-         
-          <ButtonRoutes buttonText="Cadastrar Dominio" onClick={() => navigateTo("/registerDomain")} /> 
-          <ButtonRoutes buttonText="Buscar Dominio" onClick={() => navigateTo("/SearchDomain")} />
-          
-           
-           
-           
-         </PageContentContainer>
-        </PageContainer>
-      </div>
-  </div>
-    );
-};
+  const navigateTo = (path) => {
+    navigate(path);
+   };
+
+
+  return (
+    <ContainerWithSidebar
+      increaseFontSize={increaseFontSize}
+      decreaseFontSize={decreaseFontSize}
+      HandledarkMode={HandledarkMode}
+      isDarkMode={isDarkMode}
+      logOut={logOut}
+    >
+      <PageContainer>
+        <PageHeaderContainer title={`Menu de Domínio`} />
+        <PageContentContainer>
+
+          <ButtonRoutes buttonText="Cadastrar Domínio" onClick={() => navigateTo("/cadastrarDominio")} />
+          <ButtonRoutes buttonText="Buscar Domínio" onClick={() => navigateTo("/buscarDominio")} />
+
+          <ButtonComponent
+
+              size="10rem"
+              bgColor="#585859"
+              textColor="white"
+              alternativeText="Voltar"
+            >
+              <IoIosArrowBack style={{ marginRight: 5, width: 12 }} />
+              Voltar
+            </ButtonComponent>          
+
+        </PageContentContainer>
+      </PageContainer>
+    </ContainerWithSidebar>
+  );
+}
 
 export default HomeDomain;

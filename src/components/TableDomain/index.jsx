@@ -6,29 +6,37 @@ import { BsEye } from "react-icons/bs";
 
 import { TableStyle } from "./styles.jsx";
 import PaginationComponent from "../TablePagination/index.jsx";
-import SearchComponentCategory from "../SearchCategory/index.jsx";
-import SearchComponentDomain from "../SelectDomain/index.jsx";
-import { Col, Container, Row } from "react-bootstrap";
-import { useContext } from "react";
-import { FontSizeContext } from "../../Context/FontSizeProvider.jsx";
+import SearchComponentCategory from "../SearchBar/index.jsx";
 
-function TableDomain() {
-  const { fontSize } = useContext(FontSizeContext);
+import { Container } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import ButtonInative from "../ButtonInative/index.jsx";
+
+function TableDomain({domain}) {
+
+  const navigate = useNavigate()
+  const navigateTo = (path) => {
+  navigate(path);
+ };
 
   return (
     <>
      <Container fluid>
-      <Row>
-        <Col xs={12} md={6}>
-          <SearchComponentCategory />
-        </Col>
-        <Col xs={12} md={6}>
-          <SearchComponentDomain />
-        </Col>
-      </Row>
-    </Container>
+            <SearchComponentCategory />
+            <div className="d-flex justify-content-end mb-4">
+          <ButtonInative
+            size="10rem"
+            bgColor="var(--verde-primario3)"
+            textColor="white"
+            alternativeText="Categorias Inativas"
+            action={() => navigateTo("/dominioInativo")}
+          >
+            Inativos
+          </ButtonInative>
+        </div>
+      </Container>
     <TableStyle>
-      <div style={{ fontSize: `${fontSize}px`}} className="table-area">
+      <div className="table-area">
         <Table striped hover responsive>
           <thead>
             <tr>
@@ -37,18 +45,21 @@ function TableDomain() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Desenvolvimento  de Software</td>
+            {Array.isArray(domain) && domain.map((item) => (
+            <tr key={item.id}>
+              <td>{item.name}</td>
+              <td>{item.domain}</td>
               <td className="action-column">
-                <BsEye />
-              </td>
-              <td className="action-column">
+                <button onClick={() => navigate(`changeDomain/` + item.id)} >
+                
                 <CiEdit />
+                </button>
               </td>
               <td className="action-column">
                 <RiDeleteBin6Line id="delete-icon" />
               </td>
             </tr>
+            ))}
           </tbody>
         </Table>
       </div>

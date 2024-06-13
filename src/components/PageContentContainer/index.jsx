@@ -1,29 +1,10 @@
-// import {PageContentContainerStyle} from "./styles.jsx";
+import { React } from "react";
+import {PageContentContainerStyle} from "./style";
 
-// function PageContentContainer({props, width, children, display}) {
-//     return(
-//         <PageContentContainerStyle width={width} display={display}>
-//             {children}
-//         </PageContentContainerStyle>
-//     );
-// }
-
-// export default PageContentContainer;
-
-import {PageContentContainerStyle} from "./styles.jsx";
-
-function PageContentContainer({width, padding, display, flexDirection, justifyContent, alignItems, children, height}) {
+function PageContentContainer(props) {
     return(
-        <PageContentContainerStyle 
-            width={width} 
-            height={height} 
-            padding={padding} 
-            display={display} 
-            flexDirection={flexDirection} 
-            justifyContent={justifyContent} 
-            alignItems={alignItems}
-        >
-            {children}
+        <PageContentContainerStyle>
+            {props.children}
         </PageContentContainerStyle>
     );
 }

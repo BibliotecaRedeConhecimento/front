@@ -5,7 +5,7 @@ import { ButtonModalStyle } from '../ButtonModal/styles';
 
 
 
-function ModalComponent({show, handleClose, bodyContent}) {
+function ModalComponent({show, handleClose, bodyContent, confirm}) {
  
  
  
@@ -15,21 +15,22 @@ function ModalComponent({show, handleClose, bodyContent}) {
       style={{ display: 'block', position: 'initial' }}
     >
     
-        <Modal show={show} onHide={handleClose} size='sm' centered >
-      <Modal.Header style={{backgroundColor: '#013D32', height: '4rem'}} >
+        <Modal  show={show} onHide={handleClose} centered size='sm' >
+          
+      <Modal.Header style={{backgroundColor:  `var(--verde-primario)`,height: '4rem'}} >
         
       </Modal.Header>
-      <Modal.Body style={{ borderBottom: 'none' , display: 'flex', justifyContent: 'center' }}>
+      <Modal.Body style={{ borderBottom: 'none' , display: 'flex', justifyContent: 'center', color: `var(--preto-primario)` , }}>
         {bodyContent}
       </Modal.Body>
-      <Modal.Footer style={{ borderTop: 'none', display: 'flex', justifyContent: 'space-between' }}>
+      <Modal.Footer style={{ borderTop: 'none', display: 'flex', justifyContent: 'space-between',  }}>
         <Row>
-        <Button variant="dark" onClick={handleClose} >
+        <Button onClick={handleClose} style={{backgroundColor: `var(--cinza-primario)`}}>
           Cancelar 
         </Button>
         </Row>
         <Row>
-        <Button  onClick={handleClose} style={{backgroundColor: '#013D32'}}>
+      <Button  onClick={confirm} style={{backgroundColor: `var(--verde-primario)`}}>
           Cadastrar </Button>
         </Row>
       </Modal.Footer>
