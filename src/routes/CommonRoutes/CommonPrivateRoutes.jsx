@@ -16,6 +16,7 @@ import InativeDomain from "../../pages/InativeDomain"
 import ChangeCategory from "../../pages/ChangeCategory"
 import ChangeDomain from "../../pages/ChangeDomain"
 import ChangeKnowledge from "../../pages/ChangeKnowledge"
+import ViewKnowledge from "../../pages/ViewKnowledge"
 
 
 
@@ -224,6 +225,18 @@ export const CommonPrivateRoutes = ({
         path="/buscarConhecimento/alterarConhecimento/:id"
         element={
           <ChangeKnowledge
+            increaseFontSize={increaseFontSize}
+            decreaseFontSize={decreaseFontSize}
+            HandledarkMode={HandledarkMode}
+            isDarkMode={isDarkMode}
+            logOut={handleOpenModal}
+          />
+        }
+      />
+      <Route
+        path="/exibirConhecimento:/id"
+        element={
+          <ViewKnowledge
             increaseFontSize={increaseFontSize}
             decreaseFontSize={decreaseFontSize}
             HandledarkMode={HandledarkMode}

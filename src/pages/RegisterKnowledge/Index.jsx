@@ -46,6 +46,7 @@ const RegisterKnowledge = () => {
     setValidated(true);
   };
 
+
   return (
     <ContainerWithSidebar>
     <div>
@@ -122,7 +123,7 @@ const RegisterKnowledge = () => {
                   <Form.Control
                     type="text"
                     placeholder="Título da foto ou vídeo..."
-                    value={formData.Media}
+                    value={formData.TitleMedia}
                     onChange={handleChange}
                     required
                   />
@@ -136,16 +137,15 @@ const RegisterKnowledge = () => {
                   <Form.Control 
                     placeholder="Cole a URL aqui..."
                     type="text" 
-                    value={formData.TitleMedia}
+                    value={formData.Media}
                     onChange={handleChange}
                     required
                   />
-
-                  
                   <Form.Control.Feedback type="invalid">
                     Campo obrigatório.
                   </Form.Control.Feedback>
                 </Form.Group>
+
 
                 <Form.Group controlId="Description" className="mb-3">
                   <Form.Label>Descrição</Form.Label>

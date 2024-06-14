@@ -1,77 +1,86 @@
-import { React, useState } from "react";
-
+import React, { useState } from "react";
 import PageContainer from "../../components/PageContainer";
 import PageHeaderContainer from "../../components/PageHeaderContainer";
 import PageContentContainer from "../../components/PageContentContainer";
 import { ContainerWithSidebar } from "../../components/ContainerWithSidebar";
-
-import { IoIosArrowBack } from "react-icons/io";
-import { IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { MdOutlineAddCircle } from "react-icons/md";
-
-import { Form, Row, Col } from "react-bootstrap"
-
+import { Form, Row, Col, Image } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import ButtonComponent from "../../components/ButtonBack";
 import ButtonConfirmRegistration from "../../components/ButtonConfirmRegistration";
 
-
-
 function ChangeKnowledge({
-    HandledarkMode,
-    isDarkMode,
-    decreaseFontSize,
-    increaseFontSize,
-    logOut,
+  HandledarkMode,
+  isDarkMode,
+  decreaseFontSize,
+  increaseFontSize,
+  logOut,
 }) {
+  const [formData, setFormData] = useState({
+    NameKnowledge: '',
+    Introduction: '',
+    Category: '',
+    Contributor: '',
+    TitleMedia: '',
+    Media: '',
+    Description: ''
+  });
 
-    const [formData, setFormData] = useState({
-        NameKnowledge: '',
-        Introduction: '',
-        Category: '',
-        Contributor: '',
-        TitleMedia: '',
-        Media: '',
-        Description: ''
-      });
-    
-      const handleChange = (e) => {
-        const { id, value } = e.target;
-        setFormData({
-          ...formData,
-          [id]: value
-        });
-      };
-    
-      const handleSubmit = (e) => {
-        e.preventDefault();
-        const { NameKnowledge, Introduction, Category, Contributor, TitleMedia, Media, Description } = formData;
-    
-        if (!NameKnowledge || !Introduction || !Category || !Contributor || !TitleMedia || !Media || !Description) {
-          toast.error("Todos os campos são obrigatórios!");
-          return;
-        }
-    
-        // Lógica para enviar os dados do formulário para o servidor
-    
-        toast.success("Cadastro realizado com sucesso!");
-      };
-    
-    return (
-        <ContainerWithSidebar
-            increaseFontSize={increaseFontSize}
-            decreaseFontSize={decreaseFontSize}
-            HandledarkMode={HandledarkMode}
-            isDarkMode={isDarkMode}
-            logOut={logOut}
-        >
-            <PageContainer>
-                <PageHeaderContainer icon={<MdOutlineAddCircle style={{ width: 34, marginRight: 5 }} />} title={`Cadastrar Conhecimento`} />
-                <PageContentContainer>
+  const [thumbnail, setThumbnail] = useState(null);
+  const [validated, setValidated] = useState(false);
 
-                <Form onSubmit={handleSubmit}>
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({
+      ...formData,
+      [id]: value
+    });
+
+    if (id === "Media") {
+      setThumbnail(getYouTubeThumbnail(value));
+    }
+  };
+
+  const handleSubmit = (e) => {
+    const form = e.currentTarget;
+    e.preventDefault();
+    if (form.checkValidity() === false) {
+      e.stopPropagation();
+      setValidated(true);
+      return;
+    }
+
+    setValidated(true);
+    const { NameKnowledge, Introduction, Category, Contributor, TitleMedia, Media, Description } = formData;
+
+    if (!NameKnowledge || !Introduction || !Category || !Contributor || !TitleMedia || !Media || !Description) {
+      toast.error("Todos os campos são obrigatórios!");
+      return;
+    }
+
+    toast.success("Cadastro realizado com sucesso!");
+  };
+
+  const getYouTubeThumbnail = (url) => {
+    const videoIdMatch = url.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+    return videoIdMatch ? `https://img.youtube.com/vi/${videoIdMatch[1]}/0.jpg` : null;
+  };
+
+  return (
+    <ContainerWithSidebar
+      increaseFontSize={increaseFontSize}
+      decreaseFontSize={decreaseFontSize}
+      HandledarkMode={HandledarkMode}
+      isDarkMode={isDarkMode}
+      logOut={logOut}
+    >
+      <PageContainer>
+        <PageHeaderContainer icon={<MdOutlineAddCircle style={{ width: 34, marginRight: 5 }} />} title={`Editar Conhecimento`} />
+        <PageContentContainer>
+
+          <Form noValidate validated={validated} onSubmit={handleSubmit}>
             <Row>
               <Col md={6}>
                 <Form.Group controlId="NameKnowledge" className="mb-3">
@@ -83,6 +92,9 @@ function ChangeKnowledge({
                     onChange={handleChange}
                     required
                   />
+                  <Form.Control.Feedback type="invalid">
+                    Campo obrigatório.
+                  </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group controlId="Introduction" className="mb-3">
@@ -94,6 +106,9 @@ function ChangeKnowledge({
                     onChange={handleChange}
                     required
                   />
+                  <Form.Control.Feedback type="invalid">
+                    Campo obrigatório.
+                  </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group controlId="Category" className="mb-3">
@@ -108,8 +123,11 @@ function ChangeKnowledge({
                     <option>Categoria 1</option>
                     <option>Categoria 2</option>
                     <option>Categoria 3</option>
-                    {/* Adicione mais opções conforme necessário */}
+                  
                   </Form.Control>
+                  <Form.Control.Feedback type="invalid">
+                    Campo obrigatório.
+                  </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group controlId="Contributor" className="mb-3">
@@ -121,6 +139,9 @@ function ChangeKnowledge({
                     onChange={handleChange}
                     required
                   />
+                  <Form.Control.Feedback type="invalid">
+                    Campo obrigatório.
+                  </Form.Control.Feedback>
                 </Form.Group>
               </Col>
 
@@ -134,6 +155,9 @@ function ChangeKnowledge({
                     onChange={handleChange}
                     required
                   />
+                  <Form.Control.Feedback type="invalid">
+                    Campo obrigatório.
+                  </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group controlId="Media" className="mb-3">
@@ -145,7 +169,17 @@ function ChangeKnowledge({
                     onChange={handleChange}
                     required
                   />
+                  <Form.Control.Feedback type="invalid">
+                    Campo obrigatório.
+                  </Form.Control.Feedback>
                 </Form.Group>
+
+                {thumbnail && (
+                  <div className="mb-3">
+                    
+                    <Image src={thumbnail} alt="Thumbnail" fluid style={{ maxWidth: '170px', maxHeight: '170px' }} />
+                  </div>
+                )}
 
                 <Form.Group controlId="Description" className="mb-3">
                   <Form.Label>Descrição</Form.Label>
@@ -157,6 +191,9 @@ function ChangeKnowledge({
                     onChange={handleChange}
                     required
                   />
+                  <Form.Control.Feedback type="invalid">
+                    Campo obrigatório.
+                  </Form.Control.Feedback>
                 </Form.Group>
               </Col>
             </Row>
@@ -177,14 +214,14 @@ function ChangeKnowledge({
                 Cadastrar
                 <IoIosArrowForward style={{ marginLeft: 5, width: 12 }} />
               </ButtonConfirmRegistration>
-            </div> 
+            </div>
 
           </Form>
-
-                </PageContentContainer>
-            </PageContainer>
-        </ContainerWithSidebar>
-    );
+          <ToastContainer />
+        </PageContentContainer>
+      </PageContainer>
+    </ContainerWithSidebar>
+  );
 }
 
 export default ChangeKnowledge;
