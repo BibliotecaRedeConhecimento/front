@@ -1,77 +1,58 @@
-import { React, useState } from "react";
-
+import React, { useState } from 'react';
 import PageContainer from "../../components/PageContainer";
 import PageHeaderContainer from "../../components/PageHeaderContainer";
 import PageContentContainer from "../../components/PageContentContainer";
-import { ContainerWithSidebar } from "../../components/ContainerWithSidebar";
-
-import { IoIosArrowBack } from "react-icons/io";
-import { IoIosArrowForward } from "react-icons/io";
+import { Form, Row, Col } from "react-bootstrap";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import ButtonModal from "../../components/ButtonModal";
+import ButtonComponent from '../../components/ButtonBack';
 import { MdOutlineAddCircle } from "react-icons/md";
+import { IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowBack } from "react-icons/io";
+import ButtonConfirmRegistration from '../../components/ButtonConfirmRegistration';
+import { ContainerWithSidebar } from '../../components/ContainerWithSidebar';
 
-import { Form, Row, Col } from "react-bootstrap"
+const RegisterKnowledge = () => {
+  const [formData, setFormData] = useState({
+    NameKnowledge: '',
+    Introduction: '',
+    Category: '',
+    Contributor: '',
+    TitleMedia: '',
+    Media: '',
+    Description: ''
+  });
 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+  const [validated, setValidated] = useState(false);
 
-import ButtonComponent from "../../components/ButtonBack";
-import ButtonConfirmRegistration from "../../components/ButtonConfirmRegistration";
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({
+      ...formData,
+      [id]: value
+    });
+  };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.stopPropagation();
+      toast.error("Todos os campos são obrigatórios!");
+    } else {
+      toast.success("Cadastro realizado com sucesso!");
+    }
+    setValidated(true);
+  };
 
-
-function RegisterKnowledge({
-    HandledarkMode,
-    isDarkMode,
-    decreaseFontSize,
-    increaseFontSize,
-    logOut,
-}) {
-
-    const [formData, setFormData] = useState({
-        NameKnowledge: '',
-        Introduction: '',
-        Category: '',
-        Contributor: '',
-        TitleMedia: '',
-        Media: '',
-        Description: ''
-      });
-    
-      const handleChange = (e) => {
-        const { id, value } = e.target;
-        setFormData({
-          ...formData,
-          [id]: value
-        });
-      };
-    
-      const handleSubmit = (e) => {
-        e.preventDefault();
-        const { NameKnowledge, Introduction, Category, Contributor, TitleMedia, Media, Description } = formData;
-    
-        if (!NameKnowledge || !Introduction || !Category || !Contributor || !TitleMedia || !Media || !Description) {
-          toast.error("Todos os campos são obrigatórios!");
-          return;
-        }
-    
-        // Lógica para enviar os dados do formulário para o servidor
-    
-        toast.success("Cadastro realizado com sucesso!");
-      };
-    
-    return (
-        <ContainerWithSidebar
-            increaseFontSize={increaseFontSize}
-            decreaseFontSize={decreaseFontSize}
-            HandledarkMode={HandledarkMode}
-            isDarkMode={isDarkMode}
-            logOut={logOut}
-        >
-            <PageContainer>
-                <PageHeaderContainer icon={<MdOutlineAddCircle style={{ width: 34, marginRight: 5 }} />} title={`Cadastrar Conhecimento`} />
-                <PageContentContainer>
-
-                <Form onSubmit={handleSubmit}>
+  return (
+    <ContainerWithSidebar>
+    <div>
+      <PageContainer>
+      <PageHeaderContainer icon={<MdOutlineAddCircle style={{width: 34, marginRight: 5}} />} title='Cadastrar Conhecimento' />
+        <PageContentContainer>
+          <Form noValidate validated={validated} onSubmit={handleSubmit}>
             <Row>
               <Col md={6}>
                 <Form.Group controlId="NameKnowledge" className="mb-3">
@@ -83,6 +64,9 @@ function RegisterKnowledge({
                     onChange={handleChange}
                     required
                   />
+                  <Form.Control.Feedback type="invalid">
+                    Campo obrigatório.
+                  </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group controlId="Introduction" className="mb-3">
@@ -94,6 +78,9 @@ function RegisterKnowledge({
                     onChange={handleChange}
                     required
                   />
+                  <Form.Control.Feedback type="invalid">
+                    Campo obrigatório.
+                  </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group controlId="Category" className="mb-3">
@@ -108,8 +95,10 @@ function RegisterKnowledge({
                     <option>Categoria 1</option>
                     <option>Categoria 2</option>
                     <option>Categoria 3</option>
-                    {/* Adicione mais opções conforme necessário */}
                   </Form.Control>
+                  <Form.Control.Feedback type="invalid">
+                    Campo obrigatório.
+                  </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group controlId="Contributor" className="mb-3">
@@ -121,6 +110,9 @@ function RegisterKnowledge({
                     onChange={handleChange}
                     required
                   />
+                  <Form.Control.Feedback type="invalid">
+                    Campo obrigatório.
+                  </Form.Control.Feedback>
                 </Form.Group>
               </Col>
 
@@ -130,21 +122,29 @@ function RegisterKnowledge({
                   <Form.Control
                     type="text"
                     placeholder="Título da foto ou vídeo..."
-                    value={formData.TitleMedia}
-                    onChange={handleChange}
-                    required
-                  />
-                </Form.Group>
-
-                <Form.Group controlId="Media" className="mb-3">
-                  <Form.Label>URL da Foto/Vídeo</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Cole a URL da foto ou vídeo aqui..."
                     value={formData.Media}
                     onChange={handleChange}
                     required
                   />
+                  <Form.Control.Feedback type="invalid">
+                    Campo obrigatório.
+                  </Form.Control.Feedback>
+                </Form.Group>
+
+                <Form.Group controlId="Media" className="mb-3">
+                  <Form.Label>URL do vídeo</Form.Label>
+                  <Form.Control 
+                    placeholder="Cole a URL aqui..."
+                    type="text" 
+                    value={formData.TitleMedia}
+                    onChange={handleChange}
+                    required
+                  />
+
+                  
+                  <Form.Control.Feedback type="invalid">
+                    Campo obrigatório.
+                  </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group controlId="Description" className="mb-3">
@@ -157,13 +157,16 @@ function RegisterKnowledge({
                     onChange={handleChange}
                     required
                   />
+                  <Form.Control.Feedback type="invalid">
+                    Campo obrigatório.
+                  </Form.Control.Feedback>
                 </Form.Group>
               </Col>
             </Row>
             <div className="d-flex justify-content-between mt-3">
               <ButtonComponent
                 size="10rem"
-                bgColor="#585859"
+                bgColor="var(--cinza-primario)"
                 textColor="white"
                 alternativeText="Voltar">
                 <IoIosArrowBack style={{ marginRight: 5, width: 12 }} />
@@ -171,20 +174,22 @@ function RegisterKnowledge({
               </ButtonComponent>
               <ButtonConfirmRegistration
                 size="10rem"
-                bgColor="#013d32"
+                bgColor="var(--verde-primario)"
                 textColor="white"
-                alternativeText="Cadastrar">
+                alternativeText="Cadastrar"
+                onClick={handleSubmit}>
                 Cadastrar
                 <IoIosArrowForward style={{ marginLeft: 5, width: 12 }} />
               </ButtonConfirmRegistration>
             </div> 
 
           </Form>
-
-                </PageContentContainer>
-            </PageContainer>
-        </ContainerWithSidebar>
-    );
-}
+        </PageContentContainer>
+      </PageContainer>
+      <ToastContainer />
+    </div>
+    </ContainerWithSidebar>
+  );
+};
 
 export default RegisterKnowledge;

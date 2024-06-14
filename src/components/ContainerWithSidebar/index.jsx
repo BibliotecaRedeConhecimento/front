@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import SideBarMenuBs from "../SidebarMobile";
+import SidebarMobile from "../SideBarMobile";
 import SidebarComponent from "../SideBar";
 import { useNavigate } from "react-router-dom";
 
