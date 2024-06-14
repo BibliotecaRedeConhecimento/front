@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import PageContainer from "../../components/PageContainer";
 import PageHeaderContainer from "../../components/PageHeaderContainer";
@@ -18,6 +18,7 @@ import ButtonComponent from "../../components/ButtonBack";
 import ButtonConfirmRegistration from "../../components/ButtonConfirmRegistration";
 
 import { addCategory } from "../../servicesBack/CategoryServices";
+import { getAllDomains } from "../../servicesBack/DomainServices";
 
 const RegisterCategory = ({
   HandledarkMode,
@@ -27,12 +28,17 @@ const RegisterCategory = ({
   logOut,
 }) => {
   const [showModal, setShowModal] = useState(false);
-  const [formData, setFormData] = useState({ categoryName: "" });
+  const [formData, setFormData] = useState({ categoryName: "", domainId: 0 });
   const [validated, setValidated] = useState(false);
+  const [domains, setDomains] = useState([])
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    setFormData({ ...formData, [id]: value });
+    if (id === "domainId") {
+      setFormData({ ...formData, [id]: Number(value) });
+    } else {
+      setFormData({ ...formData, [id]: value });
+    }
   };
 
   const handleOpenModal = () => {
@@ -54,7 +60,12 @@ const RegisterCategory = ({
     event.preventDefault();
     const response = await addCategory({
       name: formData.categoryName,
+      domains: [{
+        id: formData.domainId
+      }]
     });
+  
+
     if (response) {
       toast.success("Categoria cadastrada com sucesso!");
       setShowModal(false);
@@ -62,6 +73,15 @@ const RegisterCategory = ({
       toast.error("Erro ao cadastrar a categoria.");
     }
   };
+
+  const fetchDomains = async () => {
+    const resp = await getAllDomains()
+    setDomains(resp.data.content)
+  }
+
+  useEffect(() => {
+    fetchDomains()
+  }, [])
 
   return (
     <ContainerWithSidebar
@@ -94,6 +114,24 @@ const RegisterCategory = ({
                     Campo obrigatório.
                   </Form.Control.Feedback>
                 </Form.Group>
+                <Form.Group controlId="domainId" className="mb-3">
+                  <Form.Label>Selecione um Domínio</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={formData.domainId}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="">Selecione um Domínio</option>
+                    {domains.map((domain) => (
+                      <option key={domain.id} value={domain.id}>{domain.name}</option>
+                    ))}
+                  </Form.Control>
+                  <Form.Control.Feedback type="invalid">
+                    Campo obrigatório.
+                  </Form.Control.Feedback>
+                </Form.Group>
+
               </Col>
             </Row>
             <div className="d-flex justify-content-between mt-3">

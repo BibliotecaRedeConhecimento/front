@@ -10,13 +10,26 @@ import { Container } from "react-bootstrap";
 
 import { useNavigate } from "react-router-dom";
 import ButtonInative from "../ButtonInative/index.jsx";
+import { getAllCategories } from "../../servicesBack/CategoryServices.js";
+import { useEffect, useState } from "react";
 
-function TableCategory({category}) {
+function TableCategory() {
  
 const navigate = useNavigate()
 const navigateTo = (path) => {
   navigate(path);
  };
+ const [categoryData, setCategoryData] = useState([]);
+
+  const fetchCategories = async () => {
+    const response = await getAllCategories();
+    setCategoryData(response.data.content)
+    console.log(response.data.content)
+  };
+
+  useEffect(() => {
+    fetchCategories()
+  }, [])
 
 
   return (
@@ -46,10 +59,12 @@ const navigateTo = (path) => {
             </tr>
           </thead>
           <tbody>
-            {Array.isArray(category) && category.map((item) => (
+            {Array.isArray(categoryData) && categoryData.map((item) => (
             <tr key={item.id}>
               <td>{item.name}</td>
-              <td>{item.domain}</td>
+              <td>{Array.isArray(item.domains) && item.domains.map((domain) => (
+                <span key={domain.id}>{domain.name}</span>
+              ))}</td>
               <td className="action-column">
                 <button onClick={() => navigate(`changeCategory/` + item.id)}>
                 <CiEdit />

@@ -7,22 +7,36 @@ import { BsEye } from "react-icons/bs";
 import { TableStyle } from "./styles.jsx";
 import PaginationComponent from "../TablePagination/index.jsx";
 import SearchComponentCategory from "../SearchBar/index.jsx";
-import {  Container,} from "react-bootstrap";
+import { Container, } from "react-bootstrap";
 import ButtonInative from "../ButtonInative/index.jsx";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getAllKnowledges } from "../../servicesBack/KnowledgeServices.js";
 
-function TableKnowledge({ knowledge }) {
+function TableKnowledge() {
 
   const navigate = useNavigate()
-const navigateTo = (path) => {
-  navigate(path);
- };
+  const navigateTo = (path) => {
+    navigate(path);
+  };
+
+  const [knowledgeData, setKnowledgeData] = useState([])
+
+  const fetchKnowledges = async () => {
+    const response = await getAllKnowledges()
+    setKnowledgeData(response.data.content)
+    console.log(response.data.content)
+  }
+
+  useEffect(() => {
+    fetchKnowledges()
+  }, [])
 
   return (
     <>
       <Container fluid>
-            <SearchComponentCategory />
-            <div className="d-flex justify-content-end mb-4">
+        <SearchComponentCategory />
+        <div className="d-flex justify-content-end mb-4">
           <ButtonInative
             size="10rem"
             bgColor="var(--verde-primario3)"
@@ -49,13 +63,19 @@ const navigateTo = (path) => {
               </tr>
             </thead>
             <tbody>
-              {Array.isArray(knowledge) &&
-                knowledge.map((item) => (
+              {Array.isArray(knowledgeData) &&
+                knowledgeData.map((item) => (
                   <tr key={item.id}>
                     <td>{item.title}</td>
+                    <td>{Array.isArray(item.categories) && item.categories.map((category) => (
+                      Array.isArray(category.domains) && category.domains.map((domain) => (
+                        <span key={domain.id}>{domain.name}</span>
+                      ))
+                    ))}</td>
+                    <td>{Array.isArray(item.categories) && item.categories.map((category) => (
+                      <span key={category.id}>{category.name}</span>
+                    ))}</td>
                     <td>{item.text}</td>
-                    <td>{item.category}</td>
-                    <td>{item.domain}</td>
                     <td className="action-column">
                       <BsEye />
                     </td>
@@ -67,6 +87,7 @@ const navigateTo = (path) => {
                     </td>
                   </tr>
                 ))}
+
             </tbody>
           </Table>
         </div>

@@ -21,18 +21,6 @@ function SearchKnowledge({
   logOut,
 }) {
 
-    const [knowledgeData, setKnowledgeData] = useState([])
-
-    const fetchKnowledges = async() => {
-    const response = await getAllKnowledges()
-    setKnowledgeData(response.data.content)
-    console.log(response.data.content)
-    }
-    
-    useEffect(() => {
-      fetchKnowledges()
-    }, [])
-
   return (
     <ContainerWithSidebar
       increaseFontSize={increaseFontSize}
@@ -45,7 +33,7 @@ function SearchKnowledge({
         <PageHeaderContainer icon={<TfiMenuAlt style={{width: 34, marginRight: 5}} />} title={`Buscar Conhecimento`} />
         <PageContentContainer>
 
-         <TableKnowledge knowledge={knowledgeData}/>
+         <TableKnowledge />
 
          <div style={{marginTop: 20}}>
           <ButtonComponent
