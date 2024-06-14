@@ -37,7 +37,7 @@ export const ContainerWithSidebar = ({
         {windowSize < 992 ? (
           <Row>
             <Col className="px-0 col">
-              <SideBarMenuBs
+              <SidebarMobile
                 navigate={navigate}
                 HandledarkMode={HandledarkMode}
                 isDarkMode={isDarkMode}

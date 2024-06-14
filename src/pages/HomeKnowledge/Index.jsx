@@ -36,7 +36,7 @@ function HomeKnowledge({
     >
       <PageContainer>
         <PageHeaderContainer title={`Menu de Conhecimento`} />
-        <PageContentContainer>
+        <PageContentContainer width="100%" height="88vh" flexDirection= 'column' justifyContent='center' alignItems='center' display='flex' >
 
           <ButtonRoutes buttonText="Cadastrar Conhecimento" onClick={() => navigateTo("/cadastrarConhecimento")} />
           <ButtonRoutes buttonText="Buscar Conhecimento" onClick={() => navigateTo("/buscarConhecimento")} />
@@ -44,7 +44,7 @@ function HomeKnowledge({
           <ButtonComponent
 
             size="10rem"
-            bgColor="#585859"
+            bgColor="var(--cinza-primario)"
             textColor="white"
             alternativeText="Voltar"
           >

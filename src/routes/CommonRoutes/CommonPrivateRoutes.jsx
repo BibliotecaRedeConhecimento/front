@@ -126,7 +126,7 @@ export const CommonPrivateRoutes = ({
         }
       />
       <Route
-        path="/buscarCategoria/alterarCategoria/:id"
+        path="/buscarCategoria/ChangeCategory/:id"
         element={
           <ChangeCategory
             increaseFontSize={increaseFontSize}
@@ -174,7 +174,7 @@ export const CommonPrivateRoutes = ({
         }
       />
       <Route
-        path="/buscarDominio/alterarDominio/:id"
+        path="/buscarDominio/ChangeDomain/:id"
         element={
           <ChangeDomain
             increaseFontSize={increaseFontSize}
@@ -222,7 +222,7 @@ export const CommonPrivateRoutes = ({
         }
       />
       <Route
-        path="/buscarConhecimento/alterarConhecimento/:id"
+        path="/buscarConhecimento/ChangeKnowledge/:id"
         element={
           <ChangeKnowledge
             increaseFontSize={increaseFontSize}
@@ -234,7 +234,7 @@ export const CommonPrivateRoutes = ({
         }
       />
       <Route
-        path="/exibirConhecimento:/id"
+        path="/VieKnowledge:/id"
         element={
           <ViewKnowledge
             increaseFontSize={increaseFontSize}

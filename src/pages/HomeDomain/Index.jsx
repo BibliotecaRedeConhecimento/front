@@ -36,7 +36,7 @@ function HomeDomain({
     >
       <PageContainer>
         <PageHeaderContainer title={`Menu de Domínio`} />
-        <PageContentContainer>
+        <PageContentContainer width="100%" height="88vh" flexDirection= 'column' justifyContent='center' alignItems='center' display='flex' >
 
           <ButtonRoutes buttonText="Cadastrar Domínio" onClick={() => navigateTo("/cadastrarDominio")} />
           <ButtonRoutes buttonText="Buscar Domínio" onClick={() => navigateTo("/buscarDominio")} />
@@ -44,7 +44,7 @@ function HomeDomain({
           <ButtonComponent
 
               size="10rem"
-              bgColor="#585859"
+              bgColor="var(--cinza-primario)"
               textColor="white"
               alternativeText="Voltar"
             >

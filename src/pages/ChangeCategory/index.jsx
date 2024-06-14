@@ -11,13 +11,16 @@ import { MdOutlineAddCircle } from "react-icons/md";
 
 import { Form } from "react-bootstrap"
 
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import ModalComponent from "../../components/ModalComponent";
-
+import { IoIosArrowBack } from "react-icons/io";
 
 import { getCategoryById, updateCategory } from "../../servicesBack/CategoryServices";
 import ButtonModal from "../../components/ButtonModal";
+import ButtonComponent from "../../components/ButtonBack";
+
 
 
 function ChangeCategory({
@@ -80,7 +83,25 @@ function ChangeCategory({
 
             <ButtonModal buttonText="Confirmar Cadastro" onClick={handleOpenModal}/>
 
-            <ModalComponent bodyContent={'Deseja cadastrar a Categoria?'} show={showModal} handleClose={handleCloseModal}  confirm={handleEdit}/>   
+            <ButtonComponent
+              size="10rem"
+              bgColor="var(--cinza-primario)"
+              textColor="white"
+              alternativeText="Voltar"
+            >
+              <IoIosArrowBack style={{ marginRight: 5, width: 12 }} />
+              Voltar
+            </ButtonComponent>          
+
+            
+
+           
+
+            <ModalComponent 
+            bodyContent={'Deseja alterar a categoria?'} 
+            show={showModal} handleClose={handleCloseModal}  
+            confirm={handleEdit}
+            confirmButton = 'Alterar'/>   
          
 
         </PageContentContainer>

@@ -14,6 +14,7 @@ export const ButtonModalStyle = styled(Button)`
     margin-bottom: 1rem;
     justify-content: flex-end;
     &:hover {
-        background-color: var( --verde-terceario);
+        background-color: #0F6E58;
+    }
     }
 `;

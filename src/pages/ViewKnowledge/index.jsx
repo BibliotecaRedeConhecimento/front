@@ -51,7 +51,7 @@ function ViewKnowledge({
           <div style={{marginTop: 20}}>
             <ButtonComponent
               size="10rem"
-              bgColor="#585859"
+              bgColor="var(--cinza-primario)"
               textColor="white"
               alternativeText="Voltar"
             >

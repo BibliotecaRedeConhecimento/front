@@ -5,7 +5,7 @@ import { ButtonModalStyle } from '../ButtonModal/styles';
 
 
 
-function ModalComponent({show, handleClose, bodyContent, confirm}) {
+function ModalComponent({show, handleClose, bodyContent, confirm, confirmButton = 'Cadastrar'}) {
  
  
  
@@ -31,7 +31,7 @@ function ModalComponent({show, handleClose, bodyContent, confirm}) {
         </Row>
         <Row>
       <Button  onClick={confirm} style={{backgroundColor: `var(--verde-primario)`}}>
-          Cadastrar </Button>
+          {confirmButton} </Button>
         </Row>
       </Modal.Footer>
     </Modal>

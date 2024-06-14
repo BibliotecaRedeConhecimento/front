@@ -1,10 +1,17 @@
 import styled from "styled-components";
 
 export const PageContentContainerStyle = styled.div`
-    p{
-        text-align: left;
-    }
+    // p{
+    //     text-align: left;
+    // }
 
-    width: 100%;
-    padding: 1.5rem;
+    //Siga esse estilo para passar props pra uma propriedade de estilo, deixe como undefined se você não quer passar nada.
+
+    width: ${props => props.width || '100%'};
+    height: ${props => props.height || 'undefined'};
+    padding: ${props => props.padding || '1.5rem'};
+    display: ${props => props.display || 'flex-column'};
+    flex-direction: ${props => props.flexDirection || 'undefined'};
+    justify-content: ${props => props.justifyContent || 'undefined'};
+    align-items: ${props => props.alignItems || 'undefined'};
 `;

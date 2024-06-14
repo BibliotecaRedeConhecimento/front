@@ -1,19 +1,18 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { BsArrowBarRight, BsArrowBarLeft } from "react-icons/bs";
 import { CgHome } from "react-icons/cg";
 import { MdOutlineExitToApp } from "react-icons/md";
 import { MdContrast, MdOutlineTextDecrease, MdOutlineTextIncrease } from "react-icons/md";
-import { BiUserCircle } from "react-icons/bi";
+import { BiUserCircle, BiCategoryAlt } from "react-icons/bi";
+import { IoLibraryOutline } from "react-icons/io5";
+import { SlBookOpen } from "react-icons/sl";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { SidebarStyle } from "./style.js";
 import { SideBarItem } from "../SideBarItem/index.jsx";
 import { AuthenticationContext } from "../../services/context/AuthContext";
 import { SystemInfo } from "../../utils/SystemInfo.jsx";
-import { BiCategoryAlt } from "react-icons/bi";
-import { IoLibraryOutline } from "react-icons/io5";
-import { SlBookOpen } from "react-icons/sl";
 
 function Sidebar({
   logOut,
@@ -23,25 +22,22 @@ function Sidebar({
   decreaseFontSize,
   increaseFontSize,
 }) {
-  const [sideBarCollapse, setSideBarCollapse] = useState(true); // Estado para controlar se a barra lateral está recolhida ou expandida
-  const [items, setItems] = useState([]); // Estado para armazenar os itens da barra lateral dinamicamente
-  const navigate = useNavigate(); // Hook do React Router para navegação programática
-  const location = useLocation(); // Hook do React Router para obter a localização atual da rota
-  const { user } = useContext(AuthenticationContext); // Contexto de autenticação para obter informações do usuário logado
+  const [sideBarCollapse, setSideBarCollapse] = useState(true);
+  const [items, setItems] = useState([]);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { user } = useContext(AuthenticationContext);
 
-  // Função para navegar para uma rota específica e recolher a barra lateral
-  function navigateTo(route) {
-    setSideBarCollapse(true); // Recolhe a barra lateral ao navegar
-    window.scrollTo(0, 0); // Faz scroll para o topo da página
-    navigate(route); // Navega para a rota especificada
-  }
+  const navigateTo = useCallback((route) => {
+    setSideBarCollapse(true);
+    window.scrollTo(0, 0);
+    navigate(route);
+  }, [navigate]);
 
-  // Função para alternar entre recolher e expandir a barra lateral
   const handleSidebarCollapse = () => {
-    setSideBarCollapse(!sideBarCollapse); // Alterna o estado de recolher/expandir da barra lateral
+    setSideBarCollapse(!sideBarCollapse);
   };
 
-  // Função para exibir o nome do papel do usuário com base no seu papel
   const showRoleName = (role) => {
     switch (role) {
       case "COLLABORATOR":
@@ -57,9 +53,7 @@ function Sidebar({
     }
   };
 
-  // Componente para exibir o logo do sistema
   const SystemLogo = () => {
-  
     return (
       <div className="logo-area">
         {isDarkMode ? (
@@ -86,7 +80,6 @@ function Sidebar({
     );
   };
 
-  // Componente para exibir as informações do usuário na barra lateral
   const UserInfo = () => {
     return (
       <div className="user-container">
@@ -129,9 +122,7 @@ function Sidebar({
     );
   };
 
-  // Efeito para atualizar dinamicamente os itens da barra lateral com base na rota atual
   useEffect(() => {
-    // Itens comuns que estão sempre presentes na barra lateral
     const commonItems = [
       {
         index: 0,
@@ -175,8 +166,7 @@ function Sidebar({
       },
     ];
 
-    // Verifica se a rota atual é '/about' para adicionar itens extras na barra lateral
-    if (location.pathname === '/biblioteca' || location.pathname === '/menuDominio' || location.pathname === '/menuCategoria' || location.pathname === '/menuConhecimento' || location.pathname === '/cadastrarCategoria' || location.pathname === '/buscarCategoria' || location.pathname === '/categoriaInativa' || location.pathname === '/buscarCategoria/alterarCategoria/:id' || location.pathname === '/cadastrarDominio' || location.pathname === '/buscarDominio' || location.pathname === '/dominioInativo' || location.pathname === '/buscarDominio/alterarDominio/:id' || location.pathname === '/cadastrarConhecimento' || location.pathname === '/buscarConhecimento' || location.pathname === '/conhecimentoInativo' || location.pathname === '/buscarConhecimento/alterarConhecimento/:id') {
+    if (['/biblioteca', '/menuDominio', '/menuCategoria', '/menuConhecimento', '/cadastrarCategoria', '/buscarCategoria', '/categoriaInativa', '/buscarCategoria/alterarCategoria/:id', '/cadastrarDominio', '/buscarDominio', '/dominioInativo', '/buscarDominio/alterarDominio/:id', '/cadastrarConhecimento', '/buscarConhecimento', '/conhecimentoInativo', '/buscarConhecimento/alterarConhecimento/:id'].includes(location.pathname)) {
       setItems([
         ...commonItems,
         {
@@ -204,20 +194,21 @@ function Sidebar({
           icon: <SlBookOpen title="Conhecimento" size={24} />,
         },
       ]);
-    } else {
-      setItems(commonItems); // Define os itens comuns se não estiver na rota '/about'
-    }
-  }, [location, sideBarCollapse, HandledarkMode, increaseFontSize, decreaseFontSize, navigateTo]);
 
-  // Renderiza o componente da barra lateral com base no estado de recolhimento/expandir
+      SystemInfo.abbreviation = "SB";
+    } else {
+      setItems(commonItems);
+      SystemInfo.abbreviation = "SGC";
+    }
+  }, [location.pathname, sideBarCollapse, HandledarkMode, increaseFontSize, decreaseFontSize, navigateTo]);
+
   return (
     <Col className={windowSize >= 992 ? "px-0 col-1" : "px-0 col-0"}>
       <SidebarStyle collapse={sideBarCollapse}>
         <Row>
           <Col className="column-container">
-            <SystemLogo /> {/* Renderiza o logo do sistema */}
+            <SystemLogo />
             <div className="sidebar-nav">
-              {/* Mapeia e renderiza cada item na barra lateral */}
               {items.map((item, index) => (
                 <SideBarItem
                   key={index}
@@ -231,9 +222,8 @@ function Sidebar({
                 />
               ))}
             </div>
-            <UserInfo /> {/* Renderiza as informações do usuário na barra lateral */}
+            <UserInfo />
             <div className="sidebar-nav">
-              {/* Renderiza o item de sair da aplicação na barra lateral */}
               <SideBarItem
                 index={8}
                 smallText={"Sair"}

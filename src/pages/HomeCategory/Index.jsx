@@ -36,14 +36,14 @@ function HomeCategory({
     >
       <PageContainer>
         <PageHeaderContainer title={`Menu de Categoria`} />
-        <PageContentContainer>
+        <PageContentContainer width="100%" height="88vh" flexDirection= 'column' justifyContent='center' alignItems='center' display='flex' >
 
           <ButtonRoutes buttonText="Cadastrar Categoria" onClick={() => navigateTo("/cadastrarCategoria")} />
           <ButtonRoutes buttonText="Buscar Categoria" onClick={() => navigateTo("/buscarCategoria")} />
 
           <ButtonComponent
               size="10rem"
-              bgColor="#585859"
+              bgColor="var(--cinza-primario)"
               textColor="white"
               alternativeText="Voltar"
             >

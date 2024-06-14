@@ -16,6 +16,7 @@ export const ButtonRoutesStyle = styled(Button)`
 
         &:hover{
             filter: brightness(0.8);
-            background-color: #002D29;
+            background-color: #0F6E58;
         }
 `;
+
