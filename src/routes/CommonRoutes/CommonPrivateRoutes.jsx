@@ -113,7 +113,7 @@ export const CommonPrivateRoutes = ({
           />
         }
       />
-       <Route
+      <Route
         path="/categoriaInativa"
         element={
           <InativeCategory
@@ -161,7 +161,7 @@ export const CommonPrivateRoutes = ({
           />
         }
       />
-       <Route
+      <Route
         path="/dominioInativo"
         element={
           <InativeDomain
@@ -196,7 +196,7 @@ export const CommonPrivateRoutes = ({
             logOut={handleOpenModal}
           />
         }
-      /> 
+      />
       <Route
         path="/buscarConhecimento"
         element={
@@ -208,8 +208,8 @@ export const CommonPrivateRoutes = ({
             logOut={handleOpenModal}
           />
         }
-      /> 
-        <Route
+      />
+      <Route
         path="/conhecimentoInativo"
         element={
           <InativeKnowledge
@@ -222,7 +222,7 @@ export const CommonPrivateRoutes = ({
         }
       />
       <Route
-        path="/buscarConhecimento/ChangeKnowledge/:id"
+        path="/buscarConhecimento/changeKnowledge/:id"
         element={
           <ChangeKnowledge
             increaseFontSize={increaseFontSize}
@@ -234,7 +234,7 @@ export const CommonPrivateRoutes = ({
         }
       />
       <Route
-        path="/VieKnowledge:/id"
+        path="/viewKnowledge/:id"
         element={
           <ViewKnowledge
             increaseFontSize={increaseFontSize}
@@ -246,6 +246,6 @@ export const CommonPrivateRoutes = ({
         }
       />
     </Routes>
-    
+
   )
 }

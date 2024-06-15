@@ -16,9 +16,8 @@ import { getAllKnowledges } from "../../servicesBack/KnowledgeServices.js";
 function TableKnowledge() {
 
   const navigate = useNavigate()
-  const navigateTo = (path) => {
-    navigate(path);
-  };
+
+
 
   const [knowledgeData, setKnowledgeData] = useState([])
 
@@ -64,20 +63,22 @@ function TableKnowledge() {
             </thead>
             <tbody>
               {Array.isArray(knowledgeData) &&
-                knowledgeData.map((item) => (
-                  <tr key={item.id}>
-                    <td>{item.title}</td>
-                    <td>{Array.isArray(item.categories) && item.categories.map((category) => (
+                knowledgeData.map((knowledge) => (
+                  <tr key={knowledge.id}>
+                    <td>{knowledge.title}</td>
+                    <td>{Array.isArray(knowledge.categories) && knowledge.categories.map((category) => (
                       Array.isArray(category.domains) && category.domains.map((domain) => (
                         <span key={domain.id}>{domain.name}</span>
                       ))
                     ))}</td>
-                    <td>{Array.isArray(item.categories) && item.categories.map((category) => (
+                    <td>{Array.isArray(knowledge.categories) && knowledge.categories.map((category) => (
                       <span key={category.id}>{category.name}</span>
                     ))}</td>
-                    <td>{item.text}</td>
+                    <td>{knowledge.text}</td>
                     <td className="action-column">
-                      <BsEye />
+                      <button onClick={() => navigate(`/viewKnowledge/${knowledge.id}`)}>
+                        <BsEye />
+                      </button>
                     </td>
                     <td className="action-column">
                       <CiEdit />

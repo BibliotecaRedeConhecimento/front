@@ -19,13 +19,15 @@ function ViewKnowledge({
   const { id } = useParams();
   const [knowledge, setKnowledge] = useState(null);
 
+  const fetchKnowledge = async () => {
+    const response = await getKnowledgeById(id);
+    setKnowledge(response.data);
+    console.log(response.data.title)
+    console.log(knowledge)
+  };
   useEffect(() => {
-    const fetchKnowledge = async () => {
-      const response = await getKnowledgeById(id);
-      setKnowledge(response.data);
-    };
     fetchKnowledge();
-  }, [id]);
+  }, []);
 
   if (!knowledge) return <div>Loading...</div>;
 
@@ -38,24 +40,21 @@ function ViewKnowledge({
       logOut={logOut}
     >
       <PageContainer>
-        <PageHeaderContainer icon={<IoIosArrowBack style={{width: 34, marginRight: 5}} />} title={`Conhecimento`} />
+        <PageHeaderContainer icon={<IoIosArrowBack style={{ width: 34, marginRight: 5 }} />} title={`Conhecimento`} />
         <PageContentContainer>
-          <h2>{knowledge.NameKnowledge}</h2>
-          <p><strong>Introdução:</strong> {knowledge.Introduction}</p>
-          <p><strong>Categoria:</strong> {knowledge.Category}</p>
-          <p><strong>Colaborador:</strong> {knowledge.Contributor}</p>
-          <p><strong>{knowledge.TitleMedia}</strong></p>
-          <p><strong>{knowledge.Media}</strong></p>
-          <p><strong>Descrição:</strong> {knowledge.Description}</p>
-          
-          <div style={{marginTop: 20}}>
+          <h1>{knowledge.title}</h1>
+          <p><strong>Introdução</strong></p>
+          <p>{knowledge.introduction}</p>
+          <p><strong>{knowledge.titleMedia}</strong></p>
+          <p>{knowledge.description}</p>
+          <div style={{ marginTop: 20 }}>
             <ButtonComponent
               size="10rem"
               bgColor="var(--cinza-primario)"
               textColor="white"
               alternativeText="Voltar"
             >
-              <IoIosArrowBack style={{marginRight: 5, width: 12}}/>
+              <IoIosArrowBack style={{ marginRight: 5, width: 12 }} />
               Voltar
             </ButtonComponent>
           </div>
