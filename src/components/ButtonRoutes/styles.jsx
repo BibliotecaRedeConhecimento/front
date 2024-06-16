@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 
 export const ButtonRoutesStyle = styled(Button)`
     background-color: var(--verde-primario) ;
-    color: var(--branco-primario);
+    color: var(--branco-secundario);
     
     border: none;
     border-radius: 4px;
@@ -16,7 +16,7 @@ export const ButtonRoutesStyle = styled(Button)`
 
         &:hover{
             filter: brightness(0.8);
-            background-color: #0F6E58;
+            background-color: var(--verde-primario4);
         }
 `;
 

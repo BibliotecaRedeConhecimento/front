@@ -4,7 +4,7 @@ export const PageContainerStyle = styled.div`
      
 
     width: 100%;    
-    height: 95vh;
+    height: 100vh;
     background-color: var(--branco);    
     border-radius: 1rem;
     margin-top: 1rem;

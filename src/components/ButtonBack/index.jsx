@@ -8,12 +8,11 @@ function ButtonComponent({ size, bgColor, textColor, action, alternativeText, ch
     window.history.back();
   };
   return (
-    <ButtonStyle size={size} bgColor={bgColor} textColor={textColor} >
+    <ButtonStyle size={size} bgColor='var(--cinza-secundario)' textColor={textColor} >
       <Button
         role="button"
         aria-label={alternativeText}
         title={alternativeText}
-        variant={bgColor}
         className="botao-default"
         style={{ maxWidth: "100%" }}
         onClick={handleButtonClick}
