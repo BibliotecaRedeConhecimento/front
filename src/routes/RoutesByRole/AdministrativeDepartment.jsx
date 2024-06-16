@@ -1,4 +1,7 @@
 import { Route, Routes } from "react-router-dom";
+import {CommonPrivateRoutes} from "../CommonRoutes/CommonPrivateRoutes";
+
+
 
 export const AdministrativeDepartmentRoutes = ({
   HandledarkMode,
@@ -8,23 +11,22 @@ export const AdministrativeDepartmentRoutes = ({
   handleOpenModal,
 }) => {
   return (
-    <Routes>
-      {/* Adicione Rotas Privadas para o AdministrativeDepartment Aqui*/}
-      {/* 
-      Exemplo:
-            <Route
-              path="/administrativedepartment"
+    <Routes >
+            <CommonPrivateRoutes path="/administrativedepartment"
+
               element={
+              
                 <AdministrativeDepartmentPage
                   increaseFontSize={increaseFontSize}
                   decreaseFontSize={decreaseFontSize}
                   HandledarkMode={HandledarkMode}
                   isDarkMode={isDarkMode}
                   logOut={handleOpenModal}
+
                 />
               }
             /> 
-      */}
+
     </Routes>
   );
 };

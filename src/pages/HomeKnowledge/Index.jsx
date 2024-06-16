@@ -1,4 +1,4 @@
-import { React } from "react";
+import {React, useContext} from "react";
 
 import PageContainer from "../../components/PageContainer";
 import PageHeaderContainer from "../../components/PageHeaderContainer";
@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 import { IoIosArrowBack } from "react-icons/io";
 import ButtonComponent from "../../components/ButtonBack";
+import {AuthenticationContext} from "../../services/context/AuthContext";
 
 function HomeKnowledge({
   HandledarkMode,
@@ -25,6 +26,7 @@ function HomeKnowledge({
     navigate(path);
   };
 
+  const {isManager } = useContext(AuthenticationContext)
 
   return (
     <ContainerWithSidebar
@@ -38,7 +40,10 @@ function HomeKnowledge({
         <PageHeaderContainer title={`Menu de Conhecimento`} />
         <PageContentContainer width="100%" height="88vh" flexDirection= 'column' justifyContent='center' alignItems='center' display='flex' >
 
-          <ButtonRoutes buttonText="Cadastrar Conhecimento" onClick={() => navigateTo("/cadastrarConhecimento")} />
+          { isManager() ?
+            <ButtonRoutes  buttonText="Cadastrar Conhecimento" onClick={() => navigateTo("/cadastrarConhecimento")} />
+              : null
+          }
           <ButtonRoutes buttonText="Buscar Conhecimento" onClick={() => navigateTo("/buscarConhecimento")} />
 
           <ButtonComponent

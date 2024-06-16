@@ -6,8 +6,11 @@ import { TableStyle } from "./styles.jsx";
 import PaginationComponent from "../TablePagination/index.jsx";
 import SearchComponentCategory from "../SearchBar/index.jsx";
 import { Container } from "react-bootstrap";
+import {useContext} from "react";
+import {AuthenticationContext} from "../../services/context/AuthContext";
 
 function TableInativeDomain() {
+  const {isManager} = useContext(AuthenticationContext)
 
   return (
     <>

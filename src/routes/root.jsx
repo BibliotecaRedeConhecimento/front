@@ -32,6 +32,7 @@ function Root({
     setShowModal(true);
   }
 
+
   useEffect(() => {
     function handleWindowResize() {
       setWindowSize(getWindowsSize());
@@ -40,7 +41,7 @@ function Root({
   }, [windowSize]);
 
   const handleAuth = useCallback(async () => {
-    await isAuthenticated();
+    isAuthenticated();
     setLoading(false);
   }, [isAuthenticated]);
 
@@ -126,12 +127,11 @@ function Root({
     }
   };
 
-  if(!auth)
   if (loading) return <LoadingComponent />;
 
   return (
     <BrowserRouter>
-      {true ? (
+      { true ? (
         <>
           <RenderLogOutModal />
           <CommonPrivateRoutes

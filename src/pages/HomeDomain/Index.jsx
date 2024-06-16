@@ -1,4 +1,4 @@
-import { React } from "react";
+import {React, useContext} from "react";
 
 import PageContainer from "../../components/PageContainer";
 import PageHeaderContainer from "../../components/PageHeaderContainer";
@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 import { IoIosArrowBack } from "react-icons/io";
 import ButtonComponent from "../../components/ButtonBack";
+import {AuthenticationContext} from "../../services/context/AuthContext";
 
 function HomeDomain({
   HandledarkMode,
@@ -25,6 +26,7 @@ function HomeDomain({
     navigate(path);
    };
 
+  const {isManager} = useContext(AuthenticationContext)
 
   return (
     <ContainerWithSidebar
@@ -38,7 +40,11 @@ function HomeDomain({
         <PageHeaderContainer title={`Menu de Domínio`} />
         <PageContentContainer width="100%" height="88vh" flexDirection= 'column' justifyContent='center' alignItems='center' display='flex' >
 
-          <ButtonRoutes buttonText="Cadastrar Domínio" onClick={() => navigateTo("/cadastrarDominio")} />
+          { isManager() ?
+              <ButtonRoutes buttonText="Cadastrar Domínio" onClick={() => navigateTo("/cadastrarDominio")} />
+              : null
+          }
+
           <ButtonRoutes buttonText="Buscar Domínio" onClick={() => navigateTo("/buscarDominio")} />
 
           <ButtonComponent

@@ -1,4 +1,4 @@
-import { React } from "react";
+import {React, useContext} from "react";
 
 import PageContainer from "../../components/PageContainer";
 import PageHeaderContainer from "../../components/PageHeaderContainer";
@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import ButtonComponent from "../../components/ButtonBack";
 
 import { IoIosArrowBack } from "react-icons/io";
+import {AuthenticationContext} from "../../services/context/AuthContext";
 
 function HomeCategory({
   HandledarkMode,
@@ -24,7 +25,7 @@ function HomeCategory({
   const navigateTo = (path) => {
     navigate(path);
    };
-
+  const {isManager} = useContext(AuthenticationContext)
 
   return (
     <ContainerWithSidebar
@@ -38,7 +39,11 @@ function HomeCategory({
         <PageHeaderContainer title={`Menu de Categoria`} />
         <PageContentContainer width="100%" height="88vh" flexDirection= 'column' justifyContent='center' alignItems='center' display='flex' >
 
-          <ButtonRoutes buttonText="Cadastrar Categoria" onClick={() => navigateTo("/cadastrarCategoria")} />
+          { isManager() ?
+              <ButtonRoutes buttonText="Cadastrar Categoria" onClick={() => navigateTo("/cadastrarCategoria")} />
+              : null
+          }
+
           <ButtonRoutes buttonText="Buscar Categoria" onClick={() => navigateTo("/buscarCategoria")} />
 
           <ButtonComponent
