@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PageContainer from "../../components/PageContainer";
 import PageHeaderContainer from "../../components/PageHeaderContainer";
 import PageContentContainer from "../../components/PageContentContainer";
@@ -10,6 +10,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ButtonComponent from "../../components/ButtonBack";
 import ButtonConfirmRegistration from "../../components/ButtonConfirmRegistration";
+import { getAllCategories } from "../../servicesBack/CategoryServices";
+import { updateKnowledge } from "../../servicesBack/KnowledgeServices";
+import { useParams } from "react-router-dom";
 
 function ChangeKnowledge({
   HandledarkMode,
@@ -19,31 +22,38 @@ function ChangeKnowledge({
   logOut,
 }) {
   const [formData, setFormData] = useState({
-    NameKnowledge: '',
-    Introduction: '',
-    Category: '',
-    Contributor: '',
-    TitleMedia: '',
-    Media: '',
-    Description: ''
+    NameKnowledge: "",
+    Introduction: "",
+    categoryId: "",
+    Contributor: "",
+    TitleMedia: "",
+    Media: "",
+    Description: "",
   });
 
   const [thumbnail, setThumbnail] = useState(null);
   const [validated, setValidated] = useState(false);
+  const [categories, setCategories] = useState([]);
+
+  const { id } = useParams();
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    setFormData({
-      ...formData,
-      [id]: value
-    });
+    if (id === "categoryId") {
+      setFormData({
+        ...formData,
+        [id]: Number(value),
+      });
+    } else {
+      setFormData({ ...formData, [id]: value });
+    }
 
     if (id === "Media") {
       setThumbnail(getYouTubeThumbnail(value));
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     const form = e.currentTarget;
     e.preventDefault();
     if (form.checkValidity() === false) {
@@ -53,20 +63,61 @@ function ChangeKnowledge({
     }
 
     setValidated(true);
-    const { NameKnowledge, Introduction, Category, Contributor, TitleMedia, Media, Description } = formData;
+    const {
+      NameKnowledge,
+      Introduction,
+      categoryId,
+      Contributor,
+      TitleMedia,
+      Media,
+      Description,
+    } = formData;
 
-    if (!NameKnowledge || !Introduction || !Category || !Contributor || !TitleMedia || !Media || !Description) {
+    if (
+      !NameKnowledge ||
+      !Introduction ||
+      !categoryId ||
+      !Contributor ||
+      !TitleMedia ||
+      !Media ||
+      !Description
+    ) {
       toast.error("Todos os campos são obrigatórios!");
       return;
     }
-
+    const resp = await updateKnowledge(id, {
+      title: formData.NameKnowledge,
+        archive: formData.Media,
+        collaborator: formData.Contributor,
+        description: formData.Description,
+        introduction: formData.Introduction,
+        titleMedia: formData.TitleMedia,
+        categories: [
+          {
+            id: formData.categoryId,
+          },
+        ],
+    })
     toast.success("Cadastro realizado com sucesso!");
   };
 
   const getYouTubeThumbnail = (url) => {
-    const videoIdMatch = url.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
-    return videoIdMatch ? `https://img.youtube.com/vi/${videoIdMatch[1]}/0.jpg` : null;
+    const videoIdMatch = url.match(
+      /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
+    );
+    return videoIdMatch
+      ? `https://img.youtube.com/vi/${videoIdMatch[1]}/0.jpg`
+      : null;
   };
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const resp = await getAllCategories();
+      console.log(resp.data.content);
+      setCategories(resp.data.content);
+    };
+    fetchCategories();
+  }, []);
 
   return (
     <ContainerWithSidebar
@@ -77,9 +128,11 @@ function ChangeKnowledge({
       logOut={logOut}
     >
       <PageContainer>
-        <PageHeaderContainer icon={<MdOutlineAddCircle style={{ width: 34, marginRight: 5 }} />} title={`Editar Conhecimento`} />
+        <PageHeaderContainer
+          icon={<MdOutlineAddCircle style={{ width: 34, marginRight: 5 }} />}
+          title={`Editar Conhecimento`}
+        />
         <PageContentContainer>
-
           <Form noValidate validated={validated} onSubmit={handleSubmit}>
             <Row>
               <Col md={6}>
@@ -111,19 +164,23 @@ function ChangeKnowledge({
                   </Form.Control.Feedback>
                 </Form.Group>
 
-                <Form.Group controlId="Category" className="mb-3">
+                <Form.Group controlId="categoryId" className="mb-3">
                   <Form.Label>Seleção de Categoria</Form.Label>
                   <Form.Control
                     as="select"
-                    value={formData.Category}
+                    value={formData.categoryId}
                     onChange={handleChange}
                     required
                   >
                     <option value="">Selecione uma categoria</option>
-                    <option>Categoria 1</option>
-                    <option>Categoria 2</option>
-                    <option>Categoria 3</option>
-                  
+                    {Array.isArray(categories) &&
+                      categories.map((category) => (
+
+                        <option key={category.id} value={category.id}>
+                          {category.name}
+                        </option>
+                    )
+                      )}
                   </Form.Control>
                   <Form.Control.Feedback type="invalid">
                     Campo obrigatório.
@@ -176,8 +233,12 @@ function ChangeKnowledge({
 
                 {thumbnail && (
                   <div className="mb-3">
-                    
-                    <Image src={thumbnail} alt="Thumbnail" fluid style={{ maxWidth: '170px', maxHeight: '170px' }} />
+                    <Image
+                      src={thumbnail}
+                      alt="Thumbnail"
+                      fluid
+                      style={{ maxWidth: "170px", maxHeight: "170px" }}
+                    />
                   </div>
                 )}
 
@@ -202,7 +263,8 @@ function ChangeKnowledge({
                 size="10rem"
                 bgColor="var(--cinza-primario)"
                 textColor="white"
-                alternativeText="Voltar">
+                alternativeText="Voltar"
+              >
                 <IoIosArrowBack style={{ marginRight: 5, width: 12 }} />
                 Voltar
               </ButtonComponent>
@@ -210,12 +272,12 @@ function ChangeKnowledge({
                 size="10rem"
                 bgColor="#013d32"
                 textColor="white"
-                alternativeText="Cadastrar">
+                alternativeText="Cadastrar"
+              >
                 Cadastrar
                 <IoIosArrowForward style={{ marginLeft: 5, width: 12 }} />
               </ButtonConfirmRegistration>
             </div>
-
           </Form>
           <ToastContainer />
         </PageContentContainer>

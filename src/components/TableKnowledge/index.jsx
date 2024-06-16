@@ -81,7 +81,9 @@ function TableKnowledge() {
                       </button>
                     </td>
                     <td className="action-column">
+                      <button onClick={() => navigate(`/buscarConhecimento/changeKnowledge/${knowledge.id}`)}>
                       <CiEdit />
+                      </button>
                     </td>
                     <td className="action-column">
                       <RiDeleteBin6Line id="delete-icon" />
