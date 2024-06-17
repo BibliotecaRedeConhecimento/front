@@ -4,7 +4,6 @@ import { MdAddCircleOutline } from "react-icons/md";
 
 import { TableStyle } from "./style.jsx";
 import PaginationComponent from "../TablePagination/index.jsx";
-import SearchComponentCategory from "../SearchBar/index.jsx";
 import {  Container } from "react-bootstrap";
 import {useContext} from "react";
 import {AuthenticationContext} from "../../services/context/AuthContext";
@@ -15,7 +14,7 @@ function TableInativeKnowledge() {
     return (
         <>
            <Container fluid>
-            <SearchComponentCategory />
+            
       </Container>
             <TableStyle>
                 <div className="table-area">

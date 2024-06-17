@@ -6,13 +6,15 @@ import {BsEye} from "react-icons/bs";
 
 import {TableStyle} from "./styles.jsx";
 import PaginationComponent from "../TablePagination/index.jsx";
-import SearchComponentCategory from "../SearchBar/index.jsx";
+
 
 import {Button, Container} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 import ButtonInative from "../ButtonInative/index.jsx";
-import {useContext} from "react";
+import {useContext, useEffect, useState} from "react";
 import {AuthenticationContext} from "../../services/context/AuthContext";
+import SearchComponentDomain from "../SearchBarDomain/index.jsx";
+import { getAllDomains } from "../../servicesBack/DomainServices.js";
 
 function TableDomain({domain}) {
 
@@ -20,13 +22,34 @@ function TableDomain({domain}) {
     const navigateTo = (path) => {
         navigate(path);
     };
+
+    const [filterName, setFilterName] = useState('');
+    const [domainData, setDomainData] = useState([]);
+    
+
+    const fetchDomain = async () => {
+        try {
+          const response = await getAllDomains(filterName);
+          setDomainData(response.data.content);
+        } catch (error) {
+          console.error('Erro ao buscar domínios', error);
+        }
+      };
+
+      useEffect(() => {
+        fetchDomain();
+      }, [filterName]);
+
+
     const {isManager} = useContext(AuthenticationContext)
 
 
     return (
         <>
             <Container fluid>
-                <SearchComponentCategory/>
+
+                <SearchComponentDomain onSearch={setFilterName}/>
+                
                 <div className="d-flex justify-content-end mb-4">
 
 

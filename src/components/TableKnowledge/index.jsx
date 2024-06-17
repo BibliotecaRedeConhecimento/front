@@ -6,41 +6,51 @@ import {BsEye} from "react-icons/bs";
 
 import {TableStyle} from "./styles.jsx";
 import PaginationComponent from "../TablePagination/index.jsx";
-import SearchComponentCategory from "../SearchBar/index.jsx";
 import {Button, Container,} from "react-bootstrap";
 import ButtonInative from "../ButtonInative/index.jsx";
 import {useNavigate} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
 import {getAllKnowledges} from "../../servicesBack/KnowledgeServices.js";
 import {AuthenticationContext} from "../../services/context/AuthContext";
+import SearchComponentKnowledge from "../SearchBarKnowledge/index.jsx";
 
 function TableKnowledge() {
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const navigateTo = (path) => {
+        navigate(path);
+      };
+    
 
 
-    const [knowledgeData, setKnowledgeData] = useState([])
+    const [knowledgeData, setKnowledgeData] = useState([]);
+    const [filterTitle, setFilterTitle] = useState('');
 
     const fetchKnowledges = async () => {
-        const response = await getAllKnowledges()
+        const response = await getAllKnowledges(filterTitle)
         setKnowledgeData(response.data.content)
         console.log(response.data.content)
     }
 
     useEffect(() => {
         fetchKnowledges()
-    }, [])
+    }, [filterTitle])
 
     const {isManager} = useContext(AuthenticationContext)
 
     return (
         <>
             <Container fluid>
-                <SearchComponentCategory/>
+
+                <SearchComponentKnowledge onSearch={setFilterTitle}/>
+                
                 <div className="d-flex justify-content-end mb-4">
+
+                    
 
                     {isManager() ?
 
+                    
                         <ButtonInative
                             size="10rem"
                             bgColor="var(--verde-primario3)"

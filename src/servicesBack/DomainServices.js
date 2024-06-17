@@ -1,8 +1,8 @@
 import { api } from "./api";
 
-export const getAllDomains = async () => {
+export const getAllDomains = async (filterName = '') => {
   try {
-    const response = await api.get('/domains');
+    const response = await api.get(`/domains?name=${filterName}`);
     return response;
   } catch (error) {
     console.error('Erro ao buscar dominio', error);

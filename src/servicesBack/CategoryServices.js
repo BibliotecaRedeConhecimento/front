@@ -1,8 +1,8 @@
 import { api } from "./api";
 
-export const getAllCategories = async () => {
+export const getAllCategories = async (filterName= '') => {
   try {
-    const response = await api.get('/categories');
+    const response = await api.get(`/categories?name=${filterName}`);
     return response;
   } catch (error) {
     console.error('Erro ao buscar categorias', error);

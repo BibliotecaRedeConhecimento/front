@@ -5,7 +5,7 @@ import {CiEdit} from "react-icons/ci";
 
 import {TableStyle} from "./styles.jsx";
 import PaginationComponent from "../TablePagination/index.jsx";
-import SearchComponentCategory from "../SearchBar/index.jsx";
+
 import {Button, Container} from "react-bootstrap";
 
 import {useNavigate} from "react-router-dom";
@@ -13,6 +13,7 @@ import ButtonInative from "../ButtonInative/index.jsx";
 import {getAllCategories} from "../../servicesBack/CategoryServices.js";
 import {useContext, useEffect, useState} from "react";
 import {AuthenticationContext} from "../../services/context/AuthContext";
+import SearchComponentCategory from "../SearchBarCategory/index.jsx";
 
 function TableCategory() {
 
@@ -21,23 +22,24 @@ function TableCategory() {
         navigate(path);
     };
     const [categoryData, setCategoryData] = useState([]);
+    const [filterName, setFilterName] = useState('');
 
     const fetchCategories = async () => {
-        const response = await getAllCategories();
-        setCategoryData(response.data.content)
-        console.log(response.data.content)
+        const response = await getAllCategories(filterName);
+        setCategoryData(response.data.content);
+        console.log(response.data.content);
     };
 
     useEffect(() => {
         fetchCategories()
-    }, [])
+    }, [filterName])
     const {isManager} = useContext(AuthenticationContext)
 
 
     return (
         <>
             <Container fluid>
-                <SearchComponentCategory/>
+                <SearchComponentCategory onSearch={setFilterName}/>
                 <div className="d-flex justify-content-end mb-4">
                     <ButtonInative
                         size="10rem"
