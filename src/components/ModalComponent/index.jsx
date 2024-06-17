@@ -1,23 +1,23 @@
 //testando a aplicação de um modal
 
 import {Button, Modal, Row} from 'react-bootstrap';
-import { ModalButtonStyle } from '../ModalComponent/styles';
+import { ButtonModalStyle } from '../ButtonModal/styles';
 
 
 
-function ModalComponent({show, handleClose, bodyContent, confirm, confirmButton = 'Cadastrar'}) {
+function ModalComponent({show, handleClose, bodyContent, confirm, confirmButton = 'Cadastrar', cancel,cancelButton = 'Cancelar'}) {
  
  
  
  
   return (
     <div
-      style={{ display: 'block', position: 'initial' }}
+      style={{ display: 'block', position: 'initial', border: 'none' }}
     >
     
-        <Modal  show={show} onHide={handleClose} centered size='sm' >
+        <Modal  show={show} onHide={handleClose} centered size='sm'  >
           
-      <Modal.Header style={{backgroundColor:  `var(--verde-primario)`,height: '4rem'}} >
+      <Modal.Header style={{backgroundColor:  `var(--verde-primario)`,height: '4rem', border: 'none'}} >
         
       </Modal.Header>
       <Modal.Body style={{ borderBottom: 'none' , display: 'flex', justifyContent: 'center', color: `var(--preto-primario2)` , }}>
@@ -25,14 +25,13 @@ function ModalComponent({show, handleClose, bodyContent, confirm, confirmButton 
       </Modal.Body>
       <Modal.Footer style={{ borderTop: 'none', display: 'flex', justifyContent: 'space-between',  }}>
         <Row>
-        <Button onClick={handleClose} style={{backgroundColor: `var(--preto-primario2)`, border: 'none'}}>
-          Cancelar 
+        <Button onClick={cancel} style={{backgroundColor: `var(--cinza-secundario)`, border: 'none'}}>
+          {cancelButton}
         </Button>
         </Row>
         <Row>
-      <ModalButtonStyle onClick={confirm} style={{backgroundColor: `var(--verde-primario)`}}>
-          {confirmButton} 
-          </ModalButtonStyle>
+      <Button  onClick={confirm} style={{backgroundColor: `var(--verde-primario)`, border: 'none'}}>
+          {confirmButton} </Button>
         </Row>
       </Modal.Footer>
     </Modal>

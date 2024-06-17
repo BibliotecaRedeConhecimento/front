@@ -41,7 +41,9 @@ const RegisterCategory = ({
     }
   };
 
-  const handleOpenModal = () => {
+  const handleOpenModal = (event) => {
+    event.preventDefault();
+    
     const form = document.getElementById("categoryForm");
     if (form.checkValidity() === false) {
       setValidated(true);
@@ -53,25 +55,25 @@ const RegisterCategory = ({
 
   const handleCloseModal = () => {
     setShowModal(false);
-    toast.error("Cadastro de categoria cancelado.");
+    
   };
 
   const registerCategory = async (event) => {
     event.preventDefault();
-    const response = await addCategory({
-      name: formData.categoryName,
-      domains: [{
+    const response = await addCategory({name: formData.categoryName, domains: [{
         id: formData.domainId
       }]
     });
+    if (response) {
+      toast.success("Domínio cadastrado com sucesso!");
+      
+      handleCloseModal();
+    } else {
+      toast.error("Erro ao cadastrar o domínio.");
+    }
   
 
-    if (response) {
-      toast.success("Categoria cadastrada com sucesso!");
-      setShowModal(false);
-    } else {
-      toast.error("Erro ao cadastrar a categoria.");
-    }
+    
   };
 
   const fetchDomains = async () => {
@@ -108,7 +110,6 @@ const RegisterCategory = ({
                     value={formData.categoryName}
                     onChange={handleChange}
                     required
-                    style={{backgroundColor: "var(--branco-primario2)"}}
                     isInvalid={validated && !formData.categoryName}
                   />
                   <Form.Control.Feedback type="invalid">
@@ -146,23 +147,31 @@ const RegisterCategory = ({
                 Voltar
               </ButtonComponent>
               <ButtonConfirmRegistration
-                size="10rem"
-                bgColor="#013d32"
-                textColor="white"
-                alternativeText="Cadastrar"
-                onClick={handleOpenModal}
-              >
-                Cadastrar
-                <IoIosArrowForward style={{ marginLeft: 5, width: 12 }} />
-              </ButtonConfirmRegistration>
+                  type="button"
+                  size="10rem"
+                  bgColor="var(--verde-primario)"
+                  alternativeText="Cadastrar"
+                  onClick={handleOpenModal}
+                >
+                  Cadastrar
+                  <IoIosArrowForward style={{ marginLeft: 5, width: 12 }} />
+                </ButtonConfirmRegistration>
             </div>
           </Form>
           <ModalComponent
-            bodyContent={"Deseja cadastrar a Categoria?"}
-            show={showModal}
-            handleClose={handleCloseModal}
-            confirm={registerCategory}
-          />
+              tabIndex="-1"
+              bodyContent={"Deseja cadastrar a categoria??"}
+              show={showModal}
+              handleClose={() => {
+                handleCloseModal();
+                toast.error("Cadastro de categoria cancelado.");  
+              }}
+              confirm={registerCategory}
+              cancel={() => {
+                handleCloseModal();
+                toast.error("Cadastro de categoria cancelado.");  
+              }}
+            />
         </PageContentContainer>
       </PageContainer>
       <ToastContainer />

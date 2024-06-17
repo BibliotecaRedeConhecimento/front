@@ -27,9 +27,11 @@ const RegisterDomain = ({
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
+    
   };
 
-  const handleOpenModal = () => {
+  const handleOpenModal = (event) => {
+    event.preventDefault();
     const form = document.getElementById("domainForm");
     if (form.checkValidity() === false) {
       setValidated(true);
@@ -40,8 +42,11 @@ const RegisterDomain = ({
   };
 
   const handleCloseModal = () => {
+
+    
     setShowModal(false);
-    toast.error("Cadastro de domínio cancelado.");
+    
+ 
   };
 
   const registerDomain = async (event) => {
@@ -49,7 +54,8 @@ const RegisterDomain = ({
     const response = await addDomain({ name: formData.domainName });
     if (response) {
       toast.success("Domínio cadastrado com sucesso!");
-      setShowModal(false);
+      
+      handleCloseModal();
     } else {
       toast.error("Erro ao cadastrar o domínio.");
     }
@@ -70,7 +76,7 @@ const RegisterDomain = ({
             title="Cadastrar Domínio"
           />
           <PageContentContainer>
-            <Form id="domainForm" noValidate validated={validated} onSubmit={registerDomain}>
+            <Form id="domainForm" noValidate validated={validated} onSubmit={handleOpenModal}>
               <Row>
                 <Col md={12}>
                   <Form.Group controlId="domainName" className="mb-3">
@@ -103,7 +109,7 @@ const RegisterDomain = ({
                 <ButtonConfirmRegistration
                   size="10rem"
                   bgColor="var(--verde-primario)"
-                  textColor="white"
+                  
                   alternativeText="Cadastrar"
                   onClick={handleOpenModal}
                 >
@@ -116,8 +122,15 @@ const RegisterDomain = ({
               tabIndex="-1"
               bodyContent={"Deseja cadastrar o Domínio?"}
               show={showModal}
-              handleClose={handleCloseModal}
+              handleClose={() => {
+                handleCloseModal();
+                toast.error("Cadastro de domínio cancelado.");  
+              }}
               confirm={registerDomain}
+              cancel={() => {
+                handleCloseModal();
+                toast.error("Cadastro de domínio cancelado.");  
+              }}
             />
           </PageContentContainer>
         </PageContainer>

@@ -97,7 +97,7 @@ function TableDomain({domain}) {
                                 <td className="action-column">
                                     {isManager() ?
                                        <Button variant="link" onClick={() => handleInactivate(item.id)}>
-                                       <RiDeleteBin6Line />
+                                       <RiDeleteBin6Line className="delete-icon"/>
                                    </Button>
                                         : null
                                     }

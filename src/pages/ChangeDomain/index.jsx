@@ -50,6 +50,7 @@ function ChangeDomain({
   
     const handleCloseModal = () => {
       setShowModal(false);
+      toast.error("Cadastro de domínio cancelado.");
     };
   
     const handleEdit = async (event) => {
