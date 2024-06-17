@@ -3,7 +3,7 @@ import PageContainer from "../../components/PageContainer";
 import PageHeaderContainer from "../../components/PageHeaderContainer";
 import PageContentContainer from "../../components/PageContentContainer";
 import { ContainerWithSidebar } from '../../components/ContainerWithSidebar';
-import { Form, Row, Col } from "react-bootstrap";
+import { Form, Row, Col, Button } from "react-bootstrap";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
@@ -117,6 +117,7 @@ const RegisterDomain = ({
                   <IoIosArrowForward style={{ marginLeft: 5, width: 12 }} />
                 </ButtonConfirmRegistration>
               </div>
+              
             </Form>
             <ModalComponent
               tabIndex="-1"

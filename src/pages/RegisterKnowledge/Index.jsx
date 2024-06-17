@@ -14,6 +14,7 @@ import ButtonConfirmRegistration from "../../components/ButtonConfirmRegistratio
 import { ContainerWithSidebar } from "../../components/ContainerWithSidebar";
 import { addKnowledge } from "../../servicesBack/KnowledgeServices";
 import { getAllCategories } from "../../servicesBack/CategoryServices";
+import ModalComponent from "../../components/ModalComponent";
 
 const RegisterKnowledge = ({
   HandledarkMode,
@@ -34,6 +35,7 @@ const RegisterKnowledge = ({
   const [validated, setValidated] = useState(false);
   const [thumbnailUrl, setThumbnailUrl] = useState("");
   const [categories, setCategories] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -58,6 +60,25 @@ const RegisterKnowledge = ({
     }
   };
 
+  const handleOpenModal = (event) => {
+    event.preventDefault();
+    const form = document.getElementById("knowledgeForm");
+    if (form.checkValidity() === false) {
+      setValidated(true);
+      toast.error("O campo é obrigatório!");
+    } else {
+      setShowModal(true);
+    }
+  };
+
+  const handleCloseModal = () => {
+
+    
+    setShowModal(false);
+    
+ 
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -65,6 +86,7 @@ const RegisterKnowledge = ({
       e.stopPropagation();
       toast.error("Todos os campos são obrigatórios!");
     } else {
+      handleCloseModal();
       toast.success("Cadastro realizado com sucesso!");
       const resp = await addKnowledge({
         title: formData.NameKnowledge,
@@ -118,8 +140,8 @@ const RegisterKnowledge = ({
             icon={<MdOutlineAddCircle style={{ width: 34, marginRight: 5 }} />}
             title="Cadastrar Conhecimento"
           />
-          <PageContentContainer>
-            <Form noValidate validated={validated} onSubmit={handleSubmit}>
+          <PageContentContainer >
+            <Form id="knowledgeForm" noValidate validated={validated} onSubmit={handleOpenModal}>
               <Row >
                 <Col md={6} >
                   <Form.Group controlId="NameKnowledge" className="mb-3">
@@ -141,7 +163,7 @@ const RegisterKnowledge = ({
                   <Form.Group controlId="Introduction" className="mb-3">
                     <Form.Label>Introdução</Form.Label>
                     <Form.Control
-                      type="text"
+                      as="textarea"
                       placeholder="Introdução do conhecimento..."
                       value={formData.Introduction}
                       onChange={handleChange}
@@ -263,13 +285,27 @@ const RegisterKnowledge = ({
                   bgColor="var(--verde-primario)"
                   textColor="white"
                   alternativeText="Cadastrar"
-                  onClick={handleSubmit}
+                  onClick={handleOpenModal}
                 >
                   Cadastrar
                   <IoIosArrowForward style={{ marginLeft: 5, width: 12 }} />
                 </ButtonConfirmRegistration>
               </div>
             </Form>
+            <ModalComponent
+              tabIndex="-1"
+              bodyContent={"Deseja cadastrar o Domínio?"}
+              show={showModal}
+              handleClose={() => {
+                handleCloseModal();
+                toast.error("Cadastro de domínio cancelado.");  
+              }}
+              confirm={handleSubmit}
+              cancel={() => {
+                handleCloseModal();
+                toast.error("Cadastro de domínio cancelado.");  
+              }}
+            />
           </PageContentContainer>
         </PageContainer>
         <ToastContainer />

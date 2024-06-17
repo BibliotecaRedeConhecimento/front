@@ -99,7 +99,7 @@ const RegisterCategory = ({
           title={`Cadastrar Categoria`}
         />
         <PageContentContainer>
-          <Form id="categoryForm" noValidate validated={validated} onSubmit={registerCategory}>
+          <Form id="categoryForm" noValidate validated={validated} onSubmit={handleOpenModal}>
             <Row>
               <Col md={12}>
                 <Form.Group controlId="categoryName" className="mb-3">

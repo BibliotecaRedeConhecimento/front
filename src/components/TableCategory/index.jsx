@@ -92,7 +92,7 @@ function TableCategory() {
                                     {isManager() ?
                                         <td className="action-column">
                                             <Button variant="link" onClick={() => handleInactivate(item.id)}>
-                                                <RiDeleteBin6Line />
+                                                <RiDeleteBin6Line className="delete-icon" />
                                             </Button>
 
                                         </td>
