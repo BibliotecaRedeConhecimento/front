@@ -10,7 +10,7 @@ import {Button, Container,} from "react-bootstrap";
 import ButtonInative from "../ButtonInative/index.jsx";
 import {useNavigate} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
-import {getAllKnowledges} from "../../servicesBack/KnowledgeServices.js";
+import {getAllKnowledges, inactivateKnowledge} from "../../servicesBack/KnowledgeServices.js";
 import {AuthenticationContext} from "../../services/context/AuthContext";
 import SearchComponentKnowledge from "../SearchBarKnowledge/index.jsx";
 
@@ -35,6 +35,11 @@ function TableKnowledge() {
     useEffect(() => {
         fetchKnowledges()
     }, [filterTitle])
+
+    const handleInactivate = async (id) => {
+        await inactivateKnowledge(id);
+        fetchKnowledges();
+      };
 
     const {isManager} = useContext(AuthenticationContext)
 
@@ -117,7 +122,7 @@ function TableKnowledge() {
                                     }
                                     {isManager() ?
 
-                                        <td className="action-column">
+                                        <td className="action-column" onClick={() => handleInactivate(knowledge.id)}>
                                             <RiDeleteBin6Line className="delete-icon"/>
                                         </td>
                                         : null

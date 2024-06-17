@@ -44,3 +44,21 @@ export const getKnowledgeById =async (id) =>{
     console.error('Erro ao buscar o conhecimento', error);
   }
 }
+
+export const inactivateKnowledge = async (id) => {
+  try {
+    const response = await api.put(`/knowledges/activate/${id}`);
+    return response;
+  } catch (error) {
+    console.error('Erro ao inativar/ativar conhecimento.', error);
+  }
+};
+
+export const getAllInactiveKnowledges = async () => {
+  try{
+    const response = await api.get('/knowledges?active=false')
+    return response
+  }catch(error){
+    console.log("Erro ao buscar os conhecimentos inativos.", error)
+  }
+};

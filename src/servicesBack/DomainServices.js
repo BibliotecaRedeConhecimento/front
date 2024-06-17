@@ -44,3 +44,21 @@ export const getDomainById =async (id) =>{
     console.error('Erro ao buscar o dominio', error);
   }
 }
+
+export const inactivateDomain = async (id) => {
+  try {
+    const response = await api.put(`/domains/activate/${id}`);
+    return response;
+  } catch (error) {
+    console.error('Erro ao inativar/ativar os domínios.', error);
+  }
+};
+
+export const getAllInactiveDomain = async () => {
+  try{
+    const response = await api.get('/domains?active=false')
+    return response
+  }catch(error){
+    console.log("Erro ao buscar os domínios inativos.", error)
+  }
+};

@@ -44,3 +44,21 @@ export const getCategoryById =async (id) =>{
     console.error('Erro ao buscar a categoria', error);
   }
 }
+
+export const inactivateCategory = async (id) => {
+  try {
+    const response = await api.put(`/categories/activate/${id}`);
+    return response;
+  } catch (error) {
+    console.error('Erro ao inativar/ativar as categorias.', error);
+  }
+};
+
+export const getAllInactiveCategory = async () => {
+  try{
+    const response = await api.get('/categories?active=false')
+    return response
+  }catch(error){
+    console.log("Erro ao buscar as categorias inativos.", error)
+  }
+};

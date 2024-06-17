@@ -14,7 +14,7 @@ import ButtonInative from "../ButtonInative/index.jsx";
 import {useContext, useEffect, useState} from "react";
 import {AuthenticationContext} from "../../services/context/AuthContext";
 import SearchComponentDomain from "../SearchBarDomain/index.jsx";
-import { getAllDomains } from "../../servicesBack/DomainServices.js";
+import { getAllDomains, inactivateDomain } from "../../servicesBack/DomainServices.js";
 
 function TableDomain({domain}) {
 
@@ -39,6 +39,11 @@ function TableDomain({domain}) {
       useEffect(() => {
         fetchDomain();
       }, [filterName]);
+
+      const handleInactivate = async (id) => {
+        await inactivateDomain(id);
+        fetchDomain();
+    };
 
 
     const {isManager} = useContext(AuthenticationContext)
@@ -75,7 +80,7 @@ function TableDomain({domain}) {
                         </tr>
                         </thead>
                         <tbody>
-                        {Array.isArray(domain) && domain.map((item) => (
+                        {Array.isArray(domainData) && domainData.map((item) => (
                             <tr key={item.id}>
                                 <td>{item.name}</td>
                                 <td>{item.domain}</td>
@@ -91,7 +96,9 @@ function TableDomain({domain}) {
                                 </td>
                                 <td className="action-column">
                                     {isManager() ?
-                                        <RiDeleteBin6Line className="delete-icon"/>
+                                       <Button variant="link" onClick={() => handleInactivate(item.id)}>
+                                       <RiDeleteBin6Line />
+                                   </Button>
                                         : null
                                     }
                                 </td>
