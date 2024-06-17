@@ -27,7 +27,7 @@ const RegisterKnowledge = () => {
   });
 
   const [validated, setValidated] = useState(false);
-
+  const [thumbnailUrl, setThumbnailUrl] = useState("");
   const [categories, setCategories] = useState([]);
 
   const handleChange = (e) => {
@@ -39,6 +39,17 @@ const RegisterKnowledge = () => {
       });
     } else {
       setFormData({ ...formData, [id]: value });
+    }
+  };
+
+  const handleMediaChange = (e) => {
+    const { value } = e.target;
+    setFormData({ ...formData, Media: value });
+    const videoId = getVideoId(value);
+    if (videoId) {
+      setThumbnailUrl(`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`);
+    } else {
+      setThumbnailUrl("");
     }
   };
 
@@ -67,6 +78,19 @@ const RegisterKnowledge = () => {
     setValidated(true);
   };
 
+  const getVideoId = (videoUrl) => {
+    try {
+      const url = new URL(videoUrl);
+      if (url.hostname === "www.youtube.com" || url.hostname === "youtube.com") {
+        return url.searchParams.get("v");
+      } else {
+        return null;
+      }
+    } catch (error) {
+      return null;
+    }
+  };
+
   useEffect(() => {
     const fetchCategories = async () => {
       const resp = await getAllCategories();
@@ -86,8 +110,8 @@ const RegisterKnowledge = () => {
           />
           <PageContentContainer>
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
-              <Row>
-                <Col md={6}>
+              <Row >
+                <Col md={6} >
                   <Form.Group controlId="NameKnowledge" className="mb-3">
                     <Form.Label>Título</Form.Label>
                     <Form.Control
@@ -96,6 +120,7 @@ const RegisterKnowledge = () => {
                       value={formData.NameKnowledge}
                       onChange={handleChange}
                       required
+                      style={{ width: "80%" }}
                     />
                     <Form.Control.Feedback type="invalid">
                       Campo obrigatório.
@@ -110,6 +135,7 @@ const RegisterKnowledge = () => {
                       value={formData.Introduction}
                       onChange={handleChange}
                       required
+                      style={{ width: "80%" }}
                     />
                     <Form.Control.Feedback type="invalid">
                       Campo obrigatório.
@@ -123,6 +149,7 @@ const RegisterKnowledge = () => {
                       value={formData.categoryId}
                       onChange={handleChange}
                       required
+                      style={{ width: "80%" }}
                     >
                       {Array.isArray(categories) &&
                         categories.map((category) => (
@@ -144,6 +171,7 @@ const RegisterKnowledge = () => {
                       value={formData.Contributor}
                       onChange={handleChange}
                       required
+                      style={{ width: "80%" }}
                     />
                     <Form.Control.Feedback type="invalid">
                       Campo obrigatório.
@@ -160,6 +188,7 @@ const RegisterKnowledge = () => {
                       value={formData.TitleMedia}
                       onChange={handleChange}
                       required
+                      style={{ width: "80%" }}
                     />
                     <Form.Control.Feedback type="invalid">
                       Campo obrigatório.
@@ -169,16 +198,27 @@ const RegisterKnowledge = () => {
                   <Form.Group controlId="Media" className="mb-3">
                     <Form.Label>URL do vídeo</Form.Label>
                     <Form.Control
-                      placeholder="Cole a URL aqui..."
+                      placeholder="Cole a URL do vídeo aqui..."
                       type="text"
                       value={formData.Media}
-                      onChange={handleChange}
+                      onChange={handleMediaChange}
                       required
+                      style={{ width: "80%" }}
                     />
                     <Form.Control.Feedback type="invalid">
                       Campo obrigatório.
                     </Form.Control.Feedback>
                   </Form.Group>
+
+                  {thumbnailUrl && (
+                    <div className="mb-3">
+                      <img
+                        src={thumbnailUrl}
+                        alt="Thumbnail do vídeo"
+                        style={{ maxWidth: "170px", maxHeight: "170px" }}
+                      />
+                    </div>
+                  )}
 
                   <Form.Group controlId="Description" className="mb-3">
                     <Form.Label>Descrição</Form.Label>
@@ -189,6 +229,7 @@ const RegisterKnowledge = () => {
                       value={formData.Description}
                       onChange={handleChange}
                       required
+                      style={{ width: "80%" }}
                     />
                     <Form.Control.Feedback type="invalid">
                       Campo obrigatório.
