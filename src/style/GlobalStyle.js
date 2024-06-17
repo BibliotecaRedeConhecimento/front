@@ -43,6 +43,7 @@ const GlobalStyle = createGlobalStyle`
   :root {
     --branco: ${(props) => props.theme.colors.white};
     --branco-primario: ${(props) => props.theme.colors.whitePrimary};
+    --branco-primario2: ${(props) => props.theme.colors.whitePrimary2};
     --branco-secundario: ${(props) => props.theme.colors.whiteSecondary};
     --verde-primario: ${(props) => props.theme.colors.greenPrimary};
     --verde-primario2: ${(props) => props.theme.colors.greenPrimary2};
@@ -51,6 +52,8 @@ const GlobalStyle = createGlobalStyle`
     --verde-secundario: ${(props) => props.theme.colors.greenSecondary};
     --cinza-primario: ${(props) => props.theme.colors.grayPrimary};
     --cinza-secundario: ${(props) => props.theme.colors.graySecondary};
+    --striped1: ${(props) => props.theme.colors.striped1};
+    --striped2: ${(props) => props.theme.colors.striped2};
     --preto-primario: ${(props) => props.theme.colors.blackPrimary};
     --preto-primario2: ${(props) => props.theme.colors.blackPrimary2};
     --verde-constraste: ${(props) => props.theme.colors.greenConstrast};

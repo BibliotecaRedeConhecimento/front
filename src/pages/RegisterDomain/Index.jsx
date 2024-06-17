@@ -82,6 +82,7 @@ const RegisterDomain = ({
                       onChange={handleChange}
                       required
                       isInvalid={validated && !formData.domainName}
+                      style={{backgroundColor: "var(--branco-primario2)"}}
                     />
                     <Form.Control.Feedback type="invalid">
                       Campo obrigatório.

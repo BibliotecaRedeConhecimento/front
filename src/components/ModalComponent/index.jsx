@@ -1,7 +1,7 @@
 //testando a aplicação de um modal
 
 import {Button, Modal, Row} from 'react-bootstrap';
-import { ButtonModalStyle } from '../ButtonModal/styles';
+import { ModalButtonStyle } from '../ModalComponent/styles';
 
 
 
@@ -20,18 +20,19 @@ function ModalComponent({show, handleClose, bodyContent, confirm, confirmButton 
       <Modal.Header style={{backgroundColor:  `var(--verde-primario)`,height: '4rem'}} >
         
       </Modal.Header>
-      <Modal.Body style={{ borderBottom: 'none' , display: 'flex', justifyContent: 'center', color: `var(--preto-primario)` , }}>
+      <Modal.Body style={{ borderBottom: 'none' , display: 'flex', justifyContent: 'center', color: `var(--preto-primario2)` , }}>
         {bodyContent}
       </Modal.Body>
       <Modal.Footer style={{ borderTop: 'none', display: 'flex', justifyContent: 'space-between',  }}>
         <Row>
-        <Button onClick={handleClose} style={{backgroundColor: `var(--cinza-primario)`}}>
+        <Button onClick={handleClose} style={{backgroundColor: `var(--preto-primario2)`, border: 'none'}}>
           Cancelar 
         </Button>
         </Row>
         <Row>
-      <Button  onClick={confirm} style={{backgroundColor: `var(--verde-primario)`}}>
-          {confirmButton} </Button>
+      <ModalButtonStyle onClick={confirm} style={{backgroundColor: `var(--verde-primario)`}}>
+          {confirmButton} 
+          </ModalButtonStyle>
         </Row>
       </Modal.Footer>
     </Modal>

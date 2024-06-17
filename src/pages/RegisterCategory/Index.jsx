@@ -108,6 +108,7 @@ const RegisterCategory = ({
                     value={formData.categoryName}
                     onChange={handleChange}
                     required
+                    style={{backgroundColor: "var(--branco-primario2)"}}
                     isInvalid={validated && !formData.categoryName}
                   />
                   <Form.Control.Feedback type="invalid">

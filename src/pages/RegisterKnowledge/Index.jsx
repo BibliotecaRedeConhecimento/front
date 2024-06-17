@@ -15,7 +15,12 @@ import { ContainerWithSidebar } from "../../components/ContainerWithSidebar";
 import { addKnowledge } from "../../servicesBack/KnowledgeServices";
 import { getAllCategories } from "../../servicesBack/CategoryServices";
 
-const RegisterKnowledge = () => {
+const RegisterKnowledge = ({
+  HandledarkMode,
+  isDarkMode,
+  decreaseFontSize,
+  increaseFontSize,
+  logOut,}) => {
   const [formData, setFormData] = useState({
     NameKnowledge: "",
     Introduction: "",
@@ -101,7 +106,12 @@ const RegisterKnowledge = () => {
   }, []);
 
   return (
-    <ContainerWithSidebar>
+    <ContainerWithSidebar
+    increaseFontSize={increaseFontSize}
+    decreaseFontSize={decreaseFontSize}
+    HandledarkMode={HandledarkMode}
+    isDarkMode={isDarkMode}
+    logOut={logOut}>
       <div>
         <PageContainer>
           <PageHeaderContainer
@@ -120,7 +130,8 @@ const RegisterKnowledge = () => {
                       value={formData.NameKnowledge}
                       onChange={handleChange}
                       required
-                      style={{ width: "80%" }}
+                      
+                      style={{ width: "80%" ,backgroundColor: "var(--branco-primario2)"}}
                     />
                     <Form.Control.Feedback type="invalid">
                       Campo obrigatório.
@@ -135,7 +146,7 @@ const RegisterKnowledge = () => {
                       value={formData.Introduction}
                       onChange={handleChange}
                       required
-                      style={{ width: "80%" }}
+                      style={{ width: "80%" ,backgroundColor: "var(--branco-primario2)" }}
                     />
                     <Form.Control.Feedback type="invalid">
                       Campo obrigatório.
@@ -149,7 +160,7 @@ const RegisterKnowledge = () => {
                       value={formData.categoryId}
                       onChange={handleChange}
                       required
-                      style={{ width: "80%" }}
+                      style={{ width: "80%" ,backgroundColor: "var(--branco-primario2)"}}
                     >
                       {Array.isArray(categories) &&
                         categories.map((category) => (
@@ -171,7 +182,7 @@ const RegisterKnowledge = () => {
                       value={formData.Contributor}
                       onChange={handleChange}
                       required
-                      style={{ width: "80%" }}
+                      style={{ width: "80%" ,backgroundColor: "var(--branco-primario2)"}}
                     />
                     <Form.Control.Feedback type="invalid">
                       Campo obrigatório.
@@ -188,7 +199,7 @@ const RegisterKnowledge = () => {
                       value={formData.TitleMedia}
                       onChange={handleChange}
                       required
-                      style={{ width: "80%" }}
+                      style={{ width: "80%",backgroundColor: "var(--branco-primario2)" }}
                     />
                     <Form.Control.Feedback type="invalid">
                       Campo obrigatório.
@@ -203,7 +214,7 @@ const RegisterKnowledge = () => {
                       value={formData.Media}
                       onChange={handleMediaChange}
                       required
-                      style={{ width: "80%" }}
+                      style={{ width: "80%",backgroundColor: "var(--branco-primario2)" }}
                     />
                     <Form.Control.Feedback type="invalid">
                       Campo obrigatório.
@@ -229,7 +240,7 @@ const RegisterKnowledge = () => {
                       value={formData.Description}
                       onChange={handleChange}
                       required
-                      style={{ width: "80%" }}
+                      style={{ width: "80%",backgroundColor: "var(--branco-primario2)" }}
                     />
                     <Form.Control.Feedback type="invalid">
                       Campo obrigatório.

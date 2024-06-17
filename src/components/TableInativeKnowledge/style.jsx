@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const TableStyle = styled.div`
   .table-area {
     width: 100%;
-    background-color: var(--branco) !important;
     overflow-x: auto; /* Permite rolagem horizontal em telas menores */
     
   }
@@ -14,14 +13,19 @@ export const TableStyle = styled.div`
     thead {
         th {
           text-align: left;
+          color: var(--preto-primario) !important;
           
         }
       }
+   
     tbody {
+     
+
       tr {
         td {
           border-bottom: none !important;
-        }        
+          color: var(--preto-primario) !important;
+        }
       }
 
       .action-column {

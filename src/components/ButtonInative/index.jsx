@@ -5,12 +5,11 @@ import { ButtonStyle } from "./style";
 
 function ButtonInative({ size, height, bgColor, textColor, action, alternativeText, children }) {
   return (
-    <ButtonStyle size={size} height={height} bgColor={bgColor} textColor={textColor}>
+    <ButtonStyle size={size} height={height} bgColor='var(--verde-primario)' textColor='--branco-secundario'>
       <Button
         role="button"
         aria-label={alternativeText}
         title={alternativeText}
-        variant={bgColor}
         className="botao-default"
         style={{ maxWidth: "100%" }}
         onClick={action}
