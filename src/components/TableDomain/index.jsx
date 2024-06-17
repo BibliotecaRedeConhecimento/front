@@ -62,13 +62,13 @@ function TableDomain({domain}) {
                                             <Button variant="link"
                                                     style={{color: "black"}}
                                                     onClick={() => navigate(`changeDomain/` + item.id)}>
-                                                <CiEdit/>
+                                                <CiEdit className="edit-icon"/>
                                             </Button>
                                         </> : null}
                                 </td>
                                 <td className="action-column">
                                     {isManager() ?
-                                        <RiDeleteBin6Line id="delete-icon"/>
+                                        <RiDeleteBin6Line className="delete-icon"/>
                                         : null
                                     }
                                 </td>

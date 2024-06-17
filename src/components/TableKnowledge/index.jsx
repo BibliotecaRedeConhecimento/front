@@ -82,19 +82,22 @@ function TableKnowledge() {
                                         <span key={category.id}>{category.name}</span>
                                     ))}</td>
                                     <td>{knowledge.text}</td>
+
                                     <td className="action-column">
-                                        <button onClick={() => navigate(`/viewKnowledge/${knowledge.id}`)}>
-                                            <BsEye/>
-                                        </button>
+                                        <Button variant="link"
+
+                                        onClick={() => navigate(`/viewKnowledge/${knowledge.id}`)}>
+                                            <BsEye className="visualizar-icon"/>
+                                        </Button>
                                     </td>
                                     {isManager() ?
                                         <>
 
                                             <td className="action-column">
                                                 <Button variant="link"
-                                                        style={{color: "black"}}
+                                                        
                                                         onClick={() => navigate(`/buscarConhecimento/changeKnowledge/${knowledge.id}`)}>
-                                                    <CiEdit/>
+                                                    <CiEdit className="edit-icon"/>
                                                 </Button>
                                             </td>
 
@@ -105,7 +108,7 @@ function TableKnowledge() {
                                     {isManager() ?
 
                                         <td className="action-column">
-                                            <RiDeleteBin6Line id="delete-icon"/>
+                                            <RiDeleteBin6Line className="delete-icon"/>
                                         </td>
                                         : null
                                     }

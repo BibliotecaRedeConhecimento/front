@@ -42,7 +42,7 @@ export const darkTheme = {
     blackPrimary2: "#0D0D0D",
     greenConstrast: "#00FF00",
     yellowConstrast: "#FFA500",
-    redConstrast: "#C450FF",
+    redConstrast: "#e01b1b",
     blueConstrast: "#00A7FF",
     blueLightConstrast: "#87CEEB",
   },

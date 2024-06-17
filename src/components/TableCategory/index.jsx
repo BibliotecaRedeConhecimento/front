@@ -73,16 +73,16 @@ function TableCategory() {
                                     {isManager() ?
                                         <>
                                             <Button variant="link"
-                                                    style={{color: "black"}}
+                                                    
                                                     onClick={() => navigate(`changeCategory/` + item.id)}>
-                                                <CiEdit/>
+                                                <CiEdit className="edit-icon"/>
                                             </Button>
                                         </>
                                         : null}
                                 </td>
                                 {isManager() ?
                                     <td className="action-column">
-                                        <RiDeleteBin6Line id="delete-icon"/>
+                                        <RiDeleteBin6Line className="delete-icon"/>
                                     </td>
                                     : null
                                 }

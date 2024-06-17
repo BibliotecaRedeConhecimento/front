@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-
 export const TableStyle = styled.div`
   .table-area {
     width: 100%;
@@ -33,18 +32,21 @@ export const TableStyle = styled.div`
       .action-column {
         text-align: center;
 
-        #delete-icon {
-          color: var(--vermelho-perigo);
-          &:hover {
-            color: var(--verde-primario);
-            cursor: pointer;
-          }
-        }
+      .edit-icon {
+        color: var(--preto-primario); 
+  }
 
+      .delete-icon {
+         color: var(--vermelho-constraste); 
+  }
+        
+
+       
         svg {
           font-size: 24px;
           &:hover {
-            color: var(--verde-primario);
+            color: var(--preto-primario2);
+            
             cursor: pointer;
           }
         }
