@@ -11,8 +11,9 @@ import "react-toastify/dist/ReactToastify.css";
 import ButtonComponent from "../../components/ButtonBack";
 import ButtonConfirmRegistration from "../../components/ButtonConfirmRegistration";
 import { getAllCategories } from "../../servicesBack/CategoryServices";
-import { updateKnowledge } from "../../servicesBack/KnowledgeServices";
+import { getKnowledgeById, updateKnowledge } from "../../servicesBack/KnowledgeServices";
 import { useParams } from "react-router-dom";
+import ModalComponent from "../../components/ModalComponent";
 
 function ChangeKnowledge({
   HandledarkMode,
@@ -34,8 +35,43 @@ function ChangeKnowledge({
   const [thumbnail, setThumbnail] = useState(null);
   const [validated, setValidated] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   const { id } = useParams();
+
+  useEffect(() => {
+    const fetchKnowledge = async () => {
+      try {
+        const response = await getKnowledgeById(id);
+        const knowledgeData = response.data;
+        setFormData({
+          NameKnowledge: knowledgeData.title,
+          Introduction: knowledgeData.introduction,
+          categoryId: knowledgeData.categories[0]?.id || "",
+          Contributor: knowledgeData.collaborator,
+          TitleMedia: knowledgeData.titleMedia,
+          Media: knowledgeData.archive,
+          Description: knowledgeData.description,
+        });
+        setThumbnail(getYouTubeThumbnail(knowledgeData.archive));
+      } catch (error) {
+        (err)
+      }
+    };
+
+    fetchKnowledge();
+
+    const fetchCategories = async () => {
+      try {
+        const resp = await getAllCategories();
+        setCategories(resp.data.content);
+      } catch (error) {
+        toast.error("Erro ao carregar as categorias.");
+      }
+    };
+
+    fetchCategories();
+  }, [id]);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -53,12 +89,28 @@ function ChangeKnowledge({
     }
   };
 
-  const handleSubmit = async(e) => {
+  const handleOpenModal = (event) => {
+    event.preventDefault();
+    const form = document.getElementById("knowledgeForm");
+    if (form.checkValidity() === false) {
+      setValidated(true);
+      toast.error("O campo é obrigatório!");
+    } else {
+      setShowModal(true);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleSubmit = async (e) => {
     const form = e.currentTarget;
     e.preventDefault();
     if (form.checkValidity() === false) {
       e.stopPropagation();
       setValidated(true);
+      toast.error("Todos os campos são obrigatórios!");
       return;
     }
 
@@ -87,17 +139,18 @@ function ChangeKnowledge({
     }
     const resp = await updateKnowledge(id, {
       title: formData.NameKnowledge,
-        archive: formData.Media,
-        collaborator: formData.Contributor,
-        description: formData.Description,
-        introduction: formData.Introduction,
-        titleMedia: formData.TitleMedia,
-        categories: [
-          {
-            id: formData.categoryId,
-          },
-        ],
-    })
+      archive: formData.Media,
+      collaborator: formData.Contributor,
+      description: formData.Description,
+      introduction: formData.Introduction,
+      titleMedia: formData.TitleMedia,
+      categories: [
+        {
+          id: formData.categoryId,
+        },
+      ],
+    });
+    handleCloseModal();
     toast.success("Cadastro realizado com sucesso!");
   };
 
@@ -109,15 +162,6 @@ function ChangeKnowledge({
       ? `https://img.youtube.com/vi/${videoIdMatch[1]}/0.jpg`
       : null;
   };
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const resp = await getAllCategories();
-      console.log(resp.data.content);
-      setCategories(resp.data.content);
-    };
-    fetchCategories();
-  }, []);
 
   return (
     <ContainerWithSidebar
@@ -133,7 +177,7 @@ function ChangeKnowledge({
           title={`Editar Conhecimento`}
         />
         <PageContentContainer>
-          <Form noValidate validated={validated} onSubmit={handleSubmit}>
+          <Form id="knowledgeForm" noValidate validated={validated} onSubmit={handleOpenModal}>
             <Row>
               <Col md={6}>
                 <Form.Group controlId="NameKnowledge" className="mb-3">
@@ -145,7 +189,6 @@ function ChangeKnowledge({
                     onChange={handleChange}
                     required
                     style={{ width: "80%" }}
-
                   />
                   <Form.Control.Feedback type="invalid">
                     Campo obrigatório.
@@ -155,7 +198,7 @@ function ChangeKnowledge({
                 <Form.Group controlId="Introduction" className="mb-3">
                   <Form.Label>Introdução</Form.Label>
                   <Form.Control
-                    type="text"
+                    as="textarea"
                     placeholder="Introdução do conhecimento..."
                     value={formData.Introduction}
                     onChange={handleChange}
@@ -179,12 +222,10 @@ function ChangeKnowledge({
                     <option value="">Selecione uma categoria</option>
                     {Array.isArray(categories) &&
                       categories.map((category) => (
-
                         <option key={category.id} value={category.id}>
                           {category.name}
                         </option>
-                    )
-                      )}
+                      ))}
                   </Form.Control>
                   <Form.Control.Feedback type="invalid">
                     Campo obrigatório.
@@ -276,20 +317,35 @@ function ChangeKnowledge({
                 <IoIosArrowBack style={{ marginRight: 5, width: 12 }} />
                 Voltar
               </ButtonComponent>
-              <ButtonConfirmRegistration
-                size="10rem"
-                bgColor="#013d32"
-                textColor="white"
-                alternativeText="Cadastrar"
+              <ButtonConfirmRegistration 
+                  size="10rem"
+                  bgColor="var(--verde-primario)"
+                  textColor="white"
+                  alternativeText="Cadastrar"
+                  onClick={handleOpenModal}
               >
-                Cadastrar
+                Editar
                 <IoIosArrowForward style={{ marginLeft: 5, width: 12 }} />
               </ButtonConfirmRegistration>
             </div>
           </Form>
-          <ToastContainer />
+          <ModalComponent
+              tabIndex="-1"
+              bodyContent={"Deseja cadastrar o Domínio?"}
+              show={showModal}
+              handleClose={() => {
+                handleCloseModal();
+                toast.error("Edição de domínio cancelada.");  
+              }}
+              confirm={handleSubmit}
+              cancel={() => {
+                handleCloseModal();
+                toast.error("Edição de domínio cancelada.");  
+              }}
+            />
         </PageContentContainer>
       </PageContainer>
+      <ToastContainer />
     </ContainerWithSidebar>
   );
 }
