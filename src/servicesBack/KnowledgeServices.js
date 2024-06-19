@@ -1,8 +1,8 @@
 import { api } from "./api";
 
-export const getAllKnowledges = async (filterTitle = '') => {
+export const getAllKnowledges = async (filterTitle = '', size, page) => {
   try {
-    const response = await api.get(`/knowledges?title=${filterTitle}`);
+    const response = await api.get(`/knowledges?title=${filterTitle}&size=${size}&page=${page}`);
     return response;
   } catch (error) {
     console.error('Erro ao buscar conhecimentos', error);
@@ -36,7 +36,7 @@ export const deleteKnowledge = async (id) => {
   }
 };
 
-export const getKnowledgeById =async (id) =>{
+export const getKnowledgeById = async (id) => {
   try {
     const response = await api.get(`/knowledges/${id}`);
     return response;
@@ -54,11 +54,11 @@ export const inactivateKnowledge = async (id) => {
   }
 };
 
-export const getAllInactiveKnowledges = async () => {
-  try{
-    const response = await api.get('/knowledges?active=false')
+export const getAllInactiveKnowledges = async (title, size, page) => {
+  try {
+    const response = await api.get(`/knowledges?active=false&title=${title}&size=${size}&page=${page}`)
     return response
-  }catch(error){
+  } catch (error) {
     console.log("Erro ao buscar os conhecimentos inativos.", error)
   }
 };

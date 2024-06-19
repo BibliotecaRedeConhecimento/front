@@ -1,8 +1,8 @@
 import { api } from "./api";
 
-export const getAllCategories = async (filterName= '') => {
+export const getAllCategories = async (filterName= '', size, page) => {
   try {
-    const response = await api.get(`/categories?name=${filterName}`);
+    const response = await api.get(`/categories?name=${filterName}&size=${size}&page=${page}`);
     return response;
   } catch (error) {
     console.error('Erro ao buscar categorias', error);
@@ -54,9 +54,9 @@ export const inactivateCategory = async (id) => {
   }
 };
 
-export const getAllInactiveCategory = async () => {
+export const getAllInactiveCategory = async (name, size, page) => {
   try{
-    const response = await api.get('/categories?active=false')
+    const response = await api.get(`/categories?active=false&name=${name}&size=${size}&page=${page}`)
     return response
   }catch(error){
     console.log("Erro ao buscar as categorias inativos.", error)

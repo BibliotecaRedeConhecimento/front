@@ -10,30 +10,50 @@ import { Button, Container } from "react-bootstrap";
 import { useContext, useEffect, useState } from "react";
 import { AuthenticationContext } from "../../services/context/AuthContext";
 import { getAllInactiveCategory, inactivateCategory } from "../../servicesBack/CategoryServices.js";
+import SearchComponentKnowledge from "../SearchBarKnowledge/index.jsx";
 
 
 function TableInativeCategory() {
   const { isManager } = useContext(AuthenticationContext);
   const [inactiveCategoryData, setInactiveCategoryData] = useState([]);
+  const [filterName, setFilterName] = useState('');
+  const [data, setData] = useState([])
+  const [elementsValue, setElementsValue] = useState()
+  const [page, setPage] = useState()
 
   const fetchInactiveCategory = async () => {
-    const response = await getAllInactiveCategory();
+    const response = await getAllInactiveCategory(filterName, elementsValue, page);
     setInactiveCategoryData(response.data.content);
+    setData(response.data)
   };
 
   useEffect(() => {
     fetchInactiveCategory();
-  }, []);
+  }, [filterName, elementsValue, page]);
 
   const handleActivate = async (id) => {
     await inactivateCategory(id);
     fetchInactiveCategory();
   };
 
+  const handleElementValue = (elementsNumber) => {
+    setElementsValue(elementsNumber)
+}
+
+const handlePagination = (pageNumber) => {
+    setPage(pageNumber)
+}
+
+useEffect(() => {
+    if (inactiveCategoryData.length === 0 && page > 0) {
+        setPage(page - 1)
+    }
+}, [inactiveCategoryData])
+
   return (
     <>
       <Container fluid>
-
+      <SearchComponentKnowledge onSearch={setFilterName} />
       </Container>
       <TableStyle>
         <div className="table-area">
@@ -65,7 +85,7 @@ function TableInativeCategory() {
           </Table>
         </div>
       </TableStyle>
-      <PaginationComponent />
+      <PaginationComponent changeElementsNumber={handleElementValue} changePage={handlePagination} data={data} />
     </>
   );
 }

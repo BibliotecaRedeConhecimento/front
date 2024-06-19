@@ -21,6 +21,7 @@ import { getCategoryById, updateCategory } from "../../servicesBack/CategoryServ
 import ButtonModal from "../../components/ButtonModal";
 import ButtonComponent from "../../components/ButtonBack";
 import ButtonConfirmRegistration from "../../components/ButtonConfirmRegistration";
+import { getAllDomains } from "../../servicesBack/DomainServices";
 
 
 
@@ -31,44 +32,54 @@ function ChangeCategory({
   increaseFontSize,
   logOut,
 }) {
-    const { id }  = useParams()
+  const { id } = useParams()
 
 
-    console.log(id)
-    
-      const [showModal, setShowModal] = useState(false);
-      const [categoryName, setCategoryName] = useState()
-      const [domainName, setDomainName] = useState()
-    
-      const [namePlaceholder, setNamePlaceholder] = useState()
-    
-      const handleOpenModal = () => { setShowModal(true);};
-    
-      const handleCloseModal = () => { setShowModal(false);};
-    
-      const handleEdit = async() =>{
-        const response = await updateCategory(id, {name: categoryName, active: true});
-        if (response) {
-          toast.success("categoria alterado com sucesso!");
-          
-          handleCloseModal();
-        } else {
-          toast.error("Erro ao alterar a categoria.");
-        }
-    
-        
-      }
-    
-      const handleName = async() =>{
-        const response = await getCategoryById(id)
-        setNamePlaceholder(response.data.name)
-        console.log(response)
-      }
-    
-    useEffect(() => {
+  console.log(id)
+
+  const [showModal, setShowModal] = useState(false);
+  const [categoryName, setCategoryName] = useState()
+  const [domain, setDomain] = useState([])
+const [domainId, setDomainId]= useState()
+
+  const handleOpenModal = () => { setShowModal(true); };
+
+  const handleCloseModal = () => { setShowModal(false); };
+
+  const handleEdit = async () => {
+    const response = await updateCategory(id, { name: categoryName, active: true });
+    if (response) {
+      toast.success("categoria alterado com sucesso!");
+
+      handleCloseModal();
+    } else {
+      toast.error("Erro ao alterar a categoria.");
+    }
+
+
+  }
+
+  useEffect(() => {
+
+    const fetchDomains = async () => {
+      const response = await getAllDomains()
+      setDomain(response.data.content)
+    }
+    fetchDomains()
+  }, [])
+
+
+  const handleName = async () => {
+    const response = await getCategoryById(id)
+    setCategoryName(response.data.name)
+    console.log(response)
+  }
+
+  useEffect(() => {
     handleName()
-    }, [])
-    
+  }, [])
+
+
 
   return (
     <ContainerWithSidebar
@@ -79,20 +90,23 @@ function ChangeCategory({
       logOut={logOut}
     >
       <PageContainer>
-        <PageHeaderContainer icon={<MdOutlineAddCircle style={{width: 34, marginRight: 5}} />} title={`Alterar Categoria`} />
+        <PageHeaderContainer icon={<MdOutlineAddCircle style={{ width: 34, marginRight: 5 }} />} title={`Alterar Categoria`} />
         <PageContentContainer>
 
-        <Form.Group controlId="NameCategory">
+          <Form.Group controlId="NameCategory">
 
-              <Form.Label>Nome</Form.Label>
-              <Form.Control type="string" placeholder={namePlaceholder} onChange={(event) => setCategoryName(event.target.value)}/>
+            <Form.Label>Nome</Form.Label>
+            <Form.Control type="string" onChange={(event) => setCategoryName(event.target.value)} value={categoryName} />
+          </Form.Group>
+          <Form.Group controlId="domain">
 
-              
-             
-        </Form.Group>
-
-            <div className="d-flex justify-content-between mt-3">
-             <ButtonComponent
+            <Form.Label>Dominio</Form.Label>
+            <Form.Control  as="select"
+              value={domainId}
+              onChange={handleChange} />
+          </Form.Group>
+          <div className="d-flex justify-content-between mt-3">
+            <ButtonComponent
               size="10rem"
               bgColor="var(--cinza-primario)"
               textColor="white"
@@ -100,41 +114,41 @@ function ChangeCategory({
             >
               <IoIosArrowBack style={{ marginRight: 5, width: 12 }} />
               Voltar
-            </ButtonComponent>     
-            <ButtonConfirmRegistration 
+            </ButtonComponent>
+            <ButtonConfirmRegistration
               size="10rem"
               bgColor="var(--verde-primario)"
               alternativeText="Confirmar alteração"
               action={handleOpenModal} >
 
-                Alterar
-                <IoIosArrowForward style={{ marginLeft: 5, width: 12 }} />
-                
-            
-            </ButtonConfirmRegistration>  
+              Alterar
+              <IoIosArrowForward style={{ marginLeft: 5, width: 12 }} />
 
-            
-            </div>       
 
-            
+            </ButtonConfirmRegistration>
 
-           
 
-            <ModalComponent
-              tabIndex="-1"
-              bodyContent={"Deseja alterar a Categoria?"}
-              show={showModal}
-              handleClose={() => {
-                handleCloseModal();
-                toast.error("Alteração de categoria cancelada.");
-              }}
-              confirm={handleEdit}
-              cancel={() => {
-                handleCloseModal();
-                toast.error("Alteração de categoria cancelada.");
-              }}
-            />
-         
+          </div>
+
+
+
+
+
+          <ModalComponent
+            tabIndex="-1"
+            bodyContent={"Deseja alterar a Categoria?"}
+            show={showModal}
+            handleClose={() => {
+              handleCloseModal();
+              toast.error("Alteração de categoria cancelada.");
+            }}
+            confirm={handleEdit}
+            cancel={() => {
+              handleCloseModal();
+              toast.error("Alteração de categoria cancelada.");
+            }}
+          />
+
 
         </PageContentContainer>
       </PageContainer>

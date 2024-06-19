@@ -23,22 +23,38 @@ function TableCategory() {
     };
     const [categoryData, setCategoryData] = useState([]);
     const [filterName, setFilterName] = useState('');
+    const [data, setData] = useState([])
+    const [elementsValue, setElementsValue] = useState()
+    const [page, setPage] = useState()
 
     const fetchCategories = async () => {
-        const response = await getAllCategories(filterName);
+        const response = await getAllCategories(filterName, elementsValue, page);
         setCategoryData(response.data.content);
+        setData(response.data)
         console.log(response.data.content);
     };
 
     useEffect(() => {
         fetchCategories()
-    }, [filterName])
+    }, [filterName, elementsValue, page])
 
     const handleInactivate = async (id) => {
         await inactivateCategory(id);
         fetchCategories();
     };
+    const handleElementValue = (elementsNumber) => {
+        setElementsValue(elementsNumber)
+    }
 
+    const handlePagination = (pageNumber) => {
+        setPage(pageNumber)
+    }
+
+    useEffect(() => {
+        if (categoryData.length === 0 && page > 0) {
+            setPage(page - 1)
+        }
+    }, [categoryData])
 
     const { isManager } = useContext(AuthenticationContext)
 
@@ -104,7 +120,7 @@ function TableCategory() {
                     </Table>
                 </div>
             </TableStyle>
-            <PaginationComponent />
+            <PaginationComponent changeElementsNumber={handleElementValue} changePage={handlePagination} data={data} />
         </>
     );
 }

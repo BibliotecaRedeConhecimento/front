@@ -11,27 +11,46 @@ import SearchComponentKnowledge from "../SearchBarKnowledge/index.jsx";
 function TableInativeKnowledge() {
   const { isManager } = useContext(AuthenticationContext);
   const [inactiveKnowledgeData, setInactiveKnowledgeData] = useState([]);
-  
+  const [data, setData] = useState([])
+  const [elementsValue, setElementsValue] = useState()
+  const [page, setPage] = useState()
+  const [filterTitle, setFilterTitle] = useState('');
+
 
   const fetchInactiveKnowledges = async () => {
-    const response = await getAllInactiveKnowledges();
+    const response = await getAllInactiveKnowledges(filterTitle, elementsValue, page);
     setInactiveKnowledgeData(response.data.content);
+    setData(response.data)
   };
 
   useEffect(() => {
     fetchInactiveKnowledges();
-  }, []);
+  }, [filterTitle, elementsValue, page]);
 
   const handleActivate = async (id) => {
     await inactivateKnowledge(id);
     fetchInactiveKnowledges();
   };
 
+  useEffect(() => {
+    if (inactiveKnowledgeData.length === 0 && page > 0) {
+      setPage(page - 1)
+    }
+  }, [inactiveKnowledgeData])
+
+  const handleElementValue = (elementsNumber) => {
+    setElementsValue(elementsNumber)
+  }
+
+  const handlePagination = (pageNumber) => {
+    setPage(pageNumber)
+  }
+
   return (
     <>
       <Container fluid>
 
-        <SearchComponentKnowledge/>
+        <SearchComponentKnowledge onSearch={setFilterTitle} />
 
       </Container>
       <TableStyle>
@@ -74,7 +93,7 @@ function TableInativeKnowledge() {
           </Table>
         </div>
       </TableStyle>
-      <PaginationComponent />
+      <PaginationComponent changeElementsNumber={handleElementValue} changePage={handlePagination} data={data} />
     </>
   );
 }

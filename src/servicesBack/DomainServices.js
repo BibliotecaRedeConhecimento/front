@@ -1,8 +1,8 @@
 import { api } from "./api";
 
-export const getAllDomains = async (filterName = '') => {
+export const getAllDomains = async (filterName = '', size, page) => {
   try {
-    const response = await api.get(`/domains?name=${filterName}`);
+    const response = await api.get(`/domains?name=${filterName}&size=${size}&page=${page}`);
     return response;
   } catch (error) {
     console.error('Erro ao buscar dominio', error);
@@ -54,9 +54,9 @@ export const inactivateDomain = async (id) => {
   }
 };
 
-export const getAllInactiveDomain = async () => {
+export const getAllInactiveDomain = async (name, size, page) => {
   try{
-    const response = await api.get('/domains?active=false')
+    const response = await api.get(`/domains?active=false&name=${name}&size=${size}&page=${page}`)
     return response
   }catch(error){
     console.log("Erro ao buscar os domínios inativos.", error)
