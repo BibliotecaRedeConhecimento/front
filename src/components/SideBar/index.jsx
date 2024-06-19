@@ -166,7 +166,7 @@ function Sidebar({
       },
     ];
 
-    if (['/biblioteca', '/menuDominio', '/menuCategoria', '/menuConhecimento', '/cadastrarCategoria', '/buscarCategoria', '/categoriaInativa', '/buscarCategoria/alterarCategoria/:id', '/cadastrarDominio', '/buscarDominio', '/dominioInativo', '/buscarDominio/alterarDominio/:id', '/cadastrarConhecimento', '/buscarConhecimento', '/conhecimentoInativo', '/buscarConhecimento/alterarConhecimento/:id'].includes(location.pathname)) {
+    if (['/biblioteca', '/menuDominio', '/menuCategoria', '/menuConhecimento', '/cadastrarCategoria', '/buscarCategoria', '/categoriaInativa', '/buscarCategoria/ChangeCategory/:id', '/cadastrarDominio', '/buscarDominio', '/dominioInativo', '/buscarDominio/ChangeDomain/:id', '/cadastrarConhecimento', '/buscarConhecimento', '/conhecimentoInativo', '/buscarConhecimento/changeKnowledge/:id'].includes(location.pathname)) {
       setItems([
         ...commonItems,
         {

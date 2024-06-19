@@ -15,11 +15,12 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import ModalComponent from "../../components/ModalComponent";
-import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 import { getCategoryById, updateCategory } from "../../servicesBack/CategoryServices";
 import ButtonModal from "../../components/ButtonModal";
 import ButtonComponent from "../../components/ButtonBack";
+import ButtonConfirmRegistration from "../../components/ButtonConfirmRegistration";
 
 
 
@@ -37,6 +38,7 @@ function ChangeCategory({
     
       const [showModal, setShowModal] = useState(false);
       const [categoryName, setCategoryName] = useState()
+      const [domainName, setDomainName] = useState()
     
       const [namePlaceholder, setNamePlaceholder] = useState()
     
@@ -45,11 +47,16 @@ function ChangeCategory({
       const handleCloseModal = () => { setShowModal(false);};
     
       const handleEdit = async() =>{
-        const response = await updateCategory(id, {
-          name: categoryName
-        })
+        const response = await updateCategory(id, {name: categoryName, active: true});
+        if (response) {
+          toast.success("categoria alterado com sucesso!");
+          
+          handleCloseModal();
+        } else {
+          toast.error("Erro ao alterar a categoria.");
+        }
     
-        console.log(response)
+        
       }
     
       const handleName = async() =>{
@@ -76,14 +83,16 @@ function ChangeCategory({
         <PageContentContainer>
 
         <Form.Group controlId="NameCategory">
+
               <Form.Label>Nome</Form.Label>
               <Form.Control type="string" placeholder={namePlaceholder} onChange={(event) => setCategoryName(event.target.value)}/>
+
+              
              
-            </Form.Group>
+        </Form.Group>
 
-            <ButtonModal buttonText="Confirmar Cadastro" onClick={handleOpenModal}/>
-
-            <ButtonComponent
+            <div className="d-flex justify-content-between mt-3">
+             <ButtonComponent
               size="10rem"
               bgColor="var(--cinza-primario)"
               textColor="white"
@@ -91,17 +100,40 @@ function ChangeCategory({
             >
               <IoIosArrowBack style={{ marginRight: 5, width: 12 }} />
               Voltar
-            </ButtonComponent>          
+            </ButtonComponent>     
+            <ButtonConfirmRegistration 
+              size="10rem"
+              bgColor="var(--verde-primario)"
+              alternativeText="Confirmar alteração"
+              action={handleOpenModal} >
+
+                Alterar
+                <IoIosArrowForward style={{ marginLeft: 5, width: 12 }} />
+                
+            
+            </ButtonConfirmRegistration>  
+
+            
+            </div>       
 
             
 
            
 
-            <ModalComponent 
-            bodyContent={'Deseja alterar a categoria?'} 
-            show={showModal} handleClose={handleCloseModal}  
-            confirm={handleEdit}
-            confirmButton = 'Alterar'/>   
+            <ModalComponent
+              tabIndex="-1"
+              bodyContent={"Deseja alterar a Categoria?"}
+              show={showModal}
+              handleClose={() => {
+                handleCloseModal();
+                toast.error("Alteração de categoria cancelada.");
+              }}
+              confirm={handleEdit}
+              cancel={() => {
+                handleCloseModal();
+                toast.error("Alteração de categoria cancelada.");
+              }}
+            />
          
 
         </PageContentContainer>

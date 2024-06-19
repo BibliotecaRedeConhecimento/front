@@ -174,7 +174,7 @@ const RegisterCategory = ({
             />
         </PageContentContainer>
       </PageContainer>
-      <ToastContainer />
+
     </ContainerWithSidebar>
   );
 };

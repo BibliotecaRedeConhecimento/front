@@ -135,7 +135,7 @@ const RegisterDomain = ({
             />
           </PageContentContainer>
         </PageContainer>
-        <ToastContainer />
+        
       </div>
     </ContainerWithSidebar>
   );

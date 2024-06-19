@@ -324,7 +324,7 @@ function ChangeKnowledge({
                   alternativeText="Cadastrar"
                   onClick={handleOpenModal}
               >
-                Editar
+                Alterar
                 <IoIosArrowForward style={{ marginLeft: 5, width: 12 }} />
               </ButtonConfirmRegistration>
             </div>

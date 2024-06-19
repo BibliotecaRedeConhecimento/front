@@ -6,7 +6,7 @@ export const ButtonRoutesStyle = styled(Button)`
     color: var(--branco-secundario);
     
     border: none;
-    border-radius: 4px;
+    border-radius: 7px;
     width: 20rem;
     height: 7rem;
     font-size: auto;

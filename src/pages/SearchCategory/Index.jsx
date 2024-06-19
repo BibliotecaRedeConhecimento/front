@@ -21,6 +21,18 @@ function SearchCategory({
   logOut,
 }) {
 
+  const [categoryData, setCategoryData] = useState([]);
+
+  const fetchCategories = async () => {
+    const response = await getAllCategories()
+  setCategoryData(response.data.content)
+  console.log(response.data.content)
+  };
+
+useEffect(() => {
+  fetchCategories()
+}, [])
+
  
   return (
     <ContainerWithSidebar
@@ -35,7 +47,7 @@ function SearchCategory({
         <PageContentContainer>
           
 
-         <TableCategory />
+         <TableCategory category={categoryData}/>
 
          <div style={{marginTop: 20}}>
           <ButtonComponent

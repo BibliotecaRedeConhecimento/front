@@ -308,7 +308,7 @@ const RegisterKnowledge = ({
             />
           </PageContentContainer>
         </PageContainer>
-        <ToastContainer />
+        
       </div>
     </ContainerWithSidebar>
   );
