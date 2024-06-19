@@ -74,7 +74,7 @@ function Sidebar({
             <strong>{SystemInfo.abbreviation}</strong>
           </div>
         ) : (
-          <div className="system-title">{SystemInfo.title}</div>
+          <div style={{fontSize: SystemInfo.titleFontSize}} className="system-title">{SystemInfo.title}</div>
         )}
       </div>
     );
@@ -213,11 +213,14 @@ function Sidebar({
           icon: <SlBookOpen title="Conhecimento" size={24} />,
         },
       ]);
-
-      SystemInfo.abbreviation = "SB";
+      
+      {SystemInfo.abbreviation = "SB"};
+      {SystemInfo.title = "Sistema Biblioteca"};
     } else {
       setItems(commonItems);
-      SystemInfo.abbreviation = "SGC";
+      {SystemInfo.abbreviation = "SGC"};
+      {SystemInfo.title = "Sistema de Gestão de Competência"};
+      
     }
   }, [location.pathname, sideBarCollapse, HandledarkMode, increaseFontSize, decreaseFontSize, navigateTo]);
 
