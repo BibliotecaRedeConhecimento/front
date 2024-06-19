@@ -28,7 +28,7 @@ function ChangeCategory({
   const [showModal, setShowModal] = useState(false);
   const [categoryName, setCategoryName] = useState("");
   const [domain, setDomain] = useState([]);
-  const [domainId, setDomainId] = useState("");
+  const [domainId, setDomainId] = useState();
   const [errors, setErrors] = useState({});
 
   const handleOpenModal = (event) => {
@@ -43,7 +43,9 @@ function ChangeCategory({
   const handleEdit = async (event) => {
     event.preventDefault();
     try {
-      const response = await updateCategory(id, { name: categoryName, active: true, domainId });
+      const response = await updateCategory(id, { name: categoryName, active: true, domains:[{
+        id: domainId
+      }] });
       if (response) {
         toast.success("Categoria alterada com sucesso!");
         handleCloseModal();
