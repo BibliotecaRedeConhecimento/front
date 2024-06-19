@@ -85,7 +85,7 @@ function Sidebar({
       <div className="user-container">
         {sideBarCollapse ? (
           <SideBarItem
-            index={8}
+            index={9}
             smallText={"Perfil"}
             bigText={"Perfil"}
             action={navigateTo}
@@ -125,28 +125,28 @@ function Sidebar({
   useEffect(() => {
     const commonItems = [
       {
-        index: 0,
+        index: 1,
         smallText: "Contraste",
         bigText: "Alto Contraste",
         action: HandledarkMode,
         icon: <MdContrast title="Alto Contraste" size={24} />,
       },
       {
-        index: 1,
+        index: 2,
         smallText: "Aumentar",
         bigText: "Aumentar Fonte",
         action: increaseFontSize,
         icon: <MdOutlineTextIncrease title="Aumentar Fonte" size={24} />,
       },
       {
-        index: 2,
+        index: 3,
         smallText: "Diminuir",
         bigText: "Diminuir Fonte",
         action: decreaseFontSize,
         icon: <MdOutlineTextDecrease title="Diminuir Fonte" size={24} />,
       },
       {
-        index: 3,
+        index: 4,
         smallText: sideBarCollapse ? "Expandir" : "Retrair",
         bigText: sideBarCollapse ? "Expandir" : "Retrair",
         action: handleSidebarCollapse,
@@ -157,7 +157,7 @@ function Sidebar({
         ),
       },
       {
-        index: 4,
+        index: 5,
         smallText: "Início",
         bigText: "Início",
         action: navigateTo,
@@ -170,7 +170,7 @@ function Sidebar({
       setItems([
         ...commonItems,
         {
-          index: 5,
+          index: 6,
           smallText: "Domínio",
           bigText: "Domínio",
           action: navigateTo,
@@ -178,7 +178,7 @@ function Sidebar({
           icon: <IoLibraryOutline title="Domínio" size={24} />,
         },
         {
-          index: 6,
+          index: 7,
           smallText: "Categoria",
           bigText: "Categoria",
           action: navigateTo,
@@ -186,7 +186,7 @@ function Sidebar({
           icon: <BiCategoryAlt title="Categoria" size={24} />,
         },
         {
-          index: 7,
+          index: 8,
           smallText: "Conhecimento",
           bigText: "Conhecimento",
           action: navigateTo,
@@ -225,7 +225,7 @@ function Sidebar({
             <UserInfo />
             <div className="sidebar-nav">
               <SideBarItem
-                index={8}
+                index={10}
                 smallText={"Sair"}
                 bigText={"Sair"}
                 action={logOut}
