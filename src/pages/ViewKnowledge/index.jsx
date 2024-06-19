@@ -32,19 +32,22 @@ function ViewKnowledge({
   if (!knowledge) return <div>Loading...</div>;
 
   const getVideoId = (videoUrl) => {
-    const url = new URL(videoUrl);
-    if (url.hostname === "www.youtube.com" || url.hostname === "youtube.com") {
-      return url.searchParams.get("v");
-    } else {
-      throw new Error("URL do vídeo inválida");
+    try {
+      const url = new URL(videoUrl);
+      if (url.hostname === "www.youtube.com" || url.hostname === "youtube.com") {
+        return url.searchParams.get("v");
+      }
+      return null;
+    } catch (error) {
+      return null;
     }
   };
 
-  const renderVideoThumbnail = () => {
+  const renderMediaThumbnail = () => {
     if (!knowledge.archive) return null;
 
-    try {
-      const videoId = getVideoId(knowledge.archive);
+    const videoId = getVideoId(knowledge.archive);
+    if (videoId) {
       const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
       return (
         <div className="thumbnail">
@@ -56,16 +59,24 @@ function ViewKnowledge({
           >
             <Image
               src={thumbnailUrl}
-              alt="Thumbnail do vídeo"
+              alt="thumbnail"
               fluid
               style={{ width: "auto", height: "200px", borderRadius: 10 }}
             />
           </a>
         </div>
       );
-    } catch (error) {
-      console.error("Erro ao obter a thumbnail do vídeo", error);
-      return null;
+    } else {
+      return (
+        <div className="thumbnail">
+          <Image
+            src={knowledge.archive}
+            alt="Imagem"
+            fluid
+            style={{ width: "auto", height: "200px", borderRadius: 10 }}
+          />
+        </div>
+      );
     }
   };
 
@@ -83,14 +94,14 @@ function ViewKnowledge({
           <div className="container">
             <div className="content">
               <p>
-              <strong>{knowledge.title}</strong>
+                <strong>{knowledge.title}</strong>
               </p>
-                <strong>Introdução:</strong>
+              <strong>Introdução:</strong>
               <p>{knowledge.introduction}</p>
               <p>
-                <p>{knowledge.titleMedia}</p>
+                <strong>{knowledge.titleMedia}</strong>
               </p>
-              {renderVideoThumbnail()}
+              {renderMediaThumbnail()}
               <p className="description">{knowledge.description}</p>
               <div className="button-container">
                 <ButtonComponent
@@ -112,4 +123,3 @@ function ViewKnowledge({
 }
 
 export default ViewKnowledge;
-
