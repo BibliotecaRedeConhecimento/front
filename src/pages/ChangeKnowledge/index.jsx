@@ -158,9 +158,14 @@ function ChangeKnowledge({
     const videoIdMatch = url.match(
       /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
     );
-    return videoIdMatch
-      ? `https://img.youtube.com/vi/${videoIdMatch[1]}/0.jpg`
-      : null;
+
+    if (videoIdMatch) {
+      return `https://img.youtube.com/vi/${videoIdMatch[1]}/0.jpg`;
+    } else if (url.match(/\.(jpeg|jpg|gif|png)$/)) {
+      return url;
+    }
+    return null;
+
   };
 
   return (
@@ -265,10 +270,10 @@ function ChangeKnowledge({
                 </Form.Group>
 
                 <Form.Group controlId="Media" className="mb-3">
-                  <Form.Label>URL do vídeo</Form.Label>
+                  <Form.Label>URL do vídeo ou Imagem</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Cole a URL do vídeo aqui..."
+                    placeholder="Cole a URL do vídeo ou imagem aqui..."
                     value={formData.Media}
                     onChange={handleChange}
                     required
@@ -283,7 +288,7 @@ function ChangeKnowledge({
                   <div className="mb-3">
                     <Image
                       src={thumbnail}
-                      alt="Thumbnail"
+                      alt=""
                       fluid
                       style={{ maxWidth: "170px", maxHeight: "170px" }}
                     />
@@ -331,16 +336,16 @@ function ChangeKnowledge({
           </Form>
           <ModalComponent
               tabIndex="-1"
-              bodyContent={"Deseja cadastrar o Domínio?"}
+              bodyContent={"Deseja alterar o Domínio?"}
               show={showModal}
               handleClose={() => {
                 handleCloseModal();
-                toast.error("Edição de domínio cancelada.");  
+                toast.error("Edição de conhecimento cancelada.");  
               }}
               confirm={handleSubmit}
               cancel={() => {
                 handleCloseModal();
-                toast.error("Edição de domínio cancelada.");  
+                toast.error("Edição de conhecimento cancelada.");  
               }}
             />
         </PageContentContainer>

@@ -56,7 +56,7 @@ const RegisterKnowledge = ({
     if (videoId) {
       setThumbnailUrl(`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`);
     } else {
-      setThumbnailUrl("");
+      setThumbnailUrl(value);
     }
   };
 
@@ -229,9 +229,9 @@ const RegisterKnowledge = ({
                   </Form.Group>
 
                   <Form.Group controlId="Media" className="mb-3">
-                    <Form.Label>URL do vídeo</Form.Label>
+                    <Form.Label>URL do vídeo ou Imagem</Form.Label>
                     <Form.Control
-                      placeholder="Cole a URL do vídeo aqui..."
+                      placeholder="Cole a URL do vídeo ou imagem aqui..."
                       type="text"
                       value={formData.Media}
                       onChange={handleMediaChange}
@@ -247,7 +247,7 @@ const RegisterKnowledge = ({
                     <div className="mb-3">
                       <img
                         src={thumbnailUrl}
-                        alt="Thumbnail do vídeo"
+                        alt=""
                         style={{ maxWidth: "170px", maxHeight: "170px" }}
                       />
                     </div>
@@ -294,16 +294,16 @@ const RegisterKnowledge = ({
             </Form>
             <ModalComponent
               tabIndex="-1"
-              bodyContent={"Deseja cadastrar o Domínio?"}
+              bodyContent={"Deseja cadastrar o domínio?"}
               show={showModal}
               handleClose={() => {
                 handleCloseModal();
-                toast.error("Cadastro de domínio cancelado.");  
+                toast.error("Cadastro de conhecimento cancelado.");  
               }}
               confirm={handleSubmit}
               cancel={() => {
                 handleCloseModal();
-                toast.error("Cadastro de domínio cancelado.");  
+                toast.error("Cadastro de conhecimento cancelado.");  
               }}
             />
           </PageContentContainer>

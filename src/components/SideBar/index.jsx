@@ -166,7 +166,26 @@ function Sidebar({
       },
     ];
 
-    if (['/biblioteca', '/menuDominio', '/menuCategoria', '/menuConhecimento', '/cadastrarCategoria', '/buscarCategoria', '/categoriaInativa', '/buscarCategoria/ChangeCategory/:id', '/cadastrarDominio', '/buscarDominio', '/dominioInativo', '/buscarDominio/ChangeDomain/:id', '/cadastrarConhecimento', '/buscarConhecimento', '/conhecimentoInativo', '/buscarConhecimento/changeKnowledge/:id'].includes(location.pathname)) {
+    const specialRoutes = [
+      '/biblioteca',
+      '/menuDominio',
+      '/menuCategoria',
+      '/menuConhecimento',
+      '/cadastrarCategoria',
+      '/buscarCategoria',
+      '/categoriaInativa',
+      '/buscarCategoria/ChangeCategory/',
+      '/cadastrarDominio',
+      '/buscarDominio',
+      '/dominioInativo',
+      '/buscarDominio/ChangeDomain/',
+      '/cadastrarConhecimento',
+      '/buscarConhecimento',
+      '/conhecimentoInativo',
+      '/buscarConhecimento/changeKnowledge/',
+    ];
+
+    if (specialRoutes.some(route => location.pathname.startsWith(route))) {
       setItems([
         ...commonItems,
         {

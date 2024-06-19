@@ -65,11 +65,11 @@ const RegisterCategory = ({
       }]
     });
     if (response) {
-      toast.success("Domínio cadastrado com sucesso!");
+      toast.success("Categoria cadastrada com sucesso!");
       
       handleCloseModal();
     } else {
-      toast.error("Erro ao cadastrar o domínio.");
+      toast.error("Erro ao cadastrar o categoria.");
     }
   
 
@@ -160,7 +160,7 @@ const RegisterCategory = ({
           </Form>
           <ModalComponent
               tabIndex="-1"
-              bodyContent={"Deseja cadastrar a categoria??"}
+              bodyContent={"Deseja cadastrar a categoria?"}
               show={showModal}
               handleClose={() => {
                 handleCloseModal();
