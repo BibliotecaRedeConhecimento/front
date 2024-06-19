@@ -38,7 +38,7 @@ function HomeKnowledge({
     >
       <PageContainer>
         <PageHeaderContainer title={`Menu de Conhecimento`} />
-        <PageContentContainer width="100%" height="88vh" flexDirection= 'column' justifyContent='center' alignItems='center' display='flex' >
+        <PageContentContainer width="100%" flexDirection= 'column' justifyContent='center' alignItems='center' display='flex' >
 
           { isManager() ?
             <ButtonRoutes  buttonText="Cadastrar Conhecimento" onClick={() => navigateTo("/cadastrarConhecimento")} />

@@ -153,7 +153,7 @@ const RegisterKnowledge = ({
                       onChange={handleChange}
                       required
                       
-                      style={{ width: "80%" ,backgroundColor: "var(--branco-primario2)"}}
+                      style={{ backgroundColor: "var(--branco-primario2)"}}
                     />
                     <Form.Control.Feedback type="invalid">
                       Campo obrigatório.
@@ -165,10 +165,11 @@ const RegisterKnowledge = ({
                     <Form.Control
                       as="textarea"
                       placeholder="Introdução do conhecimento..."
+                      rows={5}
                       value={formData.Introduction}
                       onChange={handleChange}
                       required
-                      style={{ width: "80%" ,backgroundColor: "var(--branco-primario2)" }}
+                      style={{ backgroundColor: "var(--branco-primario2)" }}
                     />
                     <Form.Control.Feedback type="invalid">
                       Campo obrigatório.
@@ -182,7 +183,7 @@ const RegisterKnowledge = ({
                       value={formData.categoryId}
                       onChange={handleChange}
                       required
-                      style={{ width: "80%" ,backgroundColor: "var(--branco-primario2)"}}
+                      style={{ backgroundColor: "var(--branco-primario2)"}}
                     >
                       {Array.isArray(categories) &&
                         categories.map((category) => (
@@ -204,7 +205,7 @@ const RegisterKnowledge = ({
                       value={formData.Contributor}
                       onChange={handleChange}
                       required
-                      style={{ width: "80%" ,backgroundColor: "var(--branco-primario2)"}}
+                      style={{ backgroundColor: "var(--branco-primario2)"}}
                     />
                     <Form.Control.Feedback type="invalid">
                       Campo obrigatório.
@@ -221,7 +222,7 @@ const RegisterKnowledge = ({
                       value={formData.TitleMedia}
                       onChange={handleChange}
                       required
-                      style={{ width: "80%",backgroundColor: "var(--branco-primario2)" }}
+                      style={{ backgroundColor: "var(--branco-primario2)" }}
                     />
                     <Form.Control.Feedback type="invalid">
                       Campo obrigatório.
@@ -236,7 +237,7 @@ const RegisterKnowledge = ({
                       value={formData.Media}
                       onChange={handleMediaChange}
                       required
-                      style={{ width: "80%",backgroundColor: "var(--branco-primario2)" }}
+                      style={{ backgroundColor: "var(--branco-primario2)" }}
                     />
                     <Form.Control.Feedback type="invalid">
                       Campo obrigatório.
@@ -257,12 +258,12 @@ const RegisterKnowledge = ({
                     <Form.Label>Descrição</Form.Label>
                     <Form.Control
                       as="textarea"
-                      rows={3}
+                      rows={5}
                       placeholder="Descrição detalhada..."
                       value={formData.Description}
                       onChange={handleChange}
                       required
-                      style={{ width: "80%",backgroundColor: "var(--branco-primario2)" }}
+                      style={{ backgroundColor: "var(--branco-primario2)" }}
                     />
                     <Form.Control.Feedback type="invalid">
                       Campo obrigatório.

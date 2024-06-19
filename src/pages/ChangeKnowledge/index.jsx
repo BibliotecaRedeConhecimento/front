@@ -193,7 +193,7 @@ function ChangeKnowledge({
                     value={formData.NameKnowledge}
                     onChange={handleChange}
                     required
-                    style={{ width: "80%" }}
+                    
                   />
                   <Form.Control.Feedback type="invalid">
                     Campo obrigatório.
@@ -208,7 +208,7 @@ function ChangeKnowledge({
                     value={formData.Introduction}
                     onChange={handleChange}
                     required
-                    style={{ width: "80%" }}
+                    
                   />
                   <Form.Control.Feedback type="invalid">
                     Campo obrigatório.
@@ -222,7 +222,7 @@ function ChangeKnowledge({
                     value={formData.categoryId}
                     onChange={handleChange}
                     required
-                    style={{ width: "80%" }}
+                    
                   >
                     <option value="">Selecione uma categoria</option>
                     {Array.isArray(categories) &&
@@ -245,7 +245,7 @@ function ChangeKnowledge({
                     value={formData.Contributor}
                     onChange={handleChange}
                     required
-                    style={{ width: "80%" }}
+                    
                   />
                   <Form.Control.Feedback type="invalid">
                     Campo obrigatório.
@@ -262,7 +262,7 @@ function ChangeKnowledge({
                     value={formData.TitleMedia}
                     onChange={handleChange}
                     required
-                    style={{ width: "80%" }}
+                    
                   />
                   <Form.Control.Feedback type="invalid">
                     Campo obrigatório.
@@ -277,7 +277,7 @@ function ChangeKnowledge({
                     value={formData.Media}
                     onChange={handleChange}
                     required
-                    style={{ width: "80%" }}
+                    
                   />
                   <Form.Control.Feedback type="invalid">
                     Campo obrigatório.
@@ -304,7 +304,7 @@ function ChangeKnowledge({
                     value={formData.Description}
                     onChange={handleChange}
                     required
-                    style={{ width: "80%" }}
+                    
                   />
                   <Form.Control.Feedback type="invalid">
                     Campo obrigatório.
