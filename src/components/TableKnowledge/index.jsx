@@ -32,8 +32,8 @@ function TableKnowledge() {
   const [elementsValue, setElementsValue] = useState();
   const [page, setPage] = useState();
   const [data, setData] = useState([]);
-  const [selectedDomain, setSelectedDomain] = useState();
-  const [selectedCategory, setSelectedCategory] = useState();
+  const [selectedDomain, setSelectedDomain] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState(0);
   const [noResults, setNoResults] = useState(false);
 
   const fetchKnowledges = async () => {
@@ -152,7 +152,7 @@ function TableKnowledge() {
                           <span key={category.id}>{category.name}</span>
                         ))}
                     </td>
-                    <td>{knowledge.text}</td>
+                    <td>{knowledge.collaborator}</td>
 
                     <td className="action-column">
                       <Button

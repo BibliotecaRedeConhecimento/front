@@ -11,8 +11,8 @@ import ButtonModal from "../../components/ButtonModal";
 import { useParams } from "react-router-dom";
 import { getDomainById, updateDomain } from "../../servicesBack/DomainServices";
 import ButtonComponent from "../../components/ButtonBack";  
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";  
-import { ToastContainer, toast } from 'react-toastify';
+import { IoIosArrowForward } from "react-icons/io";  
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ButtonConfirmRegistration from "../../components/ButtonConfirmRegistration";
 
@@ -56,6 +56,7 @@ function ChangeDomain({
         toast.success("Domínio alterado com sucesso!");
         
         handleCloseModal();
+        
       } else {
         toast.error("Erro ao alterar o domínio.");
       }

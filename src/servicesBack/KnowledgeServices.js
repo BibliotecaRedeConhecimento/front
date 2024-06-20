@@ -54,9 +54,9 @@ export const inactivateKnowledge = async (id) => {
   }
 };
 
-export const getAllInactiveKnowledges = async (title, size, page) => {
+export const getAllInactiveKnowledges = async (title, size, page, domainId, categoryId) => {
   try {
-    const response = await api.get(`/knowledges?active=false&title=${title}&size=${size}&page=${page}`)
+    const response = await api.get(`/knowledges?active=false&title=${title}&size=${size}&page=${page}&domainId=${domainId}&categoryId=${categoryId}`)
     return response
   } catch (error) {
     console.log("Erro ao buscar os conhecimentos inativos.", error)

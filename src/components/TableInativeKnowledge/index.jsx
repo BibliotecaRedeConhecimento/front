@@ -2,11 +2,13 @@ import Table from "react-bootstrap/Table";
 import {MdAddCircleOutline} from "react-icons/md";
 import {TableStyle} from "./style.jsx";
 import PaginationComponent from "../TablePagination/index.jsx";
-import {Container, Button} from "react-bootstrap";
+import {Container, Button, Row, Col} from "react-bootstrap";
 import {useContext, useEffect, useState} from "react";
 import {getAllInactiveKnowledges, inactivateKnowledge} from "../../servicesBack/KnowledgeServices.js";
 import {AuthenticationContext} from "../../services/context/AuthContext";
 import SearchComponentKnowledge from "../SearchBarKnowledge/index.jsx";
+import ToggleSelectDomain from "../SearchBarKnowledgeDomain/index.jsx";
+import ToggleSelectCategory from "../SearchBarKnowledgeCategory/index.jsx";
 
 function TableInativeKnowledge() {
     const {isManager} = useContext(AuthenticationContext);
@@ -15,18 +17,20 @@ function TableInativeKnowledge() {
     const [elementsValue, setElementsValue] = useState()
     const [page, setPage] = useState()
     const [filterTitle, setFilterTitle] = useState('');
+    const [selectedDomain, setSelectedDomain] = useState(0);
+    const [selectedCategory, setSelectedCategory] = useState(0);
     const {user} = useContext(AuthenticationContext)
 
 
     const fetchInactiveKnowledges = async () => {
-        const response = await getAllInactiveKnowledges(filterTitle, elementsValue, page);
+        const response = await getAllInactiveKnowledges(filterTitle, elementsValue, page,selectedDomain, selectedCategory);
         setInactiveKnowledgeData(response.data.content);
         setData(response.data)
     };
 
     useEffect(() => {
         fetchInactiveKnowledges();
-    }, [filterTitle, elementsValue, page]);
+    }, [filterTitle, elementsValue, page, selectedCategory, selectedDomain]);
 
     const handleActivate = async (id) => {
         await inactivateKnowledge(id);
@@ -46,13 +50,27 @@ function TableInativeKnowledge() {
     const handlePagination = (pageNumber) => {
         setPage(pageNumber)
     }
-
+    const handleSelectedDomain = (domainId) => {
+        setSelectedDomain(domainId);
+        setSelectedCategory(0)
+      };
+      const handleSelectedCategory = (categoryId) => {
+        setSelectedCategory(categoryId);
+        setSelectedDomain(0)
+      };
     return (
         <>
             <Container fluid>
 
                 <SearchComponentKnowledge onSearch={setFilterTitle}/>
-
+                <Row style={{marginBottom: 40}}>
+          <Col md={6}>
+            <ToggleSelectDomain selectDomain={handleSelectedDomain} />
+          </Col>
+          <Col md={6}>
+            <ToggleSelectCategory selectCategory={handleSelectedCategory} />
+          </Col>
+        </Row>
             </Container>
             <TableStyle>
                 <div className="table-area">

@@ -19,6 +19,9 @@
   .custom-dropdown-menu .dropdown-item {
     color: var(--cinza-secundario); 
   }
+  .full-width {
+    background-color: var(--branco-primario2);
+  }
   
   .custom-dropdown-menu .dropdown-item:hover,
   .custom-dropdown-menu .dropdown-item:focus {

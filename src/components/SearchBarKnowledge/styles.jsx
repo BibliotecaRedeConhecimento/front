@@ -7,6 +7,7 @@ export const SearchStyle = styled.div`
   }
 
   .form-control {
+    background-color: var(--branco-primario2);
     outline: none !important;        
     box-shadow: none !important;
     padding: 8px;
