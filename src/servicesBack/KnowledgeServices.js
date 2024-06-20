@@ -1,8 +1,8 @@
 import { api } from "./api";
 
-export const getAllKnowledges = async (filterTitle = '', size, page) => {
+export const getAllKnowledges = async (filterTitle = '', size, page, domainId, categoryId) => {
   try {
-    const response = await api.get(`/knowledges?title=${filterTitle}&size=${size}&page=${page}`);
+    const response = await api.get(`/knowledges?title=${filterTitle}&size=${size}&page=${page}&domainId=${domainId}&categoryId=${categoryId}`);
     return response;
   } catch (error) {
     console.error('Erro ao buscar conhecimentos', error);
