@@ -18,5 +18,17 @@ export const ButtonRoutesStyle = styled(Button)`
             filter: brightness(0.8);
             background-color: var(--verde-primario4);
         }
+        &:focus {
+            outline: none !important;
+            box-shadow: none !important;
+            filter: brightness(1.5);
+            background-color: var(--verde-primario4);
+        }
+        &:active {
+            outline: none !important;
+            box-shadow: none !important;
+            filter: brightness(1.5);
+            background-color: var(--verde-primario4) !important;
+        }
 `;
 

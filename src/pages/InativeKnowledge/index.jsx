@@ -42,7 +42,18 @@ function InativeKnowledge({
       logOut={logOut}
     >
       <PageContainer>
-        <PageHeaderContainer icon={<TfiMenuAlt style={{width: 34, marginRight: 5}} />} title={`Conhecimento Inativo`} />
+        <PageHeaderContainer 
+        icon={<TfiMenuAlt style={{width: 34, marginRight: 5}} />} 
+        title={`Conhecimento Inativo`}
+        buttonback={
+          <ButtonComponent
+            size="8rem"
+            //bgColor="var(--cinza-primario)"
+            textColor="white"
+            alternativeText="Voltar"
+          ></ButtonComponent>
+        }
+         />
         <PageContentContainer>
 
          <TableInativeKnowledge knowledge={knowledgeData}/>

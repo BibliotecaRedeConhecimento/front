@@ -33,7 +33,7 @@ export const ContainerWithSidebar = ({
 
   return (
     <>
-      <Container  tabIndex={-1} style={{ backgroundColor: "var(--branco)" }} fluid>
+      <Container  tabIndex={-2} style={{ backgroundColor: "var(--branco)" }} fluid>
         {windowSize < 992 ? (
           <Row>
             <Col className="px-0 col">

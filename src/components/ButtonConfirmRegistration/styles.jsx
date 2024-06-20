@@ -11,5 +11,11 @@ export const ButtonStyle = styled.div`
         &:hover{
             filter: brightness(0.8);
         }
+        &:focus {
+            outline: none !important;
+            box-shadow: none !important;
+            filter: brightness(0.8);
+            background-color: var(--verde-primario4);
+        }
     }
 `;

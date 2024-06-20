@@ -1,16 +1,16 @@
-import { React } from "react";
+import React from "react";
 import Button from "react-bootstrap/Button";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { ButtonStyle } from "./styles.jsx";
 
-function ButtonComponent({ size, bgColor, textColor, action, alternativeText, children }) {
+function ButtonComponent({ size, bgColor, textColor, action, alternativeText, tabIndex = 0, children }) {
   const handleButtonClick = () => {
     window.history.back();
   };
+
   return (
-    <ButtonStyle size={size}  textColor={textColor} >
-      
-      {/* botão antigo caso for usar o antigo */}
+    <ButtonStyle size={size} textColor={textColor} tabIndex={-1}>
+      {/* Componente antigo, caso queira usar o antigo */}
       {/* <Button
         role="button"
         aria-label={alternativeText}
@@ -18,15 +18,17 @@ function ButtonComponent({ size, bgColor, textColor, action, alternativeText, ch
         className="botao-default"
         style={{ maxWidth: "100%" }}
         onClick={handleButtonClick}
+        tabIndex={tabIndex}
       >
         {children}
       </Button> */}
 
-<IoMdArrowRoundBack
+      <IoMdArrowRoundBack
+        tabIndex={tabIndex}
         aria-label={alternativeText}
         title={alternativeText}
         className="botao-default"
-        style={{  cursor: "pointer", width: "100%", height: "3.5rem", fontSize: "2rem"}} 
+        style={{ cursor: "pointer", width: "100%", height: "3.2rem", fontSize: "2rem" }} 
         onClick={handleButtonClick}
       />
     </ButtonStyle>

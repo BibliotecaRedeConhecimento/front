@@ -41,7 +41,18 @@ function InativeCategory({
       logOut={logOut}
     >
       <PageContainer>
-        <PageHeaderContainer icon={<TfiMenuAlt style={{width: 34, marginRight: 5}} />} title={`Categoria Inativa`} />
+        <PageHeaderContainer 
+        icon={<TfiMenuAlt style={{width: 34, marginRight: 5}} />} 
+        title={`Categoria Inativa`}
+        buttonback={
+          <ButtonComponent
+            size="8rem"
+            //bgColor="var(--cinza-primario)"
+            textColor="white"
+            alternativeText="Voltar"
+          ></ButtonComponent>
+        }
+         />
         <PageContentContainer>
           
 
