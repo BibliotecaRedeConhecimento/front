@@ -36,7 +36,14 @@ function HomeCategory({
       logOut={logOut}
     >
       <PageContainer>
-        <PageHeaderContainer title={`Menu de Categoria`} />
+        <PageHeaderContainer title={`Menu de Categoria`} buttonback={
+            <ButtonComponent
+              size="8rem"
+              //bgColor="var(--cinza-primario)"
+              textColor="white"
+              alternativeText="Voltar"
+            ></ButtonComponent>
+          }/>
         <PageContentContainer width="100%" flexDirection= 'column' justifyContent='center' alignItems='center' display='flex' >
 
           { isManager() ?
@@ -46,15 +53,7 @@ function HomeCategory({
 
           <ButtonRoutes buttonText="Buscar Categoria" onClick={() => navigateTo("/buscarCategoria")} />
 
-          <ButtonComponent
-              size="10rem"
-              bgColor="var(--cinza-primario)"
-              textColor="white"
-              alternativeText="Voltar"
-            >
-              <IoIosArrowBack style={{ marginRight: 5, width: 12 }} />
-              Voltar
-            </ButtonComponent>          
+                 
 
         </PageContentContainer>
       </PageContainer>

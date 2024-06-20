@@ -96,7 +96,17 @@ function ChangeCategory({
       logOut={logOut}
     >
       <PageContainer>
-        <PageHeaderContainer icon={<MdOutlineAddCircle style={{ width: 34, marginRight: 5 }} />} title={`Alterar Categoria`} />
+        <PageHeaderContainer 
+        buttonback={
+          <ButtonComponent
+            size="8rem"
+            //bgColor="var(--cinza-primario)"
+            textColor="white"
+            alternativeText="Voltar"
+          ></ButtonComponent>
+        }
+        icon={<MdOutlineAddCircle style={{ width: 34, marginRight: 5 }} />} 
+        title={`Alterar Categoria`} />
         <PageContentContainer>
           <Form onSubmit={handleOpenModal}>
             <Form.Group controlId="NameCategory" className="mb-3">
@@ -132,17 +142,8 @@ function ChangeCategory({
                 {errors.domainId}
               </Form.Control.Feedback>
             </Form.Group>
-            <div className="d-flex justify-content-between mt-3">
-              <ButtonComponent
-                size="10rem"
-                bgColor="var(--cinza-primario)"
-                textColor="white"
-                alternativeText="Voltar"
-                onClick={() => navigate("/menuCategoria")}
-              >
-                <IoIosArrowBack style={{ marginRight: 5, width: 12 }} />
-                Voltar
-              </ButtonComponent>
+            <div className="d-flex justify-content-end mt-auto">
+              
               <ButtonConfirmRegistration
                 size="10rem"
                 bgColor="var(--verde-primario)"

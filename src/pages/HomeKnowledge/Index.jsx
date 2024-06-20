@@ -37,7 +37,14 @@ function HomeKnowledge({
       logOut={logOut}
     >
       <PageContainer>
-        <PageHeaderContainer title={`Menu de Conhecimento`} />
+        <PageHeaderContainer title={`Menu de Conhecimento`} buttonback={
+            <ButtonComponent
+              size="8rem"
+              //bgColor="var(--cinza-primario)"
+              textColor="white"
+              alternativeText="Voltar"
+            ></ButtonComponent>
+          } />
         <PageContentContainer width="100%" flexDirection= 'column' justifyContent='center' alignItems='center' display='flex' >
 
           { isManager() ?
@@ -46,16 +53,7 @@ function HomeKnowledge({
           }
           <ButtonRoutes buttonText="Buscar Conhecimento" onClick={() => navigateTo("/buscarConhecimento")} />
 
-          <ButtonComponent
-
-            size="10rem"
-            bgColor="var(--cinza-primario)"
-            textColor="white"
-            alternativeText="Voltar"
-          >
-            <IoIosArrowBack style={{ marginRight: 5, width: 12 }} />
-            Voltar
-          </ButtonComponent>
+          
 
         </PageContentContainer>
       </PageContainer>

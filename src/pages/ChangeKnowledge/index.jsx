@@ -181,6 +181,14 @@ function ChangeKnowledge({
         >
             <PageContainer>
                 <PageHeaderContainer
+                buttonback={
+                    <ButtonComponent
+                      size="8rem"
+                      //bgColor="var(--cinza-primario)"
+                      textColor="white"
+                      alternativeText="Voltar"
+                    ></ButtonComponent>
+                  }
                     icon={<MdOutlineAddCircle style={{width: 34, marginRight: 5}}/>}
                     title={`Editar Conhecimento`}
                 />

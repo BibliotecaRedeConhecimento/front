@@ -95,8 +95,18 @@ const RegisterCategory = ({
     >
       <PageContainer>
         <PageHeaderContainer
+        buttonback={
+          <ButtonComponent
+            size="8rem"
+            //bgColor="var(--cinza-primario)"
+            textColor="white"
+            alternativeText="Voltar"
+          ></ButtonComponent>
+        }
           icon={<MdOutlineAddCircle style={{ width: 34, marginRight: 5 }} />}
-          title={`Cadastrar Categoria`}
+          title={`Cadastrar Categoria`
+          
+          }
         />
         <PageContentContainer>
           <Form id="categoryForm" noValidate validated={validated} onSubmit={handleOpenModal}>
@@ -136,16 +146,8 @@ const RegisterCategory = ({
 
               </Col>
             </Row>
-            <div className="d-flex justify-content-between mt-3">
-              <ButtonComponent
-                size="10rem"
-                bgColor="var(--cinza-primario)"
-                textColor="white"
-                alternativeText="Voltar"
-              >
-                <IoIosArrowBack style={{ marginRight: 5, width: 12 }} />
-                Voltar
-              </ButtonComponent>
+            <div className="d-flex justify-content-end mt-3">
+             
               <ButtonConfirmRegistration
                   type="button"
                   size="10rem"

@@ -42,7 +42,14 @@ useEffect(() => {
       logOut={logOut}
     >
       <PageContainer>
-        <PageHeaderContainer icon={<TfiMenuAlt style={{width: 34, marginRight: 5}} />} title={`Buscar Domínio`} />
+        <PageHeaderContainer icon={<TfiMenuAlt style={{width: 34, marginRight: 5}} />} title={`Buscar Domínio`} buttonback={
+            <ButtonComponent
+              size="8rem"
+              //bgColor="var(--cinza-primario)"
+              textColor="white"
+              alternativeText="Voltar"
+            ></ButtonComponent>
+          } />
         <PageContentContainer>
 
          <TableDomain domain={domainData}/>

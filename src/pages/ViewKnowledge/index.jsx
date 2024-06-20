@@ -86,7 +86,16 @@ function ViewKnowledge({
       logOut={logOut}
     >
       <PageContainer>
-        <PageHeaderContainer title={`Conhecimento`} />
+        <PageHeaderContainer 
+        buttonback={
+          <ButtonComponent
+            size="8rem"
+            //bgColor="var(--cinza-primario)"
+            textColor="white"
+            alternativeText="Voltar"
+          ></ButtonComponent>
+        }
+        title={`Conhecimento`} />
         <PageContentContainer>
           <div className="container">
             <div className="content">
@@ -100,17 +109,7 @@ function ViewKnowledge({
               </p>
               {renderMediaThumbnail()}
               <p className="description">{knowledge.description}</p>
-              <div className="button-container">
-                <ButtonComponent
-                  size="10rem"
-                  bgColor="var(--cinza-primario)"
-                  textColor="white"
-                  alternativeText="Voltar"
-                >
-                  <IoIosArrowBack style={{ marginRight: 5, width: 12 }} />
-                  Voltar
-                </ButtonComponent>
-              </div>
+             
             </div>
           </div>
         </PageContentContainer>

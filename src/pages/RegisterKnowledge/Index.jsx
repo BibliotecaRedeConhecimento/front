@@ -143,6 +143,14 @@ const RegisterKnowledge = ({
                     <PageHeaderContainer
                         icon={<MdOutlineAddCircle style={{width: 34, marginRight: 5}}/>}
                         title="Cadastrar Conhecimento"
+                        buttonback={
+                            <ButtonComponent
+                              size="8rem"
+                              bgColor="var(--cinza-primario)"
+                              textColor="white"
+                              alternativeText="Voltar"
+                            ></ButtonComponent>
+                          }
                     />
                     <PageContentContainer>
                         <Form id="knowledgeForm" noValidate validated={validated} onSubmit={handleOpenModal}>
