@@ -17,12 +17,12 @@ import ModalComponent from "../../components/ModalComponent";
 import {AuthenticationContext} from "../../services/context/AuthContext";
 
 function ChangeKnowledge({
-                             HandledarkMode,
-                             isDarkMode,
-                             decreaseFontSize,
-                             increaseFontSize,
-                             logOut,
-                         }) {
+        HandledarkMode,
+        isDarkMode,
+        decreaseFontSize,
+        increaseFontSize,
+        logOut,
+    }) {
     const [formData, setFormData] = useState({
         NameKnowledge: "",
         Introduction: "",

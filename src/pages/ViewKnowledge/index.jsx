@@ -47,23 +47,20 @@ function ViewKnowledge({
     if (!knowledge.archive) return null;
 
     const videoId = getVideoId(knowledge.archive);
-    if (videoId) {
-      const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+   if (videoId) {
+      const embedUrl = `https://www.youtube.com/embed/${videoId}`;
       return (
         <div className="thumbnail">
-          <a
-            href={`https://www.youtube.com/watch?v=${videoId}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ textDecoration: "none" }}
-          >
-            <Image
-              src={thumbnailUrl}
-              alt="thumbnail"
-              fluid
-              style={{ width: "auto", height: "200px", borderRadius: 10 }}
-            />
-          </a>
+          <iframe
+            width="560"
+            height="315"
+            src={embedUrl}
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            style={{ width: "500px", height: "315px", borderRadius: 10 }}
+          ></iframe>
         </div>
       );
     } else {
@@ -73,7 +70,7 @@ function ViewKnowledge({
             src={knowledge.archive}
             alt="Imagem"
             fluid
-            style={{ width: "auto", height: "200px", borderRadius: 10 }}
+            style={{ width: "auto", height: "300px", borderRadius: 10 }}
           />
         </div>
       );
