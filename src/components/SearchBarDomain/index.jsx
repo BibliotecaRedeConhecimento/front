@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import { AiOutlineSearch } from "react-icons/ai";
 import { SearchStyle } from "./styles.jsx";
 import { useState } from "react";
+import { toast } from 'react-toastify';
 
 function SearchComponentDomain({onSearch}) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -12,8 +13,15 @@ function SearchComponentDomain({onSearch}) {
     setSearchTerm(event.target.value);
   };
 
-  const handleSearch = () => {
-    onSearch(searchTerm);
+  const handleSearch = async () => {
+    if (searchTerm.trim() === '') {
+      onSearch('');
+    } else {
+      const result = await onSearch(searchTerm);
+      if (result.length === 0) {
+        toast.error('Nenhum domínio encontrado.');
+      }
+    }
   };
 
   const handleKeyPress = (event) => {
@@ -29,7 +37,8 @@ function SearchComponentDomain({onSearch}) {
         placeholder="Buscar por nome do domínio..."
         value={searchTerm}
         onChange={handleInputChange}
-        onKeyPress={handleKeyPress}/>
+        onKeyPress={handleKeyPress}
+        />
         <Button variant="outline-secondary" onClick={handleSearch}>
           <AiOutlineSearch />
         </Button>

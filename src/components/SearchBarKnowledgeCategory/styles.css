@@ -1,0 +1,27 @@
+.full-width {
+    width: 100%;
+    border-color: #D3D3D3  !important;
+  }
+  
+  .toggle-left {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center;
+    background-color: transparent !important; 
+    color: var(--cinza-secundario) !important; 
+  }
+  
+  .toggle-left::after {
+    margin-left: auto;
+  }
+  
+  
+  .custom-dropdown-menu .dropdown-item {
+    color: var(--cinza-secundario); 
+  }
+  
+  .custom-dropdown-menu .dropdown-item:hover,
+  .custom-dropdown-menu .dropdown-item:focus {
+    background-color: #f8f9fa; 
+  }
+  

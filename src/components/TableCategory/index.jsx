@@ -14,6 +14,7 @@ import { getAllCategories, inactivateCategory } from "../../servicesBack/Categor
 import { useContext, useEffect, useState } from "react";
 import { AuthenticationContext } from "../../services/context/AuthContext";
 import SearchComponentCategory from "../SearchBarCategory/index.jsx";
+import { toast } from 'react-toastify';
 
 function TableCategory() {
 
@@ -26,12 +27,19 @@ function TableCategory() {
     const [data, setData] = useState([])
     const [elementsValue, setElementsValue] = useState()
     const [page, setPage] = useState()
+    const [noResults, setNoResults] = useState(false);
 
     const fetchCategories = async () => {
         const response = await getAllCategories(filterName, elementsValue, page);
         setCategoryData(response.data.content);
         setData(response.data)
         console.log(response.data.content);
+        if (response.data.content.length === 0 && filterName.trim() !== '') {
+            setNoResults(true); // Define true se a busca não retornar resultados
+            toast.error('Nenhuma categoria encontrada.');
+        } else {
+            setNoResults(false);
+        }
     };
 
     useEffect(() => {
@@ -54,7 +62,7 @@ function TableCategory() {
         if (categoryData.length === 0 && page > 0) {
             setPage(page - 1)
         }
-    }, [categoryData])
+    }, [categoryData, page])
 
     const { isManager } = useContext(AuthenticationContext)
 

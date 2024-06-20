@@ -6,7 +6,7 @@ import { BsEye } from "react-icons/bs";
 
 import { TableStyle } from "./styles.jsx";
 import PaginationComponent from "../TablePagination/index.jsx";
-import { Button, Container } from "react-bootstrap";
+import { Button, Col, Row, Container } from "react-bootstrap";
 import ButtonInative from "../ButtonInative/index.jsx";
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
@@ -18,6 +18,8 @@ import { AuthenticationContext } from "../../services/context/AuthContext";
 import SearchComponentKnowledge from "../SearchBarKnowledge/index.jsx";
 import ToggleSelectDomain from "../SearchBarKnowledgeDomain/index.jsx";
 import ToggleSelectCategory from "../SearchBarKnowledgeCategory/index.jsx";
+import { toast } from 'react-toastify';
+
 
 function TableKnowledge() {
   const navigate = useNavigate();
@@ -32,6 +34,7 @@ function TableKnowledge() {
   const [data, setData] = useState([]);
   const [selectedDomain, setSelectedDomain] = useState();
   const [selectedCategory, setSelectedCategory] = useState();
+  const [noResults, setNoResults] = useState(false);
 
   const fetchKnowledges = async () => {
     const response = await getAllKnowledges(
@@ -45,6 +48,12 @@ function TableKnowledge() {
     setData(response.data);
     console.log(response.data.content);
     console.log(response.data);
+    if (response.data.content.length === 0 && filterTitle.trim() !== '') {
+      setNoResults(true); // Define true se a busca não retornar resultados
+      toast.error('Nenhum conhecimento encontrado.');
+  } else {
+      setNoResults(false);
+  }
   };
 
   useEffect(() => {
@@ -86,8 +95,14 @@ function TableKnowledge() {
     <>
       <Container fluid>
         <SearchComponentKnowledge onSearch={setFilterTitle} />
-        <ToggleSelectDomain selectDomain={handleSelectedDomain} />
-        <ToggleSelectCategory selectCategory={handleSelectedCategory}/>
+        <Row style={{marginBottom: 40}}>
+          <Col md={6}>
+            <ToggleSelectDomain selectDomain={handleSelectedDomain} />
+          </Col>
+          <Col md={6}>
+            <ToggleSelectCategory selectCategory={handleSelectedCategory} />
+          </Col>
+        </Row>
         <div className="d-flex justify-content-end mb-4">
           {isManager() ? (
             <ButtonInative

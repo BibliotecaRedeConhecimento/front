@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import { AiOutlineSearch } from "react-icons/ai";
 import { SearchStyle } from "./styles.jsx";
 import { useState } from "react";
+import { toast } from 'react-toastify';
 
 function SearchComponentKnowledge ({onSearch}) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -12,8 +13,15 @@ function SearchComponentKnowledge ({onSearch}) {
     setSearchTerm(event.target.value);
   };
 
-  const handleSearch = () => {
-    onSearch(searchTerm);
+  const handleSearch = async () => {
+    if (searchTerm.trim() === '') {
+      onSearch('');
+    } else {
+      const result = await onSearch(searchTerm);
+      if (result.length === 0) {
+        toast.error('Nenhum conhecimento encontrado.');
+      }
+    }
   };
 
   const handleKeyPress = (event) => {
@@ -22,7 +30,7 @@ function SearchComponentKnowledge ({onSearch}) {
     }
   };
   return (
-    <SearchStyle style={{marginBottom: 40}}>
+    <SearchStyle style={{marginBottom: 20}}>
       <InputGroup className="mb-3">
         <Form.Control
         type="text"

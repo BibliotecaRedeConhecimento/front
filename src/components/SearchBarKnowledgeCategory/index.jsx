@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-bootstrap";
 import { getAllCategories } from "../../servicesBack/CategoryServices";
+import './styles.css'; 
 
 const ToggleSelectCategory = ({ selectCategory }) => {
   const [categories, setCategories] = useState([]);
@@ -11,7 +12,7 @@ const ToggleSelectCategory = ({ selectCategory }) => {
         const response = await getAllCategories();
         setCategories(response.data.content);
       } catch (error) {
-        console.error("Erro ao buscar domínios:", error);
+        console.error("Erro ao buscar categorias:", error);
       }
     };
     fetchCategories();
@@ -24,19 +25,23 @@ const ToggleSelectCategory = ({ selectCategory }) => {
   };
 
   return (
-    <Dropdown>
-      <Dropdown.Toggle variant="success" id="dropdown-custom-components">
-        Buscar por Domínios
+    <Dropdown className="full-width custom-dropdown">
+      <Dropdown.Toggle
+        variant="secondary"
+        id="dropdown-custom-components"
+        className="full-width toggle-left"
+      >
+        Buscar por Categoria
       </Dropdown.Toggle>
 
-      <Dropdown.Menu>
-        <Dropdown.ItemText>Selecione um Domínio:</Dropdown.ItemText>
+      <Dropdown.Menu className="full-width custom-dropdown-menu">
+        <Dropdown.ItemText>Selecione uma Categoria:</Dropdown.ItemText>
         <Dropdown.Divider />
         {categories.map((category) => (
-          <Dropdown.Item key={category.id}>
+          <Dropdown.Item key={category.id} className="full-width">
             <button
               type="button"
-              className="dropdown-item"
+              className="dropdown-item full-width"
               value={category.id}
               onClick={handleSelect}
             >

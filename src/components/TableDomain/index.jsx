@@ -15,6 +15,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthenticationContext } from "../../services/context/AuthContext";
 import SearchComponentDomain from "../SearchBarDomain/index.jsx";
 import { getAllDomains, inactivateDomain } from "../../servicesBack/DomainServices.js";
+import { toast } from 'react-toastify';
 
 function TableDomain({ domain }) {
 
@@ -28,12 +29,19 @@ function TableDomain({ domain }) {
     const [data, setData] = useState([])
     const [elementsValue, setElementsValue] = useState()
     const [page, setPage] = useState()
+    const [noResults, setNoResults] = useState(false);
 
     const fetchDomain = async () => {
         try {
             const response = await getAllDomains(filterName, elementsValue, page);
             setDomainData(response.data.content);
             setData(response.data)
+            if (response.data.content.length === 0 && filterName.trim() !== '') {
+                setNoResults(true); // Define true se a busca não retornar resultados
+                toast.error('Nenhum domínio encontrado.');
+            } else {
+                setNoResults(false);
+            }
         } catch (error) {
             console.error('Erro ao buscar domínios', error);
         }

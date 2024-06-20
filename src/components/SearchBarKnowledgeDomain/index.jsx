@@ -24,19 +24,21 @@ const ToggleSelectDomain = ({ selectDomain }) => {
   };
 
   return (
-    <Dropdown>
-      <Dropdown.Toggle variant="success" id="dropdown-custom-components">
+    <Dropdown className="full-width custom-dropdown">
+      <Dropdown.Toggle variant="success" id="dropdown-custom-components"
+      className="full-width toggle-left">
         Buscar por Domínios
       </Dropdown.Toggle>
 
-      <Dropdown.Menu>
+      <Dropdown.Menu className="full-width custom-dropdown-menu">
         <Dropdown.ItemText>Selecione um Domínio:</Dropdown.ItemText>
         <Dropdown.Divider />
         {domains.map((domain) => (
-          <Dropdown.Item key={domain.id}>
+          <Dropdown.Item key={domain.id}
+          className="full-width">
             <button
               type="button"
-              className="dropdown-item"
+              className="dropdown-item full-width"
               value={domain.id}
               onClick={handleSelect}
             >
