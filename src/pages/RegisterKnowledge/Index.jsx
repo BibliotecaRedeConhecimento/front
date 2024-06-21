@@ -149,12 +149,12 @@ const RegisterKnowledge = ({
                         title="Cadastrar Conhecimento"
                         buttonback={
                             <ButtonComponent
-                              size="8rem"
-                              bgColor="var(--cinza-primario)"
-                              textColor="white"
-                              alternativeText="Voltar"
+                                size="8rem"
+                                bgColor="var(--cinza-primario)"
+                                textColor="white"
+                                alternativeText="Voltar"
                             ></ButtonComponent>
-                          }
+                        }
                     />
                     <PageContentContainer>
                         <Form id="knowledgeForm" noValidate validated={validated} onSubmit={handleOpenModal}>
@@ -312,7 +312,7 @@ const RegisterKnowledge = ({
                         </Form>
                         <ModalComponent
                             tabIndex="-1"
-                            bodyContent={"Deseja cadastrar o domínio?"}
+                            bodyContent={"Deseja cadastrar?"}
                             show={showModal}
                             handleClose={() => {
                                 handleCloseModal();
