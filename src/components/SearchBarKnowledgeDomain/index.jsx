@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-bootstrap";
 import { getAllDomains, getDomainById } from "../../servicesBack/DomainServices";
 
-const ToggleSelectDomain = ({ selectDomain }) => {
+const ToggleSelectDomain = ({ selectDomain, domainSelected}) => {
   const [domains, setDomains] = useState([]);
   const [selectedDomain, setSelectedDomain] = useState()
   const [domainName, setDomainName] = useState()
@@ -30,7 +30,6 @@ const ToggleSelectDomain = ({ selectDomain }) => {
     setDomainName()
   }
 
-
   useEffect(() => {
     const handleSelectedName = async () => {
       const response = await getDomainById(selectedDomain)
@@ -45,15 +44,16 @@ const ToggleSelectDomain = ({ selectDomain }) => {
     <Dropdown className="full-width custom-dropdown">
       <Dropdown.Toggle variant="success" id="dropdown-custom-components"
         className="full-width toggle-left">
-        {domainName != null ? domainName : "Buscar por Dominio"}
+        {domainName == null || domainSelected == 0 ? "Buscar por Dominio" : domainName}
       </Dropdown.Toggle>
 
       <Dropdown.Menu className="full-width custom-dropdown-menu">
         <Dropdown.ItemText>Selecione um Domínio:</Dropdown.ItemText>
         <Dropdown.Divider />
-        <Dropdown.Item>
-          <button onClick={handleReset}>
-            ZERAR
+        <Dropdown.Item className="full-width">
+          <button type="button"
+            className="dropdown-item full-width" onClick={handleReset}>
+            Limpar Filtro
           </button>
         </Dropdown.Item>
         {domains.map((domain) => (

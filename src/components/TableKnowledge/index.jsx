@@ -51,9 +51,9 @@ function TableKnowledge() {
     if (response.data.content.length === 0 && filterTitle.trim() !== '') {
       setNoResults(true); // Define true se a busca não retornar resultados
       toast.error('Nenhum conhecimento encontrado.');
-  } else {
+    } else {
       setNoResults(false);
-  }
+    }
   };
 
   useEffect(() => {
@@ -95,12 +95,12 @@ function TableKnowledge() {
     <>
       <Container fluid>
         <SearchComponentKnowledge onSearch={setFilterTitle} />
-        <Row style={{marginBottom: 40}}>
+        <Row style={{ marginBottom: 40 }}>
           <Col md={6}>
-            <ToggleSelectDomain selectDomain={handleSelectedDomain} />
+            <ToggleSelectDomain domainSelected={selectedDomain} selectDomain={handleSelectedDomain} />
           </Col>
           <Col md={6}>
-            <ToggleSelectCategory selectCategory={handleSelectedCategory} />
+            <ToggleSelectCategory categorySelected={selectedCategory} selectCategory={handleSelectedCategory} />
           </Col>
         </Row>
         <div className="d-flex justify-content-end mb-4">

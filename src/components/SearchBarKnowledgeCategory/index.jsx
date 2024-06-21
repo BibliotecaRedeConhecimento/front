@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-bootstrap";
-import { getAllCategories } from "../../servicesBack/CategoryServices";
-import './styles.css'; 
+import { getAllCategories, getCategoryById } from "../../servicesBack/CategoryServices";
+import './styles.css';
 
-const ToggleSelectCategory = ({ selectCategory }) => {
+const ToggleSelectCategory = ({ selectCategory, categorySelected }) => {
   const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState()
+  const [categoryName, setCategoryName] = useState()
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -21,8 +23,18 @@ const ToggleSelectCategory = ({ selectCategory }) => {
   const handleSelect = (e) => {
     const value = e.target.value;
     selectCategory(value);
+    setSelectedCategory(value)
     console.log(value);
   };
+
+  useEffect(() => {
+    const handleSelectedName = async () => {
+      const response = await getCategoryById(selectedCategory)
+      setCategoryName(response.data.name)
+      console.log(response.data)
+    }
+    handleSelectedName()
+  }, [selectedCategory])
 
   return (
     <Dropdown className="full-width custom-dropdown">
@@ -31,8 +43,7 @@ const ToggleSelectCategory = ({ selectCategory }) => {
         id="dropdown-custom-components"
         className="full-width toggle-left"
       >
-        Buscar por Categoria
-      </Dropdown.Toggle>
+        {categoryName == null || categorySelected == 0 ? "Buscar Categoria" : categoryName}      </Dropdown.Toggle>
 
       <Dropdown.Menu className="full-width custom-dropdown-menu">
         <Dropdown.ItemText>Selecione uma Categoria:</Dropdown.ItemText>
