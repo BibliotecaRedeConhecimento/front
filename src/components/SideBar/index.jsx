@@ -183,6 +183,7 @@ function Sidebar({
       '/buscarConhecimento',
       '/conhecimentoInativo',
       '/buscarConhecimento/changeKnowledge/',
+      '/revisarConhecimento'
     ];
 
     if (specialRoutes.some(route => location.pathname.startsWith(route))) {
