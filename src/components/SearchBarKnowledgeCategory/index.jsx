@@ -27,6 +27,12 @@ const ToggleSelectCategory = ({ selectCategory, categorySelected }) => {
     console.log(value);
   };
 
+  const handleReset = () => {
+    setSelectedCategory(0)
+    setCategoryName()
+  }
+
+
   useEffect(() => {
     const handleSelectedName = async () => {
       const response = await getCategoryById(selectedCategory)
@@ -48,6 +54,12 @@ const ToggleSelectCategory = ({ selectCategory, categorySelected }) => {
       <Dropdown.Menu className="full-width custom-dropdown-menu">
         <Dropdown.ItemText>Selecione uma Categoria:</Dropdown.ItemText>
         <Dropdown.Divider />
+        <Dropdown.Item>
+        <button type="button"
+            className="dropdown-item full-width" onClick={handleReset}>
+            Limpar Filtro
+          </button>
+        </Dropdown.Item>
         {categories.map((category) => (
           <Dropdown.Item key={category.id} className="full-width">
             <button
