@@ -18,12 +18,12 @@ import ModalComponent from "../../components/ModalComponent";
 import {AuthenticationContext} from "../../services/context/AuthContext";
 
 const RegisterKnowledge = ({
-        HandledarkMode,
-        isDarkMode,
-        decreaseFontSize,
-        increaseFontSize,
-        logOut,
-    }) => {
+                               HandledarkMode,
+                               isDarkMode,
+                               decreaseFontSize,
+                               increaseFontSize,
+                               logOut,
+                           }) => {
     const [formData, setFormData] = useState({
         NameKnowledge: "",
         Introduction: "",
@@ -38,7 +38,7 @@ const RegisterKnowledge = ({
     const [thumbnailUrl, setThumbnailUrl] = useState("");
     const [categories, setCategories] = useState([]);
     const [showModal, setShowModal] = useState(false);
-    const {user} = useContext(AuthenticationContext)
+    const {user, isManager} = useContext(AuthenticationContext)
 
 
     const handleChange = (e) => {
@@ -90,8 +90,8 @@ const RegisterKnowledge = ({
             e.stopPropagation();
             toast.error("Todos os campos são obrigatórios!");
         } else {
+            console.log(!isManager())
             handleCloseModal();
-            toast.success("Cadastro realizado com sucesso!");
             const resp = await addKnowledge({
                 title: formData.NameKnowledge,
                 archive: formData.Media,
@@ -104,7 +104,11 @@ const RegisterKnowledge = ({
                         id: formData.categoryId,
                     },
                 ],
+                needsReview: !isManager()
             });
+            if (resp.status >= 200 && resp.status < 300) {
+                toast.success("Cadastro realizado com sucesso!");
+            }
         }
         setValidated(true);
     };

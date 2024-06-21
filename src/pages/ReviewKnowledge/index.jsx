@@ -8,23 +8,23 @@ import {ContainerWithSidebar} from "../../components/ContainerWithSidebar";
 import {IoIosArrowBack} from "react-icons/io";
 import {TfiMenuAlt} from "react-icons/tfi";
 
-import {getAllKnowledges} from "../../servicesBack/KnowledgeServices";
+import {getAllNeedsReviewKnowledges} from "../../servicesBack/KnowledgeServices";
 
 import ButtonComponent from "../../components/ButtonBack";
-import TableInativeKnowledge from "../../components/TableInativeKnowledge";
+import TableReviewKnowledge from "../../components/TableReviewKnowledge";
 
-function InativeKnowledge({
-                              HandledarkMode,
-                              isDarkMode,
-                              decreaseFontSize,
-                              increaseFontSize,
-                              logOut,
-                          }) {
+function ReviewKnowledge({
+                             HandledarkMode,
+                             isDarkMode,
+                             decreaseFontSize,
+                             increaseFontSize,
+                             logOut,
+                         }) {
 
     const [knowledgeData, setKnowledgeData] = useState([])
 
     const fetchKnowledges = async () => {
-        const response = await getAllKnowledges()
+        const response = await getAllNeedsReviewKnowledges()
         setKnowledgeData(response.data.content)
         console.log(response.data.content)
     }
@@ -33,30 +33,6 @@ function InativeKnowledge({
         fetchKnowledges()
     }, [])
 
-<<<<<<< Updated upstream
-  return (
-    <ContainerWithSidebar
-      increaseFontSize={increaseFontSize}
-      decreaseFontSize={decreaseFontSize}
-      HandledarkMode={HandledarkMode}
-      isDarkMode={isDarkMode}
-      logOut={logOut}
-    >
-      <PageContainer>
-        <PageHeaderContainer 
-        icon={<TfiMenuAlt style={{width: 34, marginRight: 5}} />} 
-        title={`Conhecimento Inativo`}
-        buttonback={
-          <ButtonComponent
-            size="8rem"
-            //bgColor="var(--cinza-primario)"
-            textColor="white"
-            alternativeText="Voltar"
-          ></ButtonComponent>
-        }
-         />
-        <PageContentContainer>
-=======
     return (
         <ContainerWithSidebar
             increaseFontSize={increaseFontSize}
@@ -67,16 +43,11 @@ function InativeKnowledge({
         >
             <PageContainer>
                 <PageHeaderContainer icon={<TfiMenuAlt style={{width: 34, marginRight: 5}}/>}
-                                     title={`Conhecimento Inativo`}/>
+                                     title={`Revisar Conhecimentos`}/>
                 <PageContentContainer>
->>>>>>> Stashed changes
 
-                    <TableInativeKnowledge knowledge={knowledgeData}/>
+                    <TableReviewKnowledge knowledge={knowledgeData}/>
 
-<<<<<<< Updated upstream
-         
-         
-=======
                     <div style={{marginTop: 20}}>
                         <ButtonComponent
                             size="10rem"
@@ -86,7 +57,6 @@ function InativeKnowledge({
                             <IoIosArrowBack style={{marginRight: 5, width: 12}}/>
                             Voltar</ButtonComponent>
                     </div>
->>>>>>> Stashed changes
 
 
                 </PageContentContainer>
@@ -95,4 +65,4 @@ function InativeKnowledge({
     );
 }
 
-export default InativeKnowledge;
+export default ReviewKnowledge;
