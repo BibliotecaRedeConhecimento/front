@@ -75,7 +75,7 @@ function TableReviewKnowledge() {
                             <th colSpan="1">Domínio</th>
                             <th colSpan="1">Categoria</th>
                             <th colSpan="1">Colaborador</th>
-                            <th style={{paddingLeft: 20}} colSpan="3">Ações</th>
+                            <th style={{paddingLeft: 20}} colSpan="1">Ações</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -94,7 +94,8 @@ function TableReviewKnowledge() {
                                         <span key={category.id}>{category.name}</span>
                                     ))}
                                 </td>
-                                <td>{knowledge.text}</td>
+                                <td>{knowledge.collaborator}</td>
+                                {/*<td>{knowledge.text}</td>*/}
                                 <td className="action-column">
                                     <Button variant="link"
                                             style={{color: "black"}}
