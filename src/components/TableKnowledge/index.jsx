@@ -20,7 +20,7 @@ import ToggleSelectDomain from "../SearchBarKnowledgeDomain/index.jsx";
 import ToggleSelectCategory from "../SearchBarKnowledgeCategory/index.jsx";
 import { toast } from 'react-toastify';
 import reviewKnowledge from "../../pages/ReviewKnowledge";
-import {ReviewContext} from "../../services/context/ReviewContext";
+import { ReviewContext } from "../../services/context/ReviewContext";
 
 function TableKnowledge() {
   const navigate = useNavigate();
@@ -57,7 +57,7 @@ function TableKnowledge() {
     }
   };
 
-  const {toReview} = useContext(ReviewContext)
+  const { toReview } = useContext(ReviewContext)
 
   useEffect(() => {
     fetchKnowledges();
@@ -108,27 +108,26 @@ function TableKnowledge() {
         </Row>
         <div className="d-flex justify-content-end mb-4">
           {isManager() ? (
-            <>
-            <ButtonInative
-                size="10rem"
-                bgColor="var(--verde-primario3)"
-                textColor="white"
-                alternativeText="Categorias Inativas"
-                action={() => navigateTo("/conhecimentoInativo")}
-            >
-                Inativos
-            </ButtonInative>
-            <ButtonInative
-                size="10rem"
-                bgColor="var(--verde-primario3)"
-                textColor="white"
-                alternativeText="Conhecimentos para revisão"
-                action={() => navigateTo("/revisarConhecimento")}
-            >
-                Revisão ({toReview()})
-            </ButtonInative>
-
-        </>
+             <div className="d-flex gap-3">
+             <ButtonInative
+               size="10rem"
+               bgColor="var(--verde-primario3)"
+               textColor="white"
+               alternativeText="Conhecimentos para revisão"
+               action={() => navigateTo("/revisarConhecimento")}
+             >
+               Revisão ({toReview()})
+             </ButtonInative>
+             <ButtonInative
+               size="10rem"
+               bgColor="var(--verde-primario3)"
+               textColor="white"
+               alternativeText="Categorias Inativas"
+               action={() => navigateTo("/conhecimentoInativo")}
+             >
+               Inativos
+             </ButtonInative>
+           </div>
           ) : null}
         </div>
       </Container>
