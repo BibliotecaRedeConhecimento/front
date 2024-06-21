@@ -1,6 +1,5 @@
 import {api} from "./api";
 
-<<<<<<< Updated upstream
 export const getAllKnowledges = async (filterTitle = '', size, page, domainId, categoryId) => {
   try {
     const response = await api.get(`/knowledges?title=${filterTitle}&size=${size}&page=${page}&domainId=${domainId}&categoryId=${categoryId}`);
@@ -8,15 +7,6 @@ export const getAllKnowledges = async (filterTitle = '', size, page, domainId, c
   } catch (error) {
     console.error('Erro ao buscar conhecimentos', error);
   }
-=======
-export const getAllKnowledges = async (filterTitle = '', size, page) => {
-    try {
-        const response = await api.get(`/knowledges?title=${filterTitle}&size=${size}&page=${page}`);
-        return response;
-    } catch (error) {
-        console.error('Erro ao buscar conhecimentos', error);
-    }
->>>>>>> Stashed changes
 };
 
 export const addKnowledge = async (knowledge) => {
@@ -64,7 +54,6 @@ export const inactivateKnowledge = async (id) => {
     }
 };
 
-<<<<<<< Updated upstream
 export const getAllInactiveKnowledges = async (title, size, page, domainId, categoryId) => {
   try {
     const response = await api.get(`/knowledges?active=false&title=${title}&size=${size}&page=${page}&domainId=${domainId}&categoryId=${categoryId}`)
@@ -72,15 +61,6 @@ export const getAllInactiveKnowledges = async (title, size, page, domainId, cate
   } catch (error) {
     console.log("Erro ao buscar os conhecimentos inativos.", error)
   }
-};
-=======
-export const getAllInactiveKnowledges = async (title, size, page) => {
-    try {
-        const response = await api.get(`/knowledges?active=false&title=${title}&size=${size}&page=${page}`)
-        return response
-    } catch (error) {
-        console.log("Erro ao buscar os conhecimentos inativos.", error)
-    }
 };
 
 export const getAllNeedsReviewKnowledges = async (title, size, page) => {
@@ -99,4 +79,3 @@ export const acceptKnowledge = async (id) => {
         console.error('Erro ao revisar conhecimento.', error);
     }
 };
->>>>>>> Stashed changes
