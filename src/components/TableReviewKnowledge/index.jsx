@@ -20,8 +20,8 @@ function TableReviewKnowledge() {
     const {isManager} = useContext(AuthenticationContext);
     const [inactiveKnowledgeData, setInactiveKnowledgeData] = useState([]);
     const [data, setData] = useState([])
-    const [elementsValue, setElementsValue] = useState()
-    const [page, setPage] = useState()
+    const [elementsValue, setElementsValue] = useState(10)
+    const [page, setPage] = useState(0)
     const [filterTitle, setFilterTitle] = useState('');
     const {user} = useContext(AuthenticationContext)
 
@@ -31,7 +31,7 @@ function TableReviewKnowledge() {
         navigate(path);
     };
     const fetchKnowledgesForReview = async () => {
-        const response = await getAllNeedsReviewKnowledges(filterTitle, elementsValue, page);
+        const response = await getAllNeedsReviewKnowledges(elementsValue, page);
         setInactiveKnowledgeData(response.data.content);
         setData(response.data)
     };

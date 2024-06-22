@@ -1,12 +1,12 @@
 import {api} from "./api";
 
 export const getAllKnowledges = async (filterTitle = '', size, page, domainId, categoryId) => {
-  try {
-    const response = await api.get(`/knowledges?title=${filterTitle}&size=${size}&page=${page}&domainId=${domainId}&categoryId=${categoryId}`);
-    return response;
-  } catch (error) {
-    console.error('Erro ao buscar conhecimentos', error);
-  }
+    try {
+        const response = await api.get(`/knowledges?title=${filterTitle}&size=${size}&page=${page}&domainId=${domainId}&categoryId=${categoryId}`);
+        return response;
+    } catch (error) {
+        console.error('Erro ao buscar conhecimentos', error);
+    }
 };
 
 export const addKnowledge = async (knowledge) => {
@@ -55,16 +55,18 @@ export const inactivateKnowledge = async (id) => {
 };
 
 export const getAllInactiveKnowledges = async (title, size, page, domainId, categoryId) => {
-  try {
-    const response = await api.get(`/knowledges?active=false&title=${title}&size=${size}&page=${page}&domainId=${domainId}&categoryId=${categoryId}`)
-    return response
-  } catch (error) {
-    console.log("Erro ao buscar os conhecimentos inativos.", error)
-  }
+    try {
+        const response = await api.get(`/knowledges?active=false&title=${title}&size=${size}&page=${page}&domainId=${domainId}&categoryId=${categoryId}`)
+        return response
+    } catch (error) {
+        console.log("Erro ao buscar os conhecimentos inativos.", error)
+    }
 };
 
-export const getAllNeedsReviewKnowledges = async (title, size, page) => {
+export const getAllNeedsReviewKnowledges = async (size, page) => {
     try {
+        if (!page) page = 0;
+        if (!size) size = 10;
         const response = await api.get(`/knowledges/review?size=${size}&page=${page}`)
         return response
     } catch (error) {

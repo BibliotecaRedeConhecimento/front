@@ -92,7 +92,7 @@ const RegisterKnowledge = ({
             setValidated(true);
         } else {
             handleCloseModal();
-            
+
             const payload = {
                 title: formData.NameKnowledge,
                 archive: formData.Media,
@@ -100,6 +100,7 @@ const RegisterKnowledge = ({
                 description: formData.Description,
                 introduction: formData.Introduction,
                 titleMedia: formData.TitleMedia,
+                needsReview: !isManager(),
                 categories: [
                     {
                         id: formData.categoryId,
@@ -107,7 +108,7 @@ const RegisterKnowledge = ({
                 ],
             };
 
-    
+
             try {
                 const resp = await addKnowledge(payload);
                 if (resp.status >= 200 && resp.status < 300) {
@@ -129,7 +130,7 @@ const RegisterKnowledge = ({
                 (err)
             }
         }
-    
+
     };
     const getVideoId = (videoUrl) => {
         try {

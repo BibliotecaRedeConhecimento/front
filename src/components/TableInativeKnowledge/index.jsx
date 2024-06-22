@@ -10,7 +10,7 @@ import SearchComponentKnowledge from "../SearchBarKnowledge/index.jsx";
 import ToggleSelectDomain from "../SearchBarKnowledgeDomain/index.jsx";
 import ToggleSelectCategory from "../SearchBarKnowledgeCategory/index.jsx";
 import ModalComponent from "../../components/ModalComponent";
-import { toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 
 function TableInativeKnowledge() {
     const [showModal, setShowModal] = useState(false);
@@ -29,12 +29,12 @@ function TableInativeKnowledge() {
     const handleOpenModal = (id) => {
         setSelectedInativeKnowledgeId(id);
         setShowModal(true);
-      };
-    
-      const handleCloseModal = () => {
+    };
+
+    const handleCloseModal = () => {
         setShowModal(false);
         setSelectedInativeKnowledgeId(null);
-      };
+    };
 
     const fetchInactiveKnowledges = async () => {
         const response = await getAllInactiveKnowledges(filterTitle, elementsValue, page, selectedDomain, selectedCategory);
@@ -48,11 +48,11 @@ function TableInativeKnowledge() {
 
     const handleActivate = async (id) => {
 
-        if(selectedInativeKnowledgeId){
-        await inactivateKnowledge(id);
-        fetchInactiveKnowledges();
-        toast.success("Conhecimento reativado com sucesso!");
-        handleCloseModal();
+        if (selectedInativeKnowledgeId) {
+            await inactivateKnowledge(id);
+            fetchInactiveKnowledges();
+            toast.success("Conhecimento reativado com sucesso!");
+            handleCloseModal();
         }
     };
 
@@ -135,20 +135,20 @@ function TableInativeKnowledge() {
                         ))}
                         </tbody>
                         <ModalComponent
-              confirmButton="Inativar"
-              tabIndex="-1"
-              bodyContent={"Deseja reativar"}
-              show={showModal}
-              handleClose={() => {
-                handleCloseModal();
-                toast.error("Operação cancelada pelo usuário.");
-              }}
-              confirm={handleActivate}
-              cancel={() => {
-                handleCloseModal();
-                toast.error("Operação cancelada pelo usuário.");
-              }}
-            />
+                            confirmButton="Reativar"
+                            tabIndex="-1"
+                            bodyContent={"Deseja reativar"}
+                            show={showModal}
+                            handleClose={() => {
+                                handleCloseModal();
+                                toast.error("Operação cancelada pelo usuário.");
+                            }}
+                            confirm={() => handleActivate(selectedInativeKnowledgeId)}
+                            cancel={() => {
+                                handleCloseModal();
+                                toast.error("Operação cancelada pelo usuário.");
+                            }}
+                        />
                     </Table>
                 </div>
             </TableStyle>
