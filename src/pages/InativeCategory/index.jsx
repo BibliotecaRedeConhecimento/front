@@ -53,7 +53,7 @@ function InativeCategory({
           ></ButtonComponent>
         }
          />
-        <PageContentContainer>
+        <PageContentContainer scrollable={true}>
           
 
          <TableInativeCategory category={categoryData}/>

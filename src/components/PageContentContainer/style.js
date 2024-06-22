@@ -17,6 +17,6 @@ export const PageContentContainerStyle = styled.div`
     flex-direction: ${props => props.flexDirection || 'undefined'};
     justify-content: ${props => props.justifyContent || 'undefined'};
     align-items: ${props => props.alignItems || 'undefined'};
-    overflow-y: ${(props) => (props.scrollable ? 'auto' : 'visible')};
+    overflow-y: ${props => props.scrollable ? 'auto' : 'hidden'};
     //min-height: 100vh; 
 `;

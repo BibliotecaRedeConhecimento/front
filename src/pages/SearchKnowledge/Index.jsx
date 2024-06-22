@@ -38,7 +38,7 @@ function SearchKnowledge({
               alternativeText="Voltar"
             ></ButtonComponent>
           }/>
-        <PageContentContainer>
+        <PageContentContainer scrollable={true}>
 
          <TableKnowledge />
 

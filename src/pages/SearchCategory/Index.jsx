@@ -51,7 +51,7 @@ useEffect(() => {
               alternativeText="Voltar"
             ></ButtonComponent>
           }/>
-        <PageContentContainer>
+        <PageContentContainer scrollable={true}>
           
 
          <TableCategory category={categoryData}/>
