@@ -15,6 +15,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthenticationContext } from "../../services/context/AuthContext";
 import SearchComponentCategory from "../SearchBarCategory/index.jsx";
 import { toast } from 'react-toastify';
+import ModalComponent from "../../components/ModalComponent";
 
 function TableCategory() {
 
@@ -22,12 +23,25 @@ function TableCategory() {
     const navigateTo = (path) => {
         navigate(path);
     };
+
+    const [showModal, setShowModal] = useState(false);
     const [categoryData, setCategoryData] = useState([]);
     const [filterName, setFilterName] = useState('');
     const [data, setData] = useState([])
     const [elementsValue, setElementsValue] = useState()
     const [page, setPage] = useState()
     const [noResults, setNoResults] = useState(false);
+    const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+
+    const handleOpenModal = (id) => {
+        setSelectedCategoryId(id);
+        setShowModal(true);
+      };
+    
+      const handleCloseModal = () => {
+        setShowModal(false);
+        setSelectedCategoryId(null);
+      };
 
     const fetchCategories = async () => {
         const response = await getAllCategories(filterName, elementsValue, page);
@@ -47,8 +61,12 @@ function TableCategory() {
     }, [filterName, elementsValue, page])
 
     const handleInactivate = async (id) => {
-        await inactivateCategory(id);
+        if (selectedCategoryId) {
+        await inactivateCategory(selectedCategoryId);
         fetchCategories();
+        toast.success("Categoria inativado com sucesso!");
+        handleCloseModal();
+    }
     };
     const handleElementValue = (elementsNumber) => {
         setElementsValue(elementsNumber)
@@ -115,7 +133,7 @@ function TableCategory() {
                                     </td>
                                     {isManager() ?
                                         <td className="action-column">
-                                            <Button variant="link" onClick={() => handleInactivate(item.id)}>
+                                            <Button variant="link" onClick={() => handleOpenModal(item.id)}>
                                                 <RiDeleteBin6Line className="delete-icon" />
                                             </Button>
 
@@ -125,6 +143,21 @@ function TableCategory() {
                                 </tr>
                             ))}
                         </tbody>
+                        <ModalComponent
+              confirmButton="Inativar"
+              tabIndex="-1"
+              bodyContent={"Deseja inativar a categoria?"}
+              show={showModal}
+              handleClose={() => {
+                handleCloseModal();
+                toast.error("Operação cancelada pelo usuário.");
+              }}
+              confirm={handleInactivate}
+              cancel={() => {
+                handleCloseModal();
+                toast.error("Operação cancelada pelo usuário.");
+              }}
+            />
                     </Table>
                 </div>
             </TableStyle>

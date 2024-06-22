@@ -11,15 +11,28 @@ import { useContext, useEffect, useState } from "react";
 import { AuthenticationContext } from "../../services/context/AuthContext";
 import { getAllInactiveCategory, inactivateCategory } from "../../servicesBack/CategoryServices.js";
 import SearchComponentKnowledge from "../SearchBarKnowledge/index.jsx";
-
+import { toast } from 'react-toastify';
+import ModalComponent from "../../components/ModalComponent";
 
 function TableInativeCategory() {
+  const [showModal, setShowModal] = useState(false);
   const { isManager } = useContext(AuthenticationContext);
   const [inactiveCategoryData, setInactiveCategoryData] = useState([]);
   const [filterName, setFilterName] = useState('');
   const [data, setData] = useState([])
   const [elementsValue, setElementsValue] = useState()
   const [page, setPage] = useState()
+  const [selectedInativeCategoryId, setSelectedInativeCategoryId] = useState(null);
+
+  const handleOpenModal = (id) => {
+    setSelectedInativeCategoryId(id);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedInativeCategoryId(null);
+  };
 
   const fetchInactiveCategory = async () => {
     const response = await getAllInactiveCategory(filterName, elementsValue, page);
@@ -32,8 +45,12 @@ function TableInativeCategory() {
   }, [filterName, elementsValue, page]);
 
   const handleActivate = async (id) => {
+    if (selectedInativeCategoryId){
     await inactivateCategory(id);
     fetchInactiveCategory();
+    toast.success("Categoria reativada com sucesso!");
+    handleCloseModal();
+  }
   };
 
   const handleElementValue = (elementsNumber) => {
@@ -73,7 +90,7 @@ useEffect(() => {
 
                   {isManager() ?
                     <td className="action-column">
-                      <Button variant="link" onClick={() => handleActivate(item.id)}>
+                      <Button variant="link" onClick={() => handleOpenModal(item.id)}>
                         <MdAddCircleOutline />
                       </Button>
                     </td>
@@ -82,6 +99,21 @@ useEffect(() => {
                 </tr>
               ))}
             </tbody>
+            <ModalComponent
+              confirmButton="Reativar"
+              tabIndex="-1"
+              bodyContent={"Deseja reativar a categoria?"}
+              show={showModal}
+              handleClose={() => {
+                handleCloseModal();
+                toast.error("Operação cancelada pelo usuário.");
+              }}
+              confirm={handleActivate}
+              cancel={() => {
+                handleCloseModal();
+                toast.error("Operação cancelada pelo usuário.");
+              }}
+            />
           </Table>
         </div>
       </TableStyle>

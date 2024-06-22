@@ -11,14 +11,30 @@ import { useContext, useEffect, useState } from "react";
 import { AuthenticationContext } from "../../services/context/AuthContext";
 import { getAllInactiveDomain, inactivateDomain } from "../../servicesBack/DomainServices.js";
 import SearchComponentDomain from "../SearchBarDomain/index.jsx";
+import ModalComponent from "../../components/ModalComponent";
+import { toast } from "react-toastify";
 
 function TableInativeDomain() {
+
+  const [showModal, setShowModal] = useState(false);
   const { isManager } = useContext(AuthenticationContext)
   const [inactiveDomainData, setInactiveDomainData] = useState([]);
   const [data, setData] = useState([])
   const [elementsValue, setElementsValue] = useState()
   const [page, setPage] = useState()
   const [filterName, setFilterName] = useState('');
+  const [selectedInativeDomainId, setSelectedInativeDomainId] = useState(null);
+
+  const handleOpenModal = (id) => {
+    console.log('este modal foi aberto')
+    setSelectedInativeDomainId(id);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedInativeDomainId(null);
+  };
 
   const fetchInactiveDomain = async () => {
     const response = await getAllInactiveDomain(filterName, elementsValue, page);
@@ -36,10 +52,18 @@ function TableInativeDomain() {
       setPage(page - 1)
     }
   }, [inactiveDomainData])
+
   const handleActivate = async (id) => {
+
+    if (selectedInativeDomainId) {
     await inactivateDomain(id);
     fetchInactiveDomain();
+    toast.success("Domínio reativado com sucesso!");
+    handleCloseModal();
+    }
   };
+
+  
   const handleElementValue = (elementsNumber) => {
     setElementsValue(elementsNumber)
   }
@@ -70,7 +94,9 @@ function TableInativeDomain() {
                   <td>{item.domain}</td>
                   <td className="action-column">
                     {isManager() ?
-                      <Button variant="link" onClick={() => handleActivate(item.id)}>
+                      <Button 
+                      variant="link" 
+                      onClick={() => handleOpenModal(item.id)}>
                         <MdAddCircleOutline />
                       </Button>
                       : null
@@ -79,6 +105,21 @@ function TableInativeDomain() {
                 </tr>
               ))}
             </tbody>
+            <ModalComponent
+              confirmButton="Reativar"
+              tabIndex="-1"
+              bodyContent={"Deseja reativar o domínio?"}
+              show={showModal}
+              handleClose={() => {
+                handleCloseModal();
+                toast.error("Operação cancelada pelo usuário.");
+              }}
+              confirm={handleActivate}
+              cancel={() => {
+                handleCloseModal();
+                toast.error("Operação cancelada pelo usuário.");
+              }}
+              />
           </Table>
         </div>
       </TableStyle>

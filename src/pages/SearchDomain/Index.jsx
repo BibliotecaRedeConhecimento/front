@@ -50,7 +50,7 @@ useEffect(() => {
               alternativeText="Voltar"
             ></ButtonComponent>
           } />
-        <PageContentContainer>
+         <PageContentContainer scrollable={true}>
 
          <TableDomain domain={domainData}/>
 

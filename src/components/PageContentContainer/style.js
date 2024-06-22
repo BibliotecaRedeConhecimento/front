@@ -8,7 +8,7 @@ export const PageContentContainerStyle = styled.div`
     //Siga esse estilo para passar props pra uma propriedade de estilo, deixe como undefined se você não quer passar nada.
 
     width: ${props => props.width || '100%'};
-    height: ${props => props.height || 'undefined'};
+    height: ${props => props.height || '86.1vh'};
     padding-top: ${props => props.padding || '5%'};
     padding-bottom: ${props => props.padding || '5%'};
     padding-right: ${props => props.padding || '10%'};
@@ -17,6 +17,6 @@ export const PageContentContainerStyle = styled.div`
     flex-direction: ${props => props.flexDirection || 'undefined'};
     justify-content: ${props => props.justifyContent || 'undefined'};
     align-items: ${props => props.alignItems || 'undefined'};
-    overflow-y: ${(props) => (props.scrollable ? 'auto' : 'visible')};
-    min-height: 100vh;
+    overflow-y: ${props => props.scrollable ? 'auto' : 'hidden'};
+    //min-height: 100vh; 
 `;

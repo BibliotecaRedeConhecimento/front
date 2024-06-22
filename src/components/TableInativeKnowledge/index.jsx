@@ -9,8 +9,11 @@ import {AuthenticationContext} from "../../services/context/AuthContext";
 import SearchComponentKnowledge from "../SearchBarKnowledge/index.jsx";
 import ToggleSelectDomain from "../SearchBarKnowledgeDomain/index.jsx";
 import ToggleSelectCategory from "../SearchBarKnowledgeCategory/index.jsx";
+import ModalComponent from "../../components/ModalComponent";
+import { toast } from 'react-toastify';
 
 function TableInativeKnowledge() {
+    const [showModal, setShowModal] = useState(false);
     const {isManager} = useContext(AuthenticationContext);
     const [inactiveKnowledgeData, setInactiveKnowledgeData] = useState([]);
     const [data, setData] = useState([])
@@ -20,7 +23,18 @@ function TableInativeKnowledge() {
     const [selectedDomain, setSelectedDomain] = useState(0);
     const [selectedCategory, setSelectedCategory] = useState(0);
     const {user} = useContext(AuthenticationContext)
+    const [selectedInativeKnowledgeId, setSelectedInativeKnowledgeId] = useState(null);
 
+
+    const handleOpenModal = (id) => {
+        setSelectedInativeKnowledgeId(id);
+        setShowModal(true);
+      };
+    
+      const handleCloseModal = () => {
+        setShowModal(false);
+        setSelectedInativeKnowledgeId(null);
+      };
 
     const fetchInactiveKnowledges = async () => {
         const response = await getAllInactiveKnowledges(filterTitle, elementsValue, page, selectedDomain, selectedCategory);
@@ -33,8 +47,13 @@ function TableInativeKnowledge() {
     }, [filterTitle, elementsValue, page, selectedCategory, selectedDomain]);
 
     const handleActivate = async (id) => {
+
+        if(selectedInativeKnowledgeId){
         await inactivateKnowledge(id);
         fetchInactiveKnowledges();
+        toast.success("Conhecimento reativado com sucesso!");
+        handleCloseModal();
+        }
     };
 
     useEffect(() => {
@@ -108,13 +127,28 @@ function TableInativeKnowledge() {
                                 <td>{knowledge.collaborator}</td>
 
                                 <td className="action-column">
-                                    <Button variant="link" onClick={() => handleActivate(knowledge.id)}>
+                                    <Button variant="link" onClick={() => handleOpenModal(knowledge.id)}>
                                         <MdAddCircleOutline/>
                                     </Button>
                                 </td>
                             </tr>
                         ))}
                         </tbody>
+                        <ModalComponent
+              confirmButton="Inativar"
+              tabIndex="-1"
+              bodyContent={"Deseja reativar"}
+              show={showModal}
+              handleClose={() => {
+                handleCloseModal();
+                toast.error("Operação cancelada pelo usuário.");
+              }}
+              confirm={handleActivate}
+              cancel={() => {
+                handleCloseModal();
+                toast.error("Operação cancelada pelo usuário.");
+              }}
+            />
                     </Table>
                 </div>
             </TableStyle>

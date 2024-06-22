@@ -21,6 +21,7 @@ import ToggleSelectCategory from "../SearchBarKnowledgeCategory/index.jsx";
 import { toast } from 'react-toastify';
 import reviewKnowledge from "../../pages/ReviewKnowledge";
 import { ReviewContext } from "../../services/context/ReviewContext";
+import ModalComponent from "../../components/ModalComponent";
 
 function TableKnowledge() {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ function TableKnowledge() {
     navigate(path);
   };
 
+  const [showModal, setShowModal] = useState(false);
   const [knowledgeData, setKnowledgeData] = useState([]);
   const [filterTitle, setFilterTitle] = useState("");
   const [elementsValue, setElementsValue] = useState();
@@ -35,8 +37,19 @@ function TableKnowledge() {
   const [data, setData] = useState([]);
   const [selectedDomain, setSelectedDomain] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState(0);
+  const [selectedKnowledgeId, setSelectedKnowledgeId] = useState(null);
   const [noResults, setNoResults] = useState(false);
 
+  const handleOpenModal = (id) => {
+    setSelectedKnowledgeId(id);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedKnowledgeId(null);
+  };
+  
   const fetchKnowledges = async () => {
     const response = await getAllKnowledges(
       filterTitle,
@@ -64,8 +77,12 @@ function TableKnowledge() {
   }, [filterTitle, page, elementsValue, selectedDomain, selectedCategory]);
 
   const handleInactivate = async (id) => {
+    if(selectedKnowledgeId) {
     await inactivateKnowledge(id);
     fetchKnowledges();
+    toast.success("Conhecimento inativado com sucesso!");
+    handleCloseModal();
+    }
   };
 
   const handleElementValue = (elementsNumber) => {
@@ -197,7 +214,7 @@ function TableKnowledge() {
                     {isManager() ? (
                       <td
                         className="action-column"
-                        onClick={() => handleInactivate(knowledge.id)}
+                        onClick={() => handleOpenModal(knowledge.id)}
                       >
                         <RiDeleteBin6Line className="delete-icon" />
                       </td>
@@ -205,6 +222,21 @@ function TableKnowledge() {
                   </tr>
                 ))}
             </tbody>
+            <ModalComponent
+              confirmButton="Inativar"
+              tabIndex="-1"
+              bodyContent={"Deseja inativar?"}
+              show={showModal}
+              handleClose={() => {
+                handleCloseModal();
+                toast.error("Operação cancelada pelo usuário.");
+              }}
+              confirm={handleInactivate}
+              cancel={() => {
+                handleCloseModal();
+                toast.error("Operação cancelada pelo usuário.");
+              }}
+            />
           </Table>
         </div>
       </TableStyle>

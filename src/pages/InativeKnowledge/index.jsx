@@ -54,7 +54,7 @@ function InativeKnowledge({
           ></ButtonComponent>
         }
          />
-        <PageContentContainer>
+         <PageContentContainer scrollable={true}>
 
          <TableInativeKnowledge knowledge={knowledgeData}/>
 
