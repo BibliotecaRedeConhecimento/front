@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-bootstrap";
 import { getAllCategories, getCategoryById } from "../../servicesBack/CategoryServices";
-import './styles.css';
+import "./styles.css";
 
-const ToggleSelectCategory = ({ selectCategory, categorySelected }) => {
+const ToggleSelectCategory = ({ selectCategory, domainSelected }) => {
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState()
-  const [categoryName, setCategoryName] = useState()
+  const [filteredCategories, setFilteredCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(0);
+  const [categoryName, setCategoryName] = useState(null);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -20,22 +21,36 @@ const ToggleSelectCategory = ({ selectCategory, categorySelected }) => {
     fetchCategories();
   }, []);
 
-  const handleSelect = (e) => {
+  // Atualiza as categorias filtradas quando o domínio selecionado muda
+  useEffect(() => {
+    if (domainSelected) {
+      const domainId = parseInt(domainSelected);
+      const filtered = categories.filter((category) =>
+        category.domains.some((domain) => domain.id === domainId)
+      );
+      setFilteredCategories(filtered);
+    } else {
+      setFilteredCategories(categories); // Se nenhum domínio estiver selecionado, mostra todas as categorias
+    }
+  }, [categories, domainSelected]);
+
+  const handleSelect = async (e) => {
     const value = e.target.value;
     selectCategory(value);
-    setSelectedCategory(value)
-    console.log(value);
+    setSelectedCategory(value); // Define o ID da categoria selecionada
+    try {
+      const response = await getCategoryById(value); // Utiliza o valor atual de 'value'
+      setCategoryName(response.data.name);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Erro ao buscar nome da categoria:", error);
+    }
   };
 
-  useEffect(() => {
-    const handleSelectedName = async () => {
-      const response = await getCategoryById(selectedCategory)
-      setCategoryName(response.data.name)
-      console.log(response.data)
-    }
-    handleSelectedName()
-  }, [selectedCategory])
-
+  const handleReset = () => {
+    selectCategory(0);
+    setCategoryName();
+  };
   return (
     <Dropdown className="full-width custom-dropdown">
       <Dropdown.Toggle
@@ -43,12 +58,25 @@ const ToggleSelectCategory = ({ selectCategory, categorySelected }) => {
         id="dropdown-custom-components"
         className="full-width toggle-left"
       >
-        {categoryName == null || categorySelected == 0 ? "Buscar Categoria" : categoryName}      </Dropdown.Toggle>
+        {(categoryName == null && categoryName == undefined) ||
+        selectedCategory == 0
+          ? "Buscar Categoria"
+          : categoryName}{" "}
+      </Dropdown.Toggle>
 
       <Dropdown.Menu className="full-width custom-dropdown-menu">
         <Dropdown.ItemText>Selecione uma Categoria:</Dropdown.ItemText>
         <Dropdown.Divider />
-        {categories.map((category) => (
+        <Dropdown.Item className="full-width">
+          <button
+            type="button"
+            className="dropdown-item full-width"
+            onClick={handleReset}
+          >
+            Limpar Filtro
+          </button>
+        </Dropdown.Item>
+        {filteredCategories.map((category) => (
           <Dropdown.Item key={category.id} className="full-width">
             <button
               type="button"

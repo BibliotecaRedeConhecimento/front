@@ -8,12 +8,15 @@ import { Button, Col, Row, Container } from "react-bootstrap";
 import ButtonInative from "../ButtonInative/index.jsx";
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import { getAllKnowledges, inactivateKnowledge } from "../../servicesBack/KnowledgeServices.js";
+import {
+  getAllKnowledges,
+  inactivateKnowledge,
+} from "../../servicesBack/KnowledgeServices.js";
 import { AuthenticationContext } from "../../services/context/AuthContext";
 import SearchComponentKnowledge from "../SearchBarKnowledge/index.jsx";
 import ToggleSelectDomain from "../SearchBarKnowledgeDomain/index.jsx";
 import ToggleSelectCategory from "../SearchBarKnowledgeCategory/index.jsx";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import { ReviewContext } from "../../services/context/ReviewContext";
 import ModalComponent from "../../components/ModalComponent";
 
@@ -56,15 +59,15 @@ function TableKnowledge() {
     setData(response.data);
     console.log(response.data.content);
     console.log(response.data);
-    if (response.data.content.length === 0 && filterTitle.trim() !== '') {
+    if (response.data.content.length === 0 && filterTitle.trim() !== "") {
       setNoResults(true); // Define true se a busca não retornar resultados
-      toast.error('Nenhum conhecimento encontrado.');
+      toast.error("Nenhum conhecimento encontrado.");
     } else {
       setNoResults(false);
     }
   };
 
-  const { toReview } = useContext(ReviewContext)
+  const { toReview } = useContext(ReviewContext);
 
   useEffect(() => {
     fetchKnowledges();
@@ -95,11 +98,9 @@ function TableKnowledge() {
 
   const handleSelectedDomain = (domainId) => {
     setSelectedDomain(domainId);
-    setSelectedCategory(0);
   };
   const handleSelectedCategory = (categoryId) => {
     setSelectedCategory(categoryId);
-    setSelectedDomain(0);
   };
 
   const { isManager } = useContext(AuthenticationContext);
@@ -110,10 +111,17 @@ function TableKnowledge() {
         <SearchComponentKnowledge onSearch={setFilterTitle} />
         <Row style={{ marginBottom: 40 }}>
           <Col md={6}>
-            <ToggleSelectDomain domainSelected={selectedDomain} selectDomain={handleSelectedDomain} />
+            <ToggleSelectDomain
+              domainSelected={selectedDomain}
+              selectDomain={handleSelectedDomain}
+            />
           </Col>
           <Col md={6}>
-            <ToggleSelectCategory categorySelected={selectedCategory} selectCategory={handleSelectedCategory} />
+            <ToggleSelectCategory
+              categorySelected={selectedCategory}
+              domainSelected={selectedDomain}
+              selectCategory={handleSelectedCategory}
+            />
           </Col>
         </Row>
         <div className="d-flex justify-content-end mb-4">
@@ -162,7 +170,9 @@ function TableKnowledge() {
                   const uniqueCategories = new Set();
                   knowledge.categories.forEach((category) => {
                     uniqueCategories.add(category.name);
-                    category.domains.forEach((domain) => uniqueDomains.add(domain.name));
+                    category.domains.forEach((domain) =>
+                      uniqueDomains.add(domain.name)
+                    );
                   });
 
                   return (
@@ -172,18 +182,33 @@ function TableKnowledge() {
                       <td>{[...uniqueCategories].join(", ")}</td>
                       <td>{knowledge.collaborator}</td>
                       <td className="action-column">
-                        <Button variant="link" onClick={() => navigate(`/viewKnowledge/${knowledge.id}`)}>
+                        <Button
+                          variant="link"
+                          onClick={() =>
+                            navigate(`/viewKnowledge/${knowledge.id}`)
+                          }
+                        >
                           <BsEye className="visualizar-icon" />
                         </Button>
                       </td>
                       {isManager() && (
                         <>
                           <td className="action-column">
-                            <Button variant="link" onClick={() => navigate(`/buscarConhecimento/changeKnowledge/${knowledge.id}`)}>
+                            <Button
+                              variant="link"
+                              onClick={() =>
+                                navigate(
+                                  `/buscarConhecimento/changeKnowledge/${knowledge.id}`
+                                )
+                              }
+                            >
                               <CiEdit className="edit-icon" />
                             </Button>
                           </td>
-                          <td className="action-column" onClick={() => handleOpenModal(knowledge.id)}>
+                          <td
+                            className="action-column"
+                            onClick={() => handleOpenModal(knowledge.id)}
+                          >
                             <RiDeleteBin6Line className="delete-icon" />
                           </td>
                         </>
