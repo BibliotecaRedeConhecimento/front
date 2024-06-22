@@ -54,7 +54,7 @@ const RegisterDomain = ({
     const response = await addDomain({ name: formData.domainName });
     if (response) {
       toast.success("Domínio cadastrado com sucesso!");
-      
+      setFormData({ domainName: "" });
       handleCloseModal();
     } else {
       toast.error("Erro ao cadastrar o domínio.");

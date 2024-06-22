@@ -66,6 +66,7 @@ const RegisterCategory = ({
     });
     if (response) {
       toast.success("Categoria cadastrada com sucesso!");
+      setFormData({ categoryName: "" });
       
       handleCloseModal();
     } else {

@@ -89,10 +89,11 @@ const RegisterKnowledge = ({
         if (form.checkValidity() === false) {
             e.stopPropagation();
             toast.error("Todos os campos são obrigatórios!");
+            setValidated(true);
         } else {
-            console.log(!isManager())
             handleCloseModal();
-            const resp = await addKnowledge({
+            
+            const payload = {
                 title: formData.NameKnowledge,
                 archive: formData.Media,
                 collaborator: user.fullName,
@@ -104,15 +105,32 @@ const RegisterKnowledge = ({
                         id: formData.categoryId,
                     },
                 ],
-                needsReview: !isManager()
-            });
-            if (resp.status >= 200 && resp.status < 300) {
-                toast.success("Cadastro realizado com sucesso!");
+            };
+
+    
+            try {
+                const resp = await addKnowledge(payload);
+                if (resp.status >= 200 && resp.status < 300) {
+                    toast.success("Cadastro realizado com sucesso!");
+                    setFormData({
+                        NameKnowledge: "",
+                        Introduction: "",
+                        categoryId: "",
+                        Contributor: "",
+                        TitleMedia: "",
+                        Media: "",
+                        Description: "",
+                    });
+                    setThumbnailUrl("");
+                } else {
+                    toast.error("Erro ao cadastrar conhecimento.");
+                }
+            } catch (error) {
+                (err)
             }
         }
-        setValidated(true);
+    
     };
-
     const getVideoId = (videoUrl) => {
         try {
             const url = new URL(videoUrl);

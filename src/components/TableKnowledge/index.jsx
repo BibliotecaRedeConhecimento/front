@@ -1,25 +1,19 @@
 import Table from "react-bootstrap/Table";
-
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { CiEdit } from "react-icons/ci";
 import { BsEye } from "react-icons/bs";
-
 import { TableStyle } from "./styles.jsx";
 import PaginationComponent from "../TablePagination/index.jsx";
 import { Button, Col, Row, Container } from "react-bootstrap";
 import ButtonInative from "../ButtonInative/index.jsx";
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import {
-  getAllKnowledges,
-  inactivateKnowledge,
-} from "../../servicesBack/KnowledgeServices.js";
+import { getAllKnowledges, inactivateKnowledge } from "../../servicesBack/KnowledgeServices.js";
 import { AuthenticationContext } from "../../services/context/AuthContext";
 import SearchComponentKnowledge from "../SearchBarKnowledge/index.jsx";
 import ToggleSelectDomain from "../SearchBarKnowledgeDomain/index.jsx";
 import ToggleSelectCategory from "../SearchBarKnowledgeCategory/index.jsx";
 import { toast } from 'react-toastify';
-import reviewKnowledge from "../../pages/ReviewKnowledge";
 import { ReviewContext } from "../../services/context/ReviewContext";
 import ModalComponent from "../../components/ModalComponent";
 
@@ -49,7 +43,7 @@ function TableKnowledge() {
     setShowModal(false);
     setSelectedKnowledgeId(null);
   };
-  
+
   const fetchKnowledges = async () => {
     const response = await getAllKnowledges(
       filterTitle,
@@ -77,11 +71,11 @@ function TableKnowledge() {
   }, [filterTitle, page, elementsValue, selectedDomain, selectedCategory]);
 
   const handleInactivate = async (id) => {
-    if(selectedKnowledgeId) {
-    await inactivateKnowledge(id);
-    fetchKnowledges();
-    toast.success("Conhecimento inativado com sucesso!");
-    handleCloseModal();
+    if (selectedKnowledgeId) {
+      await inactivateKnowledge(id);
+      fetchKnowledges();
+      toast.success("Conhecimento inativado com sucesso!");
+      handleCloseModal();
     }
   };
 
@@ -101,13 +95,12 @@ function TableKnowledge() {
 
   const handleSelectedDomain = (domainId) => {
     setSelectedDomain(domainId);
-    setSelectedCategory(0)
+    setSelectedCategory(0);
   };
   const handleSelectedCategory = (categoryId) => {
     setSelectedCategory(categoryId);
-    setSelectedDomain(0)
+    setSelectedDomain(0);
   };
-
 
   const { isManager } = useContext(AuthenticationContext);
 
@@ -125,26 +118,26 @@ function TableKnowledge() {
         </Row>
         <div className="d-flex justify-content-end mb-4">
           {isManager() ? (
-             <div className="d-flex gap-3">
-             <ButtonInative
-               size="10rem"
-               bgColor="var(--verde-primario3)"
-               textColor="white"
-               alternativeText="Conhecimentos para revisão"
-               action={() => navigateTo("/revisarConhecimento")}
-             >
-               Revisão ({toReview()})
-             </ButtonInative>
-             <ButtonInative
-               size="10rem"
-               bgColor="var(--verde-primario3)"
-               textColor="white"
-               alternativeText="Categorias Inativas"
-               action={() => navigateTo("/conhecimentoInativo")}
-             >
-               Inativos
-             </ButtonInative>
-           </div>
+            <div className="d-flex gap-3">
+              <ButtonInative
+                size="10rem"
+                bgColor="var(--verde-primario3)"
+                textColor="white"
+                alternativeText="Conhecimentos para revisão"
+                action={() => navigateTo("/revisarConhecimento")}
+              >
+                Revisão ({toReview()})
+              </ButtonInative>
+              <ButtonInative
+                size="10rem"
+                bgColor="var(--verde-primario3)"
+                textColor="white"
+                alternativeText="Categorias Inativas"
+                action={() => navigateTo("/conhecimentoInativo")}
+              >
+                Inativos
+              </ButtonInative>
+            </div>
           ) : null}
         </div>
       </Container>
@@ -164,63 +157,40 @@ function TableKnowledge() {
             </thead>
             <tbody>
               {Array.isArray(knowledgeData) &&
-                knowledgeData.map((knowledge) => (
-                  <tr key={knowledge.id}>
-                    <td>{knowledge.title}</td>
-                    <td>
-                      {Array.isArray(knowledge.categories) &&
-                        knowledge.categories.map(
-                          (category) =>
-                            Array.isArray(category.domains) &&
-                            category.domains.map((domain) => (
-                              <span key={domain.id}>{domain.name}</span>
-                            ))
-                        )}
-                    </td>
-                    <td>
-                      {Array.isArray(knowledge.categories) &&
-                        knowledge.categories.map((category) => (
-                          <span key={category.id}>{category.name}</span>
-                        ))}
-                    </td>
-                    <td>{knowledge.collaborator}</td>
+                knowledgeData.map((knowledge) => {
+                  const uniqueDomains = new Set();
+                  const uniqueCategories = new Set();
+                  knowledge.categories.forEach((category) => {
+                    uniqueCategories.add(category.name);
+                    category.domains.forEach((domain) => uniqueDomains.add(domain.name));
+                  });
 
-                    <td className="action-column">
-                      <Button
-                        variant="link"
-                        onClick={() =>
-                          navigate(`/viewKnowledge/${knowledge.id}`)
-                        }
-                      >
-                        <BsEye className="visualizar-icon" />
-                      </Button>
-                    </td>
-                    {isManager() ? (
-                      <>
-                        <td className="action-column">
-                          <Button
-                            variant="link"
-                            onClick={() =>
-                              navigate(
-                                `/buscarConhecimento/changeKnowledge/${knowledge.id}`
-                              )
-                            }
-                          >
-                            <CiEdit className="edit-icon" />
-                          </Button>
-                        </td>
-                      </>
-                    ) : null}
-                    {isManager() ? (
-                      <td
-                        className="action-column"
-                        onClick={() => handleOpenModal(knowledge.id)}
-                      >
-                        <RiDeleteBin6Line className="delete-icon" />
+                  return (
+                    <tr key={knowledge.id}>
+                      <td>{knowledge.title}</td>
+                      <td>{[...uniqueDomains].join(", ")}</td>
+                      <td>{[...uniqueCategories].join(", ")}</td>
+                      <td>{knowledge.collaborator}</td>
+                      <td className="action-column">
+                        <Button variant="link" onClick={() => navigate(`/viewKnowledge/${knowledge.id}`)}>
+                          <BsEye className="visualizar-icon" />
+                        </Button>
                       </td>
-                    ) : null}
-                  </tr>
-                ))}
+                      {isManager() && (
+                        <>
+                          <td className="action-column">
+                            <Button variant="link" onClick={() => navigate(`/buscarConhecimento/changeKnowledge/${knowledge.id}`)}>
+                              <CiEdit className="edit-icon" />
+                            </Button>
+                          </td>
+                          <td className="action-column" onClick={() => handleOpenModal(knowledge.id)}>
+                            <RiDeleteBin6Line className="delete-icon" />
+                          </td>
+                        </>
+                      )}
+                    </tr>
+                  );
+                })}
             </tbody>
             <ModalComponent
               confirmButton="Inativar"
@@ -231,7 +201,7 @@ function TableKnowledge() {
                 handleCloseModal();
                 toast.error("Operação cancelada pelo usuário.");
               }}
-              confirm={handleInactivate}
+              confirm={() => handleInactivate(selectedKnowledgeId)}
               cancel={() => {
                 handleCloseModal();
                 toast.error("Operação cancelada pelo usuário.");
