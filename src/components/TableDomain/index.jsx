@@ -127,9 +127,11 @@ function TableDomain({ domain }) {
             <thead>
               <tr>
                 <th colSpan="1">Domínio</th>
+                {isManager() ?
                 <th style={{paddingLeft: 40}} colSpan="2">
                   Ações
                 </th>
+                : null}
               </tr>
             </thead>
             <tbody>
