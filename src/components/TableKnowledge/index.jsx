@@ -138,6 +138,7 @@ function TableKnowledge() {
                 </Row>
                 <div className="d-flex justify-content-end mb-4">
                     {isManager() ? (
+                        <>                        
                         <div style={{paddingRight: 20}} className="d-flex gap-3">
                             <ButtonInative
                                 size="10rem"
@@ -149,7 +150,7 @@ function TableKnowledge() {
                                 Revisão ({toReview()})
                             </ButtonInative>
                         </div>
-                    ) : null}
+                    
                     <div className="d-flex gap-3">
                         <ButtonInative
                             size="10rem"
@@ -161,6 +162,8 @@ function TableKnowledge() {
                             Inativos
                         </ButtonInative>
                     </div>
+                    </>
+                    ) : null}
                 </div>
             </Container>
             <TableStyle>

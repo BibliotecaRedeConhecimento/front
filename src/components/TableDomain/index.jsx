@@ -58,7 +58,7 @@ function TableDomain({ domain }) {
     } catch (error) {
       console.error("Erro ao buscar um domínio.", error);
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
@@ -105,86 +105,88 @@ function TableDomain({ domain }) {
           return categoryData; // Retorne os dados filtrados ou um array vazio
         }} />
 
-        <div className="d-flex justify-content-end mb-4">
-          <ButtonInative
-            size="10rem"
-            bgColor="var(--verde-primario3)"
-            textColor="white"
-            alternativeText="Categorias Inativas"
-            action={() => navigateTo("/dominioInativo")}
-          >
-            Inativos
-          </ButtonInative>
-        </div>
+        {isManager() ? (
+          <div className="d-flex justify-content-end mb-4">
+            <ButtonInative
+              size="10rem"
+              bgColor="var(--verde-primario3)"
+              textColor="white"
+              alternativeText="Categorias Inativas"
+              action={() => navigateTo("/dominioInativo")}
+            >
+              Inativos
+            </ButtonInative>
+          </div>
+        ) : null}
       </Container>
       <TableStyle>
         <div className="table-area">
-        {loading ? (
+          {loading ? (
             <div className="text-center my-5">
-            <Spinner animation="border" role="status">
-              <span className="visually-hidden">Carregando...</span>
-            </Spinner>
-          </div>
+              <Spinner animation="border" role="status">
+                <span className="visually-hidden">Carregando...</span>
+              </Spinner>
+            </div>
           ) : (
-          <Table striped hover responsive>
-            <thead>
-              <tr>
-                <th colSpan="1">Domínio</th>
-                {isManager() ?
-                <th style={{paddingLeft: 40}} colSpan="2">
-                  Ações
-                </th>
-                : null}
-              </tr>
-            </thead>
-            <tbody>
-              {Array.isArray(domainData) &&
-                domainData.map((item) => (
-                  <tr key={item.id}>
-                    <td>{item.name}</td>
-                   
-                    <td className="action-column">
-                      {isManager() ? (
-                        <>
+            <Table striped hover responsive>
+              <thead>
+                <tr>
+                  <th colSpan="1">Domínio</th>
+                  {isManager() ?
+                    <th style={{ paddingLeft: 40 }} colSpan="2">
+                      Ações
+                    </th>
+                    : null}
+                </tr>
+              </thead>
+              <tbody>
+                {Array.isArray(domainData) &&
+                  domainData.map((item) => (
+                    <tr key={item.id}>
+                      <td>{item.name}</td>
+
+                      <td className="action-column">
+                        {isManager() ? (
+                          <>
+                            <Button
+                              variant="link"
+                              style={{ color: "black" }}
+                              onClick={() => navigate(`changeDomain/` + item.id)}
+                            >
+                              <CiEdit className="edit-icon" />
+                            </Button>
+                          </>
+                        ) : null}
+                      </td>
+                      <td className="action-column">
+                        {isManager() ? (
                           <Button
                             variant="link"
-                            style={{ color: "black" }}
-                            onClick={() => navigate(`changeDomain/` + item.id)}
+                            onClick={() => handleOpenModal(item.id)}
                           >
-                            <CiEdit className="edit-icon" />
+                            <RiDeleteBin6Line className="delete-icon" />
                           </Button>
-                        </>
-                      ) : null}
-                    </td>
-                    <td className="action-column">
-                      {isManager() ? (
-                        <Button
-                          variant="link"
-                          onClick={() => handleOpenModal(item.id)}
-                        >
-                          <RiDeleteBin6Line className="delete-icon" />
-                        </Button>
-                      ) : null}
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-            <ModalComponent
-              confirmButton="Inativar"
-              tabIndex="-1"
-              bodyContent={"Deseja inativar o domínio?"}
-              show={showModal}
-              handleClose={() => {
-                handleCloseModal();
-                toast.error("Operação cancelada pelo usuário.");
-              }}
-              confirm={() => handleInactivate(selectedDomainId)}
-              cancel={() => {
-                handleCloseModal();
-                toast.error("Operação cancelada pelo usuário.");
-              }}
-            />
-          </Table>
+                        ) : null}
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+              <ModalComponent
+                confirmButton="Inativar"
+                tabIndex="-1"
+                bodyContent={"Deseja inativar o domínio?"}
+                show={showModal}
+                handleClose={() => {
+                  handleCloseModal();
+                  toast.error("Operação cancelada pelo usuário.");
+                }}
+                confirm={() => handleInactivate(selectedDomainId)}
+                cancel={() => {
+                  handleCloseModal();
+                  toast.error("Operação cancelada pelo usuário.");
+                }}
+              />
+            </Table>
           )}
         </div>
       </TableStyle>

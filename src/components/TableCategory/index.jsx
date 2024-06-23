@@ -108,6 +108,7 @@ function TableCategory() {
           }}
         />
         <div className="d-flex justify-content-end mb-4">
+        {isManager() ? (
           <ButtonInative
             size="10rem"
             bgColor="var(--verde-primario3)"
@@ -117,7 +118,8 @@ function TableCategory() {
           >
             Inativos
           </ButtonInative>
-        </div>
+          ) : null}
+        </div> 
       </Container>
       <TableStyle>
         <div className="table-area">
