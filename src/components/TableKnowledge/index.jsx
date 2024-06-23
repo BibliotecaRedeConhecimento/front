@@ -29,8 +29,8 @@ function TableKnowledge() {
     const [showModal, setShowModal] = useState(false);
     const [knowledgeData, setKnowledgeData] = useState([]);
     const [filterTitle, setFilterTitle] = useState("");
-    const [elementsValue, setElementsValue] = useState();
-    const [page, setPage] = useState();
+    const [elementsValue, setElementsValue] = useState(10);
+    const [page, setPage] = useState(0);
     const [data, setData] = useState([]);
     const [selectedDomain, setSelectedDomain] = useState(0);
     const [selectedCategory, setSelectedCategory] = useState(0);

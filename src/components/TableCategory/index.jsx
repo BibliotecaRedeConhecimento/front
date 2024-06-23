@@ -6,11 +6,14 @@ import PaginationComponent from "../TablePagination/index.jsx";
 import { Button, Container, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import ButtonInative from "../ButtonInative/index.jsx";
-import { getAllCategories, inactivateCategory } from "../../servicesBack/CategoryServices.js";
+import {
+  getAllCategories,
+  inactivateCategory,
+} from "../../servicesBack/CategoryServices.js";
 import { useContext, useEffect, useState } from "react";
 import { AuthenticationContext } from "../../services/context/AuthContext";
 import SearchComponentCategory from "../SearchBarCategory/index.jsx";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import ModalComponent from "../../components/ModalComponent";
 
 function TableCategory() {
@@ -22,10 +25,10 @@ function TableCategory() {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [categoryData, setCategoryData] = useState([]);
-  const [filterName, setFilterName] = useState('');
+  const [filterName, setFilterName] = useState("");
   const [data, setData] = useState([]);
   const [elementsValue, setElementsValue] = useState(10);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [noResults, setNoResults] = useState(false);
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
 
@@ -45,9 +48,9 @@ function TableCategory() {
       const response = await getAllCategories(filterName, elementsValue, page);
       setCategoryData(response.data.content);
       setData(response.data);
-      if (response.data.content.length === 0 && filterName.trim() !== '') {
+      if (response.data.content.length === 0 && filterName.trim() !== "") {
         setNoResults(true);
-        toast.error('Nenhuma categoria encontrada.');
+        toast.error("Nenhuma categoria encontrada.");
       } else {
         setNoResults(false);
       }
@@ -70,7 +73,9 @@ function TableCategory() {
         toast.success("Categoria inativada com sucesso.");
         handleCloseModal();
       } else {
-        toast.error("Erro ao inativar categoria. Verifique se há conhecimentos relacionados.");
+        toast.error(
+          "Erro ao inativar categoria. Verifique se há conhecimentos relacionados."
+        );
       }
     } catch (error) {
       toast.error("Erro ao inativar categoria.");
@@ -96,10 +101,12 @@ function TableCategory() {
   return (
     <>
       <Container fluid>
-        <SearchComponentCategory onSearch={(value) => {
-          setFilterName(value);
-          return categoryData; // Retorne os dados filtrados ou um array vazio
-        }} />
+        <SearchComponentCategory
+          onSearch={(value) => {
+            setFilterName(value);
+            return categoryData; // Retorne os dados filtrados ou um array vazio
+          }}
+        />
         <div className="d-flex justify-content-end mb-4">
           <ButtonInative
             size="10rem"
@@ -126,34 +133,50 @@ function TableCategory() {
                 <tr>
                   <th colSpan="1">Categoria</th>
                   <th colSpan="1">Domínio</th>
-                  {isManager() ? <th style={{ paddingLeft: 40 }} colSpan="2">Ações</th> : null}
+                  {isManager() ? (
+                    <th style={{ paddingLeft: 40 }} colSpan="2">
+                      Ações
+                    </th>
+                  ) : null}
                 </tr>
               </thead>
               <tbody>
-                {Array.isArray(categoryData) && categoryData.map((item) => (
-                  <tr key={item.id}>
-                    <td>{item.name}</td>
-                    <td>{Array.isArray(item.domains) && item.domains.map((domain) => (
-                      <span key={domain.id}>{domain.name}</span>
-                    ))}</td>
-                    <td className="action-column">
-                      {isManager() ? (
-                        <>
-                          <Button variant="link" onClick={() => navigate(`changeCategory/` + item.id)}>
-                            <CiEdit className="edit-icon" />
-                          </Button>
-                        </>
-                      ) : null}
-                    </td>
-                    {isManager() ? (
-                      <td className="action-column">
-                        <Button variant="link" onClick={() => handleOpenModal(item.id)}>
-                          <RiDeleteBin6Line className="delete-icon" />
-                        </Button>
+                {Array.isArray(categoryData) &&
+                  categoryData.map((item) => (
+                    <tr key={item.id}>
+                      <td>{item.name}</td>
+                      <td>
+                        {Array.isArray(item.domains) &&
+                          item.domains.map((domain) => (
+                            <span key={domain.id}>{domain.name}</span>
+                          ))}
                       </td>
-                    ) : null}
-                  </tr>
-                ))}
+                      <td className="action-column">
+                        {isManager() ? (
+                          <>
+                            <Button
+                              variant="link"
+                              onClick={() =>
+                                navigate(`changeCategory/` + item.id)
+                              }
+                            >
+                              <CiEdit className="edit-icon" />
+                            </Button>
+                          </>
+                        ) : null}
+                      </td>
+                      {isManager() ? (
+                        <td className="action-column">
+                          <Button
+                            variant="link"
+                            onClick={() => handleOpenModal(item.id)}
+                          >
+                            <RiDeleteBin6Line className="delete-icon" />
+                          </Button>
+                        </td>
+                      ) : null}
+                    </tr>
+                  ))}
               </tbody>
               <ModalComponent
                 confirmButton="Inativar"
@@ -174,7 +197,11 @@ function TableCategory() {
           )}
         </div>
       </TableStyle>
-      <PaginationComponent changeElementsNumber={handleElementValue} changePage={handlePagination} data={data} />
+      <PaginationComponent
+        changeElementsNumber={handleElementValue}
+        changePage={handlePagination}
+        data={data}
+      />
     </>
   );
 }

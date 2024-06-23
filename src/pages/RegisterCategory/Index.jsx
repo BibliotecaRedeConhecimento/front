@@ -30,7 +30,7 @@ const RegisterCategory = ({
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({ categoryName: "", domainId: 0 });
   const [validated, setValidated] = useState(false);
-  const [domains, setDomains] = useState([])
+  const [domains, setDomains] = useState([]);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -43,7 +43,7 @@ const RegisterCategory = ({
 
   const handleOpenModal = (event) => {
     event.preventDefault();
-    
+
     const form = document.getElementById("categoryForm");
     if (form.checkValidity() === false) {
       setValidated(true);
@@ -55,36 +55,36 @@ const RegisterCategory = ({
 
   const handleCloseModal = () => {
     setShowModal(false);
-    
   };
 
   const registerCategory = async (event) => {
     event.preventDefault();
-    const response = await addCategory({name: formData.categoryName, domains: [{
-        id: formData.domainId
-      }]
+    const response = await addCategory({
+      name: formData.categoryName,
+      domains: [
+        {
+          id: formData.domainId,
+        },
+      ],
     });
     if (response) {
       toast.success("Categoria cadastrada com sucesso!");
       setFormData({ categoryName: "" });
-      
+
       handleCloseModal();
     } else {
       toast.error("Erro ao cadastrar o categoria.");
     }
-  
-
-    
   };
 
   const fetchDomains = async () => {
-    const resp = await getAllDomains()
-    setDomains(resp.data.content)
-  }
+    const resp = await getAllDomains({ filterName: null }, 100);
+    setDomains(resp.data.content);
+  };
 
   useEffect(() => {
-    fetchDomains()
-  }, [])
+    fetchDomains();
+  }, []);
 
   return (
     <ContainerWithSidebar
@@ -96,21 +96,24 @@ const RegisterCategory = ({
     >
       <PageContainer>
         <PageHeaderContainer
-        buttonback={
-          <ButtonComponent
-            size="8rem"
-            //bgColor="var(--cinza-primario)"
-            textColor="white"
-            alternativeText="Voltar"
-          ></ButtonComponent>
-        }
-          icon={<MdOutlineAddCircle style={{ width: 34, marginRight: 15 }} />}
-          title={`Cadastrar Categoria`
-          
+          buttonback={
+            <ButtonComponent
+              size="8rem"
+              //bgColor="var(--cinza-primario)"
+              textColor="white"
+              alternativeText="Voltar"
+            ></ButtonComponent>
           }
+          icon={<MdOutlineAddCircle style={{ width: 34, marginRight: 15 }} />}
+          title={`Cadastrar Categoria`}
         />
         <PageContentContainer>
-          <Form id="categoryForm" noValidate validated={validated} onSubmit={handleOpenModal}>
+          <Form
+            id="categoryForm"
+            noValidate
+            validated={validated}
+            onSubmit={handleOpenModal}
+          >
             <Row>
               <Col md={12}>
                 <Form.Group controlId="categoryName" className="mb-3">
@@ -137,47 +140,46 @@ const RegisterCategory = ({
                   >
                     <option value="">Selecione um Domínio</option>
                     {domains.map((domain) => (
-                      <option key={domain.id} value={domain.id}>{domain.name}</option>
+                      <option key={domain.id} value={domain.id}>
+                        {domain.name}
+                      </option>
                     ))}
                   </Form.Control>
                   <Form.Control.Feedback type="invalid">
                     Campo obrigatório.
                   </Form.Control.Feedback>
                 </Form.Group>
-
               </Col>
             </Row>
             <div className="d-flex justify-content-end mt-3">
-             
               <ButtonConfirmRegistration
-                  type="button"
-                  size="10rem"
-                  bgColor="var(--verde-primario)"
-                  alternativeText="Cadastrar"
-                  onClick={handleOpenModal}
-                >
-                  Cadastrar
-                  <IoIosArrowForward style={{ marginLeft: 5, width: 12 }} />
-                </ButtonConfirmRegistration>
+                type="button"
+                size="10rem"
+                bgColor="var(--verde-primario)"
+                alternativeText="Cadastrar"
+                onClick={handleOpenModal}
+              >
+                Cadastrar
+                <IoIosArrowForward style={{ marginLeft: 5, width: 12 }} />
+              </ButtonConfirmRegistration>
             </div>
           </Form>
           <ModalComponent
-              tabIndex="-1"
-              bodyContent={"Deseja cadastrar a categoria?"}
-              show={showModal}
-              handleClose={() => {
-                handleCloseModal();
-                toast.error("Cadastro de categoria cancelado.");  
-              }}
-              confirm={registerCategory}
-              cancel={() => {
-                handleCloseModal();
-                toast.error("Cadastro de categoria cancelado.");  
-              }}
-            />
+            tabIndex="-1"
+            bodyContent={"Deseja cadastrar a categoria?"}
+            show={showModal}
+            handleClose={() => {
+              handleCloseModal();
+              toast.error("Cadastro de categoria cancelado.");
+            }}
+            confirm={registerCategory}
+            cancel={() => {
+              handleCloseModal();
+              toast.error("Cadastro de categoria cancelado.");
+            }}
+          />
         </PageContentContainer>
       </PageContainer>
-
     </ContainerWithSidebar>
   );
 };

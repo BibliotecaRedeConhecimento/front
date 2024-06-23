@@ -28,8 +28,8 @@ function TableDomain({ domain }) {
   const [domainData, setDomainData] = useState([]);
   const [filterName, setFilterName] = useState("");
   const [data, setData] = useState([]);
-  const [elementsValue, setElementsValue] = useState();
-  const [page, setPage] = useState();
+  const [elementsValue, setElementsValue] = useState(10);
+  const [page, setPage] = useState(0);
   const [noResults, setNoResults] = useState(false);
   const [selectedDomainId, setSelectedDomainId] = useState(null);
 

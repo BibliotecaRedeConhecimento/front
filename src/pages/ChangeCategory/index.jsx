@@ -65,7 +65,7 @@ function ChangeCategory({
         setCategoryName(categoryResponse.data.name);
         setDomainId(categoryResponse.data.domainId);
 
-        const domainResponse = await getAllDomains();
+        const domainResponse = await getAllDomains({filterName: null}, 100);
         setDomain(domainResponse.data.content);
       } catch (error) {
         toast.error("Erro ao carregar dados.");
