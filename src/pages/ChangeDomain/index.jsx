@@ -10,6 +10,7 @@ import ModalComponent from "../../components/ModalComponent";
 import ButtonModal from "../../components/ButtonModal";
 import { useParams } from "react-router-dom";
 import { getDomainById, updateDomain } from "../../servicesBack/DomainServices";
+import { useNavigate } from "react-router-dom";
 import ButtonComponent from "../../components/ButtonBack";  
 import { IoIosArrowForward } from "react-icons/io";  
 import { toast } from 'react-toastify';
@@ -31,16 +32,22 @@ function ChangeDomain({
 }) {
 
     const { id } = useParams();
+    const navigate = useNavigate();
+    const navigateTo = (path) => {
+      navigate(path);
+    };
 
     console.log(id);
   
     const [showModal, setShowModal] = useState(false);
     const [domainName, setDomainName] = useState("");
-  
-    const [namePlaceholder, setNamePlaceholder] = useState();
+    const [errors, setErrors] = useState({});
   
     const handleOpenModal = () => {
+      event.preventDefault();
+    if (validateForm()) {
       setShowModal(true);
+    }
     };
   
     const handleCloseModal = () => {
@@ -54,8 +61,8 @@ function ChangeDomain({
       const response = await updateDomain(id, {name: domainName, active: true});
       if (response) {
         toast.success("Domínio alterado com sucesso!");
-        
         handleCloseModal();
+        navigate("/buscarDominio");
         
       } else {
         toast.error("Erro ao alterar o domínio.");
@@ -69,12 +76,19 @@ function ChangeDomain({
   
     const handleName = async () => {
       const response = await getDomainById(id);
-      setNamePlaceholder(response.data.name);
+      setDomainName(response.data.name);
     };
   
     useEffect(() => {
       handleName();
     }, []);
+
+    const validateForm = () => {
+      const newErrors = {};
+      if (!domainName) newErrors.domainName = "Nome do domínio é obrigatório";
+      setErrors(newErrors);
+      return Object.keys(newErrors).length === 0;
+    };
 
     return (
         <ContainerWithSidebar
@@ -101,10 +115,15 @@ function ChangeDomain({
                 <Form.Group controlId="NameDomain">
             <Form.Label>Nome</Form.Label>
             <Form.Control
-              type="string"
-              value={namePlaceholder}
+              type="text"
+              value={domainName}
               onChange={(event) => setDomainName(event.target.value)}
+              isInvalid={!!errors.domainName}
+                required
             />
+            <Form.Control.Feedback type="invalid">
+                {errors.domainName}
+              </Form.Control.Feedback>
           </Form.Group>
           
               
