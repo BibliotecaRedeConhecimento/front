@@ -94,13 +94,16 @@ function TableDomain({ domain }) {
     if (domainData.length === 0 && page > 0) {
       setPage(page - 1);
     }
-  }, [domainData]);
+  }, [domainData, page]);
   const { isManager } = useContext(AuthenticationContext);
 
   return (
     <>
       <Container fluid>
-        <SearchComponentDomain onSearch={setFilterName} />
+        <SearchComponentDomain onSearch={(value) => {
+          setFilterName(value);
+          return categoryData; // Retorne os dados filtrados ou um array vazio
+        }} />
 
         <div className="d-flex justify-content-end mb-4">
           <ButtonInative

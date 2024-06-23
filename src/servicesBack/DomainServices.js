@@ -4,7 +4,7 @@ export const getAllDomains = async (filterName, size, page) => {
     try {
         const response = await api.get(`/domains`, {
             params: {
-                ...(name ? {name: filterName} : {}),
+                ...(filterName ? {name: filterName} : {}),
                 ...(size ? {size: size} : {}),
                 ...(page ? {page: page} : {}),
             }

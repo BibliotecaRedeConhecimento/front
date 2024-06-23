@@ -4,7 +4,7 @@ export const getAllCategories = async (filterName, size, page) => {
     try {
         const response = await api.get(`/categories`, {
             params: {
-                ...(name ? {name: filterName} : {}),
+                ...(filterName ? {name: filterName} : {}),
                 ...(size ? {size: size} : {}),
                 ...(page ? {page: page} : {}),
             }

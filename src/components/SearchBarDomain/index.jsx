@@ -18,7 +18,7 @@ function SearchComponentDomain({onSearch}) {
       onSearch('');
     } else {
       const result = await onSearch(searchTerm);
-      if (result.length === 0) {
+      if (result && result.length === 0) {
         toast.error('Nenhum domínio encontrado.');
       }
     }
