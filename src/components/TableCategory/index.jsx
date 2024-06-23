@@ -1,20 +1,20 @@
 import Table from "react-bootstrap/Table";
 
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { CiEdit } from "react-icons/ci";
+import {RiDeleteBin6Line} from "react-icons/ri";
+import {CiEdit} from "react-icons/ci";
 
-import { TableStyle } from "./styles.jsx";
+import {TableStyle} from "./styles.jsx";
 import PaginationComponent from "../TablePagination/index.jsx";
 
-import { Button, Container, Spinner } from "react-bootstrap";
+import {Button, Container, Spinner} from "react-bootstrap";
 
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import ButtonInative from "../ButtonInative/index.jsx";
-import { getAllCategories, inactivateCategory } from "../../servicesBack/CategoryServices.js";
-import { useContext, useEffect, useState } from "react";
-import { AuthenticationContext } from "../../services/context/AuthContext";
+import {getAllCategories, inactivateCategory} from "../../servicesBack/CategoryServices.js";
+import {useContext, useEffect, useState} from "react";
+import {AuthenticationContext} from "../../services/context/AuthContext";
 import SearchComponentCategory from "../SearchBarCategory/index.jsx";
-import { toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 import ModalComponent from "../../components/ModalComponent";
 
 function TableCategory() {
@@ -37,30 +37,30 @@ function TableCategory() {
     const handleOpenModal = (id) => {
         setSelectedCategoryId(id);
         setShowModal(true);
-      };
-    
-      const handleCloseModal = () => {
+    };
+
+    const handleCloseModal = () => {
         setShowModal(false);
         setSelectedCategoryId(null);
-      };
+    };
 
     const fetchCategories = async () => {
         setLoading(true);
-        try{
-        const response = await getAllCategories(filterName, elementsValue, page);
-        setCategoryData(response.data.content);
-        setData(response.data)
-        if (response.data.content.length === 0 && filterName.trim() !== '') {
-            setNoResults(true); // Define true se a busca não retornar resultados
-            toast.error('Nenhuma categoria encontrada.');
-        } else {
-            setNoResults(false);
+        try {
+            const response = await getAllCategories(filterName, elementsValue, page);
+            setCategoryData(response.data.content);
+            setData(response.data)
+            if (response.data.content.length === 0 && filterName.trim() !== '') {
+                setNoResults(true); // Define true se a busca não retornar resultados
+                toast.error('Nenhuma categoria encontrada.');
+            } else {
+                setNoResults(false);
+            }
+        } catch (error) {
+            console.error("Erro ao buscar categoria:", error);
+        } finally {
+            setLoading(false);
         }
-    } catch (error) {
-        console.error("Erro ao buscar categoria:", error);
-       } finally {
-        setLoading(false); 
-      }
     };
 
     useEffect(() => {
@@ -69,19 +69,19 @@ function TableCategory() {
 
     const handleInactivate = async (id) => {
         try {
-        const response = await inactivateCategory(id);
-          if (response && response.status === 200) {
-          fetchCategories();
-          toast.success("Categoria inativada com sucesso.");
-          handleCloseModal();
-        } else {
-            toast.error("Erro ao inativar categoria. Verifique se há conhecimentos relacionados.");
-          }
+            const response = await inactivateCategory(id);
+            if (response && response.status >= 200 && response.status < 300) {
+                fetchCategories();
+                toast.success("Categoria inativada com sucesso.");
+                handleCloseModal();
+            } else {
+                toast.error("Erro ao inativar categoria. Verifique se há conhecimentos relacionados.");
+            }
         } catch (error) {
-          toast.error("Erro ao inativar categoria.");
+            toast.error("Erro ao inativar categoria.");
         }
-      };
-    
+    };
+
     const handleElementValue = (elementsNumber) => {
         setElementsValue(elementsNumber)
     }
@@ -96,13 +96,15 @@ function TableCategory() {
         }
     }, [categoryData, page])
 
-    const { isManager } = useContext(AuthenticationContext)
+    const {isManager} = useContext(AuthenticationContext)
 
 
     return (
         <>
             <Container fluid>
-                <SearchComponentCategory onSearch={setFilterName} />
+                <SearchComponentCategory onSearch={() => {
+                    setFilterName
+                }}/>
                 <div className="d-flex justify-content-end mb-4">
                     <ButtonInative
                         size="10rem"
@@ -118,24 +120,24 @@ function TableCategory() {
             </Container>
             <TableStyle>
                 <div className="table-area">
-                {loading ? (
-            <div className="text-center my-5">
-            <Spinner animation="border" role="status">
-              <span className="visually-hidden">Carregando...</span>
-            </Spinner>
-          </div>
-          ) : (
-                    <Table striped hover responsive>
-                        <thead>
+                    {loading ? (
+                        <div className="text-center my-5">
+                            <Spinner animation="border" role="status">
+                                <span className="visually-hidden">Carregando...</span>
+                            </Spinner>
+                        </div>
+                    ) : (
+                        <Table striped hover responsive>
+                            <thead>
                             <tr>
                                 <th colSpan="1">Categoria</th>
                                 <th colSpan="1">Domínio</th>
                                 {isManager() ?
-                                <th style={{paddingLeft: 40}} colSpan="2">Ações</th>
-                                : null}
+                                    <th style={{paddingLeft: 40}} colSpan="2">Ações</th>
+                                    : null}
                             </tr>
-                        </thead>
-                        <tbody>
+                            </thead>
+                            <tbody>
                             {Array.isArray(categoryData) && categoryData.map((item) => (
                                 <tr key={item.id}>
                                     <td>{item.name}</td>
@@ -148,8 +150,8 @@ function TableCategory() {
                                             <>
                                                 <Button variant="link"
 
-                                                    onClick={() => navigate(`changeCategory/` + item.id)}>
-                                                    <CiEdit className="edit-icon" />
+                                                        onClick={() => navigate(`changeCategory/` + item.id)}>
+                                                    <CiEdit className="edit-icon"/>
                                                 </Button>
                                             </>
                                             : null}
@@ -157,7 +159,7 @@ function TableCategory() {
                                     {isManager() ?
                                         <td className="action-column">
                                             <Button variant="link" onClick={() => handleOpenModal(item.id)}>
-                                                <RiDeleteBin6Line className="delete-icon" />
+                                                <RiDeleteBin6Line className="delete-icon"/>
                                             </Button>
 
                                         </td>
@@ -165,27 +167,27 @@ function TableCategory() {
                                     }
                                 </tr>
                             ))}
-                        </tbody>
-                        <ModalComponent
-              confirmButton="Inativar"
-              tabIndex="-1"
-              bodyContent={"Deseja inativar a categoria?"}
-              show={showModal}
-              handleClose={() => {
-                handleCloseModal();
-                toast.error("Operação cancelada pelo usuário.");
-              }}
-              confirm={() => handleInactivate(selectedCategoryId)}
-              cancel={() => {
-                handleCloseModal();
-                toast.error("Operação cancelada pelo usuário.");
-              }}
-            />
-                    </Table>
-          )}
+                            </tbody>
+                            <ModalComponent
+                                confirmButton="Inativar"
+                                tabIndex="-1"
+                                bodyContent={"Deseja inativar a categoria?"}
+                                show={showModal}
+                                handleClose={() => {
+                                    handleCloseModal();
+                                    toast.error("Operação cancelada pelo usuário.");
+                                }}
+                                confirm={() => handleInactivate(selectedCategoryId)}
+                                cancel={() => {
+                                    handleCloseModal();
+                                    toast.error("Operação cancelada pelo usuário.");
+                                }}
+                            />
+                        </Table>
+                    )}
                 </div>
             </TableStyle>
-            <PaginationComponent changeElementsNumber={handleElementValue} changePage={handlePagination} data={data} />
+            <PaginationComponent changeElementsNumber={handleElementValue} changePage={handlePagination} data={data}/>
         </>
     );
 }

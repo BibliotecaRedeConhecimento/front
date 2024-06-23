@@ -33,15 +33,6 @@ export const updateCategory = async (id, category) => {
     }
 };
 
-export const deleteCategory = async (id) => {
-    try {
-        const response = await api.delete(`/categories/${id}`);
-        return response;
-    } catch (error) {
-        console.error('Erro ao deletar categoria', error);
-    }
-};
-
 export const getCategoryById = async (id) => {
     try {
         const response = await api.get(`/categories/${id}`);
