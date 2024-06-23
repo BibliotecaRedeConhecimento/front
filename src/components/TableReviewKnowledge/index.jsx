@@ -15,6 +15,8 @@ import {CiEdit} from "react-icons/ci";
 import {RiDeleteBin6Line} from "react-icons/ri";
 import {IoMdAddCircleOutline} from "react-icons/io";
 import {useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
+import ModalComponent from "../ModalComponent";
 
 function TableReviewKnowledge() {
     const {isManager} = useContext(AuthenticationContext);
@@ -24,7 +26,18 @@ function TableReviewKnowledge() {
     const [page, setPage] = useState(0)
     const [filterTitle, setFilterTitle] = useState('');
     const {user} = useContext(AuthenticationContext)
+    const [selectedForReview, setSelectedForReview] = useState(0)
+    const [showModal, setShowModal] = useState(false);
 
+    const handleOpenModal = (id) => {
+        setSelectedForReview(id);
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setSelectedForReview(0);
+    };
 
     const navigate = useNavigate();
     const navigateTo = (path) => {
@@ -40,7 +53,7 @@ function TableReviewKnowledge() {
         fetchKnowledgesForReview();
     }, [filterTitle, elementsValue, page]);
 
-    const handleActivate = async (id) => {
+    const handleAccept = async id => {
         await acceptKnowledge(id);
         fetchKnowledgesForReview();
     };
@@ -120,7 +133,7 @@ function TableReviewKnowledge() {
                                 }
                                 {isManager() ?
 
-                                    <td className="action-column" onClick={() => handleActivate(knowledge.id)}>
+                                    <td className="action-column" onClick={() => handleOpenModal(knowledge.id)}>
                                         <IoMdAddCircleOutline className="add-icon"/>
                                     </td>
                                     : null
@@ -128,6 +141,21 @@ function TableReviewKnowledge() {
                             </tr>
                         ))}
                         </tbody>
+                        <ModalComponent
+                            confirmButton="Reativar"
+                            tabIndex="-1"
+                            bodyContent={"Deseja aceitar esse conhecimento?"}
+                            show={showModal}
+                            handleClose={() => {
+                                handleCloseModal();
+                                toast.error("Operação cancelada pelo usuário.");
+                            }}
+                            confirm={() => handleAccept(selectedForReview)}
+                            cancel={() => {
+                                handleCloseModal();
+                                toast.error("Operação cancelada pelo usuário.");
+                            }}
+                        />
                     </Table>
                 </div>
             </TableStyle>
