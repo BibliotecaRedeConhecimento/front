@@ -6,7 +6,7 @@ import { TableStyle } from "./styles.jsx";
 import PaginationComponent from "../TablePagination/index.jsx";
 
 
-import { Button, Container } from "react-bootstrap";
+import { Button, Container, Spinner } from "react-bootstrap";
 import { useContext, useEffect, useState } from "react";
 import { AuthenticationContext } from "../../services/context/AuthContext";
 import { getAllInactiveCategory, inactivateCategory } from "../../servicesBack/CategoryServices.js";
@@ -16,6 +16,7 @@ import ModalComponent from "../../components/ModalComponent";
 
 function TableInativeCategory() {
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { isManager } = useContext(AuthenticationContext);
   const [inactiveCategoryData, setInactiveCategoryData] = useState([]);
   const [filterName, setFilterName] = useState('');
@@ -23,6 +24,7 @@ function TableInativeCategory() {
   const [elementsValue, setElementsValue] = useState()
   const [page, setPage] = useState()
   const [selectedInativeCategoryId, setSelectedInativeCategoryId] = useState(null);
+  const [noResults, setNoResults] = useState(false);
 
   const handleOpenModal = (id) => {
     setSelectedInativeCategoryId(id);
@@ -35,22 +37,41 @@ function TableInativeCategory() {
   };
 
   const fetchInactiveCategory = async () => {
+    setLoading(true);
+    try {
     const response = await getAllInactiveCategory(filterName, elementsValue, page);
     setInactiveCategoryData(response.data.content);
     setData(response.data)
-  };
+    if (response.data.content.length === 0 && filterName.trim() !== "") {
+      setNoResults(true); // Define true se a busca não retornar resultados
+      toast.error("Nenhuma categoria encontrada.");
+    } else {
+      setNoResults(false);
+    }
+  } catch (error) {
+    console.error("Erro ao buscar uma categoria.", error);
+  } finally {
+    setLoading(false); 
+  }
+};
 
   useEffect(() => {
     fetchInactiveCategory();
   }, [filterName, elementsValue, page]);
 
   const handleActivate = async (id) => {
-    if (selectedInativeCategoryId){
-    await inactivateCategory(id);
-    fetchInactiveCategory();
-    toast.success("Categoria reativada com sucesso!");
-    handleCloseModal();
-  }
+    try {
+      const response = await inactivateCategory(id);
+      if (response && response.status === 200) {
+      fetchInactiveCategory();
+      toast.success("Categoria ativada com sucesso.");
+      handleCloseModal();
+    } else {
+      toast.error("Erro ao ativar categoria. Verifique se há domínios relacionados inativos.");
+    }
+    } catch (error) {
+      toast.error("Erro ao ativar categoria.");
+    }
   };
 
   const handleElementValue = (elementsNumber) => {
@@ -74,19 +95,32 @@ useEffect(() => {
       </Container>
       <TableStyle>
         <div className="table-area">
+        {loading ? (
+            <div className="text-center my-5">
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Carregando...</span>
+            </Spinner>
+          </div>
+          ) : (
           <Table striped hover responsive>
             <thead>
               <tr>
                 <th colSpan="1">Categoria</th>
-      
-                <th style={{ paddingLeft: 20 }} colSpan="3">Ações</th>
+                <th colSpan="1">Domínio</th>
+
+                {isManager() ?      
+                <th style={{textAlign: 'center'}} colSpan="3">Ações</th>
+                : null
+              }
               </tr>
             </thead>
             <tbody>
               {Array.isArray(inactiveCategoryData) && inactiveCategoryData.map((item) => (
                 <tr key={item.id}>
                   <td>{item.name}</td>
-
+                  <td>{Array.isArray(item.domains) && item.domains.map((domain) => (
+                                        <span key={domain.id}>{domain.name}</span>
+                                    ))}</td>
 
                   {isManager() ?
                     <td className="action-column">
@@ -108,13 +142,14 @@ useEffect(() => {
                 handleCloseModal();
                 toast.error("Operação cancelada pelo usuário.");
               }}
-              confirm={handleActivate}
+              confirm={() => handleActivate(selectedInativeCategoryId)}
               cancel={() => {
                 handleCloseModal();
                 toast.error("Operação cancelada pelo usuário.");
               }}
             />
           </Table>
+          )}
         </div>
       </TableStyle>
       <PaginationComponent changeElementsNumber={handleElementValue} changePage={handlePagination} data={data} />

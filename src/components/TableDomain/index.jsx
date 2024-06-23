@@ -4,7 +4,7 @@ import { CiEdit } from "react-icons/ci";
 import { BsEye } from "react-icons/bs";
 import { TableStyle } from "./styles.jsx";
 import PaginationComponent from "../TablePagination/index.jsx";
-import { Button, Container } from "react-bootstrap";
+import { Button, Container, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import ButtonInative from "../ButtonInative/index.jsx";
 import { useContext, useEffect, useState } from "react";
@@ -24,6 +24,7 @@ function TableDomain({ domain }) {
   };
 
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [domainData, setDomainData] = useState([]);
   const [filterName, setFilterName] = useState("");
   const [data, setData] = useState([]);
@@ -43,6 +44,7 @@ function TableDomain({ domain }) {
   };
 
   const fetchDomain = async () => {
+    setLoading(true);
     try {
       const response = await getAllDomains(filterName, elementsValue, page);
       setDomainData(response.data.content);
@@ -54,7 +56,9 @@ function TableDomain({ domain }) {
         setNoResults(false);
       }
     } catch (error) {
-      console.error("Erro ao buscar domínios", error);
+      console.error("Erro ao buscar um domínio.", error);
+    } finally {
+      setLoading(false); 
     }
   };
 
@@ -63,12 +67,18 @@ function TableDomain({ domain }) {
   }, [filterName, page, elementsValue]);
 
 
-const handleInactivate = async (id) => {
-    if (selectedDomainId) {
-      await inactivateDomain(selectedDomainId);
-      fetchDomain();
-      toast.success("Domínio inativado com sucesso!");
-      handleCloseModal();
+  const handleInactivate = async (id) => {
+    try {
+      const response = await inactivateDomain(id);
+      if (response && response.status === 200) {
+        fetchDomain();
+        toast.success("Domínio inativado com sucesso.");
+        handleCloseModal();
+      } else {
+        toast.error("Erro ao inativar domínio. Verifique se há categorias relacionadas.");
+      }
+    } catch (error) {
+      toast.error("Erro ao inativar domínio. Verifique se há categorias relacionadas.");
     }
   };
 
@@ -106,11 +116,18 @@ const handleInactivate = async (id) => {
       </Container>
       <TableStyle>
         <div className="table-area">
+        {loading ? (
+            <div className="text-center my-5">
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Carregando...</span>
+            </Spinner>
+          </div>
+          ) : (
           <Table striped hover responsive>
             <thead>
               <tr>
                 <th colSpan="1">Domínio</th>
-                <th style={{ paddingLeft: 20 }} colSpan="3">
+                <th style={{paddingLeft: 40}} colSpan="2">
                   Ações
                 </th>
               </tr>
@@ -120,7 +137,7 @@ const handleInactivate = async (id) => {
                 domainData.map((item) => (
                   <tr key={item.id}>
                     <td>{item.name}</td>
-                    <td>{item.domain}</td>
+                   
                     <td className="action-column">
                       {isManager() ? (
                         <>
@@ -156,13 +173,14 @@ const handleInactivate = async (id) => {
                 handleCloseModal();
                 toast.error("Operação cancelada pelo usuário.");
               }}
-              confirm={handleInactivate}
+              confirm={() => handleInactivate(selectedDomainId)}
               cancel={() => {
                 handleCloseModal();
                 toast.error("Operação cancelada pelo usuário.");
               }}
             />
           </Table>
+          )}
         </div>
       </TableStyle>
       <PaginationComponent

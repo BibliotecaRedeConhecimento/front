@@ -27,6 +27,8 @@ export const TableStyle = styled.div`
 
       .action-column {
         text-align: center;
+         width: 10%;
+         white-space: nowrap; 
 
          .edit-icon {
         color: var(--preto-primario); 

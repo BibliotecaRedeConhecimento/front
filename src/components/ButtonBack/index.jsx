@@ -28,7 +28,7 @@ function ButtonComponent({ size, bgColor, textColor, action, alternativeText, ta
         aria-label={alternativeText}
         title={alternativeText}
         className="botao-default"
-        style={{ cursor: "pointer", width: "100%", height: "3.2rem", fontSize: "2rem" }} 
+        style={{ cursor: "pointer", width: "100%", height: "2.2rem", fontSize: "2rem" }} 
         onClick={handleButtonClick}
       />
     </ButtonStyle>

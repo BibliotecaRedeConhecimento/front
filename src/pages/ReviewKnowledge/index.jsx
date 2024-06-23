@@ -43,7 +43,7 @@ function ReviewKnowledge({
         >
             <PageContainer>
                 <PageHeaderContainer
-                    icon={<TfiMenuAlt style={{ width: 34, marginRight: 5 }} />}
+                    icon={<TfiMenuAlt style={{ width: 34, marginRight: 15 }} />}
                     title={`Revisar Conhecimentos`}
                     buttonback={
                         <ButtonComponent

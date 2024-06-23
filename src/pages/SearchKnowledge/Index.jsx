@@ -30,7 +30,7 @@ function SearchKnowledge({
       logOut={logOut}
     >
       <PageContainer>
-        <PageHeaderContainer icon={<TfiMenuAlt style={{width: 34, marginRight: 5}} />} title={`Buscar Conhecimento`} buttonback={
+        <PageHeaderContainer icon={<TfiMenuAlt style={{width: 34, marginRight: 15}} />} title={`Buscar Conhecimento`} buttonback={
             <ButtonComponent
               size="8rem"
               //bgColor="var(--cinza-primario)"

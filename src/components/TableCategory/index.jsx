@@ -6,7 +6,7 @@ import { CiEdit } from "react-icons/ci";
 import { TableStyle } from "./styles.jsx";
 import PaginationComponent from "../TablePagination/index.jsx";
 
-import { Button, Container } from "react-bootstrap";
+import { Button, Container, Spinner } from "react-bootstrap";
 
 import { useNavigate } from "react-router-dom";
 import ButtonInative from "../ButtonInative/index.jsx";
@@ -25,6 +25,7 @@ function TableCategory() {
     };
 
     const [showModal, setShowModal] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [categoryData, setCategoryData] = useState([]);
     const [filterName, setFilterName] = useState('');
     const [data, setData] = useState([])
@@ -44,16 +45,22 @@ function TableCategory() {
       };
 
     const fetchCategories = async () => {
+        setLoading(true);
+        try{
         const response = await getAllCategories(filterName, elementsValue, page);
         setCategoryData(response.data.content);
         setData(response.data)
-        console.log(response.data.content);
         if (response.data.content.length === 0 && filterName.trim() !== '') {
             setNoResults(true); // Define true se a busca não retornar resultados
             toast.error('Nenhuma categoria encontrada.');
         } else {
             setNoResults(false);
         }
+    } catch (error) {
+        console.error("Erro ao buscar categoria:", error);
+       } finally {
+        setLoading(false); 
+      }
     };
 
     useEffect(() => {
@@ -61,13 +68,20 @@ function TableCategory() {
     }, [filterName, elementsValue, page])
 
     const handleInactivate = async (id) => {
-        if (selectedCategoryId) {
-        await inactivateCategory(selectedCategoryId);
-        fetchCategories();
-        toast.success("Categoria inativado com sucesso!");
-        handleCloseModal();
-    }
-    };
+        try {
+        const response = await inactivateCategory(id);
+          if (response && response.status === 200) {
+          fetchCategories();
+          toast.success("Categoria inativada com sucesso.");
+          handleCloseModal();
+        } else {
+            toast.error("Erro ao inativar categoria. Verifique se há conhecimentos relacionados.");
+          }
+        } catch (error) {
+          toast.error("Erro ao inativar categoria.");
+        }
+      };
+    
     const handleElementValue = (elementsNumber) => {
         setElementsValue(elementsNumber)
     }
@@ -104,12 +118,19 @@ function TableCategory() {
             </Container>
             <TableStyle>
                 <div className="table-area">
+                {loading ? (
+            <div className="text-center my-5">
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Carregando...</span>
+            </Spinner>
+          </div>
+          ) : (
                     <Table striped hover responsive>
                         <thead>
                             <tr>
                                 <th colSpan="1">Categoria</th>
                                 <th colSpan="1">Domínio</th>
-                                <th style={{ paddingLeft: 20 }} colSpan="3">Ações</th>
+                                <th style={{paddingLeft: 40}} colSpan="2">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -152,13 +173,14 @@ function TableCategory() {
                 handleCloseModal();
                 toast.error("Operação cancelada pelo usuário.");
               }}
-              confirm={handleInactivate}
+              confirm={() => handleInactivate(selectedCategoryId)}
               cancel={() => {
                 handleCloseModal();
                 toast.error("Operação cancelada pelo usuário.");
               }}
             />
                     </Table>
+          )}
                 </div>
             </TableStyle>
             <PaginationComponent changeElementsNumber={handleElementValue} changePage={handlePagination} data={data} />

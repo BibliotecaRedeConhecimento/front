@@ -42,8 +42,8 @@ function InativeCategory({
     >
       <PageContainer>
         <PageHeaderContainer 
-        icon={<TfiMenuAlt style={{width: 34, marginRight: 5}} />} 
-        title={`Categoria Inativa`}
+        icon={<TfiMenuAlt style={{width: 34, marginRight: 15}} />} 
+        title={`Categorias Inativas`}
         buttonback={
           <ButtonComponent
             size="8rem"

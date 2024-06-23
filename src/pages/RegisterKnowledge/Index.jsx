@@ -164,7 +164,7 @@ const RegisterKnowledge = ({
             <div>
                 <PageContainer>
                     <PageHeaderContainer
-                        icon={<MdOutlineAddCircle style={{width: 34, marginRight: 5}}/>}
+                        icon={<MdOutlineAddCircle style={{width: 34, marginRight: 15}}/>}
                         title="Cadastrar Conhecimento"
                         buttonback={
                             <ButtonComponent

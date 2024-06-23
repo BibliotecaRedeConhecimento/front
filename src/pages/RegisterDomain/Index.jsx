@@ -48,6 +48,7 @@ const RegisterDomain = ({
     
  
   };
+  
 
   const registerDomain = async (event) => {
     event.preventDefault();
@@ -72,7 +73,7 @@ const RegisterDomain = ({
       <div>
         <PageContainer>
           <PageHeaderContainer
-            icon={<MdOutlineAddCircle style={{ width: 34, marginRight: 5 }} />}
+            icon={<MdOutlineAddCircle style={{ width: 34, marginRight: 15 }} />}
             title="Cadastrar Domínio"
             buttonback={
               <ButtonComponent

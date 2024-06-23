@@ -33,6 +33,8 @@ export const TableStyle = styled.div`
 
       .action-column {
         text-align: center;
+          width: 10%;
+         white-space: nowrap; 
 
         #delete-icon {
           color: var(--vermelho-perigo);

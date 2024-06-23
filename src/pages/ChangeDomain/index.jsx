@@ -102,7 +102,7 @@ function ChangeDomain({
             <Form.Label>Nome</Form.Label>
             <Form.Control
               type="string"
-              placeholder={namePlaceholder}
+              value={namePlaceholder}
               onChange={(event) => setDomainName(event.target.value)}
             />
           </Form.Group>

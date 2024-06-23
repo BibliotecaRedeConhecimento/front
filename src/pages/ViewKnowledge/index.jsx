@@ -4,10 +4,10 @@ import PageContainer from "../../components/PageContainer";
 import PageHeaderContainer from "../../components/PageHeaderContainer";
 import PageContentContainer from "../../components/PageContentContainer";
 import { ContainerWithSidebar } from "../../components/ContainerWithSidebar";
-import { IoIosArrowBack } from "react-icons/io";
 import ButtonComponent from "../../components/ButtonBack";
 import { getKnowledgeById } from "../../servicesBack/KnowledgeServices";
-import { Image } from "react-bootstrap";
+import { Image, Spinner } from "react-bootstrap"; 
+import { SlBookOpen } from "react-icons/sl";
 import "./style.css";
 
 function ViewKnowledge({
@@ -19,22 +19,96 @@ function ViewKnowledge({
 }) {
   const { id } = useParams();
   const [knowledge, setKnowledge] = useState(null);
+  const [loading, setLoading] = useState(true); 
 
   const fetchKnowledge = async () => {
-    const response = await getKnowledgeById(id);
-    setKnowledge(response.data);
+    try {
+      const response = await getKnowledgeById(id);
+      setKnowledge(response.data);
+    } catch (error) {
+      console.error("Erro ao buscar conhecimento:", error);
+    } finally {
+      setLoading(false); 
+    }
   };
 
   useEffect(() => {
     fetchKnowledge();
   }, []);
 
-  if (!knowledge) return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <ContainerWithSidebar
+        increaseFontSize={increaseFontSize}
+        decreaseFontSize={decreaseFontSize}
+        HandledarkMode={HandledarkMode}
+        isDarkMode={isDarkMode}
+        logOut={logOut}
+      >
+        <PageContainer>
+          <PageHeaderContainer
+          title={`Conhecimento`}
+          icon={<SlBookOpen style={{width: 34, marginRight: 15}} />} 
+            buttonback={
+              <ButtonComponent
+                size="8rem"
+                //bgColor="var(--cinza-primario)"
+                textColor="white"
+                alternativeText="Voltar"
+              ></ButtonComponent>
+            }
+          />
+          <PageContentContainer>
+            <div className="text-center mt-5">
+              <Spinner animation="border" role="status">
+                <span className="visually-hidden">Carregando...</span>
+              </Spinner>
+            </div>
+          </PageContentContainer>
+        </PageContainer>
+      </ContainerWithSidebar>
+    );
+  }
+
+  if (!knowledge) {
+    return (
+      <ContainerWithSidebar
+        increaseFontSize={increaseFontSize}
+        decreaseFontSize={decreaseFontSize}
+        HandledarkMode={HandledarkMode}
+        isDarkMode={isDarkMode}
+        logOut={logOut}
+      >
+        <PageContainer>
+          <PageHeaderContainer
+          title={`Conhecimento`}
+          icon={<SlBookOpen style={{width: 34, marginRight: 15}} />} 
+            buttonback={
+              <ButtonComponent
+                size="8rem"
+                //bgColor="var(--cinza-primario)"
+                textColor="white"
+                alternativeText="Voltar"
+              ></ButtonComponent>
+            }
+          />
+          <PageContentContainer>
+            <div className="text-center mt-5">
+              <div>Não foi possível carregar o conhecimento.</div>
+            </div>
+          </PageContentContainer>
+        </PageContainer>
+      </ContainerWithSidebar>
+    );
+  }
 
   const getVideoId = (videoUrl) => {
     try {
       const url = new URL(videoUrl);
-      if (url.hostname === "www.youtube.com" || url.hostname === "youtube.com") {
+      if (
+        url.hostname === "www.youtube.com" ||
+        url.hostname === "youtube.com"
+      ) {
         return url.searchParams.get("v");
       }
       return null;
@@ -47,7 +121,7 @@ function ViewKnowledge({
     if (!knowledge.archive) return null;
 
     const videoId = getVideoId(knowledge.archive);
-   if (videoId) {
+    if (videoId) {
       const embedUrl = `https://www.youtube.com/embed/${videoId}`;
       return (
         <div className="thumbnail">
@@ -86,16 +160,18 @@ function ViewKnowledge({
       logOut={logOut}
     >
       <PageContainer>
-        <PageHeaderContainer 
-        buttonback={
-          <ButtonComponent
-            size="8rem"
-            //bgColor="var(--cinza-primario)"
-            textColor="white"
-            alternativeText="Voltar"
-          ></ButtonComponent>
-        }
-        title={`Conhecimento`} />
+        <PageHeaderContainer
+        title={`Conhecimento`}
+        icon={<SlBookOpen style={{width: 34, marginRight: 15}} />} 
+          buttonback={
+            <ButtonComponent
+              size="8rem"
+              //bgColor="var(--cinza-primario)"
+              textColor="white"
+              alternativeText="Voltar"
+            ></ButtonComponent>
+          }
+        />
         <PageContentContainer>
           <div className="container">
             <div className="content">
@@ -109,7 +185,6 @@ function ViewKnowledge({
               </p>
               {renderMediaThumbnail()}
               <p className="description">{knowledge.description}</p>
-             
             </div>
           </div>
         </PageContentContainer>

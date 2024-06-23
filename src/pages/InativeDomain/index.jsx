@@ -43,8 +43,8 @@ useEffect(() => {
     >
       <PageContainer>
         <PageHeaderContainer 
-        icon={<TfiMenuAlt style={{width: 34, marginRight: 5}} />} 
-        title={`Buscar Domínio`}
+        icon={<TfiMenuAlt style={{width: 34, marginRight: 15}} />} 
+        title={`Domínios Inativos`}
         buttonback={
           <ButtonComponent
             size="8rem"

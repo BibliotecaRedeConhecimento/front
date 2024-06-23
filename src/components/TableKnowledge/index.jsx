@@ -4,7 +4,7 @@ import { CiEdit } from "react-icons/ci";
 import { BsEye } from "react-icons/bs";
 import { TableStyle } from "./styles.jsx";
 import PaginationComponent from "../TablePagination/index.jsx";
-import { Button, Col, Row, Container } from "react-bootstrap";
+import { Button, Col, Row, Container, Spinner } from "react-bootstrap"; 
 import ButtonInative from "../ButtonInative/index.jsx";
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
@@ -36,6 +36,7 @@ function TableKnowledge() {
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [selectedKnowledgeId, setSelectedKnowledgeId] = useState(null);
   const [noResults, setNoResults] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleOpenModal = (id) => {
     setSelectedKnowledgeId(id);
@@ -48,22 +49,29 @@ function TableKnowledge() {
   };
 
   const fetchKnowledges = async () => {
-    const response = await getAllKnowledges(
-      filterTitle,
-      elementsValue,
-      page,
-      selectedDomain,
-      selectedCategory
-    );
-    setKnowledgeData(response.data.content);
-    setData(response.data);
-    console.log(response.data.content);
-    console.log(response.data);
-    if (response.data.content.length === 0 && filterTitle.trim() !== "") {
-      setNoResults(true); // Define true se a busca não retornar resultados
-      toast.error("Nenhum conhecimento encontrado.");
-    } else {
-      setNoResults(false);
+    setLoading(true);
+    try {
+      const response = await getAllKnowledges(
+        filterTitle,
+        elementsValue,
+        page,
+        selectedDomain,
+        selectedCategory
+      );
+      setKnowledgeData(response.data.content);
+      setData(response.data);
+      console.log(response.data.content);
+      console.log(response.data);
+      if (response.data.content.length === 0 && filterTitle.trim() !== "") {
+        setNoResults(true); // Define true se a busca não retornar resultados
+        toast.error("Nenhum conhecimento encontrado.");
+      } else {
+        setNoResults(false);
+      }
+    } catch (error) {
+      console.error("Erro ao buscar conhecimentos:", error);
+    } finally {
+      setLoading(false); 
     }
   };
 
@@ -77,7 +85,7 @@ function TableKnowledge() {
     if (selectedKnowledgeId) {
       await inactivateKnowledge(id);
       fetchKnowledges();
-      toast.success("Conhecimento inativado com sucesso!");
+      toast.success("Conhecimento inativado com sucesso.");
       handleCloseModal();
     }
   };
@@ -126,7 +134,7 @@ function TableKnowledge() {
         </Row>
         <div className="d-flex justify-content-end mb-4">
           {isManager() ? (
-            <div className="d-flex gap-3">
+            <div style={{ paddingRight: 20 }} className="d-flex gap-3">
               <ButtonInative
                 size="10rem"
                 bgColor="var(--verde-primario3)"
@@ -136,109 +144,120 @@ function TableKnowledge() {
               >
                 Revisão ({toReview()})
               </ButtonInative>
-              <ButtonInative
-                size="10rem"
-                bgColor="var(--verde-primario3)"
-                textColor="white"
-                alternativeText="Categorias Inativas"
-                action={() => navigateTo("/conhecimentoInativo")}
-              >
-                Inativos
-              </ButtonInative>
             </div>
           ) : null}
+          <div className="d-flex gap-3">
+            <ButtonInative
+              size="10rem"
+              bgColor="var(--verde-primario3)"
+              textColor="white"
+              alternativeText="Categorias Inativas"
+              action={() => navigateTo("/conhecimentoInativo")}
+            >
+              Inativos
+            </ButtonInative>
+          </div>
         </div>
       </Container>
       <TableStyle>
         <div className="table-area">
-          <Table striped hover responsive>
-            <thead>
-              <tr>
-                <th colSpan="1">Título</th>
-                <th colSpan="1">Domínio</th>
-                <th colSpan="1">Categoria</th>
-                <th colSpan="1">Colaborador</th>
-                <th style={{ paddingLeft: 20 }} colSpan="3">
-                  Ações
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {Array.isArray(knowledgeData) &&
-                knowledgeData.map((knowledge) => {
-                  const uniqueDomains = new Set();
-                  const uniqueCategories = new Set();
-                  knowledge.categories.forEach((category) => {
-                    uniqueCategories.add(category.name);
-                    category.domains.forEach((domain) =>
-                      uniqueDomains.add(domain.name)
-                    );
-                  });
+          {loading ? (
+            <div className="text-center my-5">
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Carregando...</span>
+            </Spinner>
+          </div>
+          ) : (
+            <Table striped hover responsive>
+              <thead>
+                <tr>
+                  <th style={{ width: '30%' }} colSpan="1">Título</th>
+                  <th style={{ width: '20%' }} colSpan="1">Domínio</th>
+                  <th style={{ width: '20%' }} colSpan="1">Categoria</th>
+                  <th style={{ width: '20%' }} colSpan="1">Colaborador</th>
+                  <th style={{ width: '10%' }} colSpan="3">
+                    Ações
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {Array.isArray(knowledgeData) &&
+                  knowledgeData.map((knowledge) => {
+                    const uniqueDomains = new Set();
+                    const uniqueCategories = new Set();
+                    knowledge.categories.forEach((category) => {
+                      uniqueCategories.add(category.name);
+                      category.domains.forEach((domain) =>
+                        uniqueDomains.add(domain.name)
+                      );
+                    });
 
-                  return (
-                    <tr key={knowledge.id}>
-                      <td>{knowledge.title}</td>
-                      <td>{[...uniqueDomains].join(", ")}</td>
-                      <td>{[...uniqueCategories].join(", ")}</td>
-                      <td>{knowledge.collaborator}</td>
-                      <td className="action-column">
-                        <Button
-                          variant="link"
-                          onClick={() =>
-                            navigate(`/viewKnowledge/${knowledge.id}`)
-                          }
-                        >
-                          <BsEye className="visualizar-icon" />
-                        </Button>
-                      </td>
-                      {isManager() && (
-                        <>
-                          <td className="action-column">
-                            <Button
-                              variant="link"
-                              onClick={() =>
-                                navigate(
-                                  `/buscarConhecimento/changeKnowledge/${knowledge.id}`
-                                )
-                              }
-                            >
-                              <CiEdit className="edit-icon" />
-                            </Button>
-                          </td>
-                          <td
-                            className="action-column"
-                            onClick={() => handleOpenModal(knowledge.id)}
+                    return (
+                      <tr key={knowledge.id}>
+                        <td>{knowledge.title}</td>
+                        <td>{[...uniqueDomains].join(", ")}</td>
+                        <td>{[...uniqueCategories].join(", ")}</td>
+                        <td>{knowledge.collaborator}</td>
+
+                        <td style={{ width: 50 }} className="action-column">
+                          <Button
+                            variant="link"
+                            onClick={() =>
+                              navigate(`/viewKnowledge/${knowledge.id}`)
+                            }
                           >
-                            <RiDeleteBin6Line className="delete-icon" />
-                          </td>
-                        </>
-                      )}
-                    </tr>
-                  );
-                })}
-            </tbody>
-            <ModalComponent
-              confirmButton="Inativar"
-              tabIndex="-1"
-              bodyContent={"Deseja inativar?"}
-              show={showModal}
-              handleClose={() => {
-                handleCloseModal();
-                toast.error("Operação cancelada pelo usuário.");
-              }}
-              confirm={() => handleInactivate(selectedKnowledgeId)}
-              cancel={() => {
-                handleCloseModal();
-                toast.error("Operação cancelada pelo usuário.");
-              }}
-            />
-          </Table>
+                            <BsEye className="visualizar-icon" />
+                          </Button>
+                        </td>
+                        {isManager() && (
+                          <>
+                            <td style={{ paddingRight: 20 }} className="action-column">
+                              <Button
+                                variant="link"
+                                onClick={() =>
+                                  navigate(
+                                    `/buscarConhecimento/changeKnowledge/${knowledge.id}`
+                                  )
+                                }
+                              >
+                                <CiEdit className="edit-icon" />
+                              </Button>
+                            </td>
+                            <td style={{ paddingRight: 40 }}
+                              className="action-column"
+                              onClick={() => handleOpenModal(knowledge.id)}
+                            >
+                              <RiDeleteBin6Line className="delete-icon" />
+                            </td>
+                          </>
+                        )}
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </Table>
+          )}
         </div>
       </TableStyle>
       <PaginationComponent
         changeElementsNumber={handleElementValue}
         changePage={handlePagination}
         data={data}
+      />
+      <ModalComponent
+        confirmButton="Inativar"
+        tabIndex="-1"
+        bodyContent={"Deseja inativar esse conhecimento?"}
+        show={showModal}
+        handleClose={() => {
+          handleCloseModal();
+          toast.error("Operação cancelada pelo usuário.");
+        }}
+        confirm={() => handleInactivate(selectedKnowledgeId)}
+        cancel={() => {
+          handleCloseModal();
+          toast.error("Operação cancelada pelo usuário.");
+        }}
       />
     </>
   );

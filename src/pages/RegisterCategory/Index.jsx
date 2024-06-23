@@ -104,7 +104,7 @@ const RegisterCategory = ({
             alternativeText="Voltar"
           ></ButtonComponent>
         }
-          icon={<MdOutlineAddCircle style={{ width: 34, marginRight: 5 }} />}
+          icon={<MdOutlineAddCircle style={{ width: 34, marginRight: 15 }} />}
           title={`Cadastrar Categoria`
           
           }

@@ -36,7 +36,7 @@ function TelaInicial({
             logOut={logOut}
         >
             <PageContainer>
-                <PageHeaderContainer title={`Bem-vindo(a) ${user.fullName}`}/>
+                <PageHeaderContainer title={`Bem-vindo(a), ${user.fullName}`}/>
                 <PageContentContainer>
                     <TelaInicialStyle>
                         <Container>

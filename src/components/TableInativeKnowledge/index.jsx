@@ -2,7 +2,7 @@ import Table from "react-bootstrap/Table";
 import { MdAddCircleOutline } from "react-icons/md";
 import { TableStyle } from "./style.jsx";
 import PaginationComponent from "../TablePagination/index.jsx";
-import { Container, Button, Row, Col } from "react-bootstrap";
+import { Container, Button, Row, Col, Spinner } from "react-bootstrap";
 import { useContext, useEffect, useState } from "react";
 import {
   getAllInactiveKnowledges,
@@ -17,6 +17,7 @@ import { toast } from "react-toastify";
 
 function TableInativeKnowledge() {
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { isManager } = useContext(AuthenticationContext);
   const [inactiveKnowledgeData, setInactiveKnowledgeData] = useState([]);
   const [data, setData] = useState([]);
@@ -28,6 +29,7 @@ function TableInativeKnowledge() {
   const { user } = useContext(AuthenticationContext);
   const [selectedInativeKnowledgeId, setSelectedInativeKnowledgeId] =
     useState(null);
+    const [noResults, setNoResults] = useState(false);
 
   const handleOpenModal = (id) => {
     setSelectedInativeKnowledgeId(id);
@@ -40,6 +42,8 @@ function TableInativeKnowledge() {
   };
 
   const fetchInactiveKnowledges = async () => {
+    setLoading(true);
+    try {
     const response = await getAllInactiveKnowledges(
       filterTitle,
       elementsValue,
@@ -49,18 +53,35 @@ function TableInativeKnowledge() {
     );
     setInactiveKnowledgeData(response.data.content);
     setData(response.data);
-  };
+    if (response.data.content.length === 0 && filterTitle.trim() !== "") {
+      setNoResults(true); // Define true se a busca não retornar resultados
+      toast.error("Nenhum conhecimento encontrado.");
+    } else {
+      setNoResults(false);
+    }
+  } catch (error) {
+    console.error("Erro ao buscar conhecimentos:", error);
+   } finally {
+    setLoading(false); 
+  }
+};
 
   useEffect(() => {
     fetchInactiveKnowledges();
   }, [filterTitle, elementsValue, page, selectedCategory, selectedDomain]);
 
   const handleActivate = async (id) => {
-    if (selectedInativeKnowledgeId) {
-      await inactivateKnowledge(id);
+    try{
+    const response = await inactivateKnowledge(id);
+    if (response && response.status === 200) {
       fetchInactiveKnowledges();
-      toast.success("Conhecimento reativado com sucesso!");
+      toast.success("Conhecimento ativado com sucesso.");
       handleCloseModal();
+    } else {
+      toast.error("Erro ao ativar conhecimento. Verifique se há categorias relacionadas inativas.");
+    }
+    } catch (error) {
+      toast.error("Erro ao ativar conhecimento.");
     }
   };
 
@@ -106,16 +127,25 @@ function TableInativeKnowledge() {
       </Container>
       <TableStyle>
         <div className="table-area">
+        {loading ? (
+            <div className="text-center my-5">
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Carregando...</span>
+            </Spinner>
+          </div>
+          ) : (
           <Table striped hover responsive>
             <thead>
               <tr>
-                <th colSpan="1">Título</th>
-                <th colSpan="1">Domínio</th>
-                <th colSpan="1">Categoria</th>
-                <th colSpan="1">Colaborador</th>
-                <th style={{ paddingLeft: 20 }} colSpan="3">
+                <th style={{width: '30%'}} colSpan="1">Título</th>
+                <th style={{width: '20%'}} colSpan="1">Domínio</th>
+                <th style={{width: '20%'}} colSpan="1">Categoria</th>
+                <th style={{width: '25%'}} colSpan="1">Colaborador</th>
+                {isManager() ? (
+                <th style={{ width: '5%'}} colSpan="1">
                   Ações
                 </th>
+                ) : null}
               </tr>
             </thead>
             <tbody>
@@ -141,7 +171,7 @@ function TableInativeKnowledge() {
                     </td>
                     {/*<td>{knowledge.text}</td>*/}
                     <td>{knowledge.collaborator}</td>
-
+                    {isManager() ? (
                     <td className="action-column">
                       <Button
                         variant="link"
@@ -150,13 +180,14 @@ function TableInativeKnowledge() {
                         <MdAddCircleOutline />
                       </Button>
                     </td>
+                    ) : null}
                   </tr>
                 ))}
             </tbody>
             <ModalComponent
               confirmButton="Reativar"
               tabIndex="-1"
-              bodyContent={"Deseja reativar"}
+              bodyContent={"Deseja reativar esse conhecimento?"}
               show={showModal}
               handleClose={() => {
                 handleCloseModal();
@@ -169,7 +200,10 @@ function TableInativeKnowledge() {
               }}
             />
           </Table>
+          )}
         </div>
+            
+            
       </TableStyle>
       <PaginationComponent
         changeElementsNumber={handleElementValue}

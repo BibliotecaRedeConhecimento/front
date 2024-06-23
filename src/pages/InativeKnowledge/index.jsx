@@ -43,8 +43,8 @@ function InativeKnowledge({
     >
       <PageContainer>
         <PageHeaderContainer 
-        icon={<TfiMenuAlt style={{width: 34, marginRight: 5}} />} 
-        title={`Conhecimento Inativo`}
+        icon={<TfiMenuAlt style={{width: 34, marginRight: 15}} />} 
+        title={`Conhecimentos Inativos`}
         buttonback={
           <ButtonComponent
             size="8rem"
