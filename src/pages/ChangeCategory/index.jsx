@@ -166,8 +166,9 @@ function ChangeCategory({
             </div>
           </Form>
           <ModalComponent
+            confirmButton="Alterar"
             tabIndex="-1"
-            bodyContent={"Deseja alterar a Categoria?"}
+            bodyContent={"Deseja Alterar?"}
             show={showModal}
             handleClose={() => {
               handleCloseModal();
@@ -181,7 +182,7 @@ function ChangeCategory({
           />
         </PageContentContainer>
       </PageContainer>
-      <ToastContainer />
+      
     </ContainerWithSidebar>
   );
 }

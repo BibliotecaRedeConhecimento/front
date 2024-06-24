@@ -4,6 +4,7 @@ export const SearchStyle = styled.div`
   .input-group {
     display: flex;
     
+    
   }
 
   .form-control {

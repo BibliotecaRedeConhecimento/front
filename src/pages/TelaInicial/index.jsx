@@ -37,7 +37,7 @@ function TelaInicial({
         >
             <PageContainer>
                 <PageHeaderContainer title={`Bem-vindo(a), ${user.fullName}`}/>
-                <PageContentContainer>
+                <PageContentContainer scrollable={true}>
                     <TelaInicialStyle>
                         <Container>
                             <Row style={{display: "flex", justifyContent: "flex-end"}}>

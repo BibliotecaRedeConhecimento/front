@@ -20,7 +20,7 @@ function ModalComponent({show, handleClose, bodyContent, confirm, confirmButton 
       <Modal.Header style={{backgroundColor:  `var(--verde-primario)`,height: '4rem', border: 'none'}} >
         
       </Modal.Header>
-      <Modal.Body style={{ borderBottom: 'none' , display: 'flex', justifyContent: 'center', color: `var(--preto-primario2)` , }}>
+      <Modal.Body style={{ borderBottom: 'none' , display: 'flex', justifyContent: 'center', color: `var(--preto-primario2)` , textAlign: 'center'}}>
         {bodyContent}
       </Modal.Body>
       <Modal.Footer style={{ borderTop: 'none', display: 'flex', justifyContent: 'space-between',  }}>

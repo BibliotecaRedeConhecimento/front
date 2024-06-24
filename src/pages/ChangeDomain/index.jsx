@@ -146,8 +146,9 @@ function ChangeDomain({
                   
 
                   <ModalComponent
+              confirmButton="Alterar"
               tabIndex="-1"
-              bodyContent={"Deseja alterar o Domínio?"}
+              bodyContent={"Deseja Alterar?"}
               show={showModal}
               handleClose={() => {
                 handleCloseModal();

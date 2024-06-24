@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 export const SideBarItemStyle = styled.div`
+
+    
   
     width: ${(props) => (props.collapse ? "auto" : "100%")};
     padding: 0.5rem;

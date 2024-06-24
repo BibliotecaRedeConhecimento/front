@@ -54,7 +54,7 @@ function ReviewKnowledge({
                         ></ButtonComponent>
                     }
                 />
-                <PageContentContainer>
+                <PageContentContainer scrollable={true}> 
 
                     <TableReviewKnowledge knowledge={knowledgeData} />
 

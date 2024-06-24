@@ -167,6 +167,7 @@ function Sidebar({
     ];
 
     const specialRoutes = [
+      '/',
       '/biblioteca',
       '/menuDominio',
       '/menuCategoria',
@@ -184,7 +185,8 @@ function Sidebar({
       '/conhecimentoInativo',
       '/buscarConhecimento/changeKnowledge/',
       '/revisarConhecimento',
-      '/viewKnowledge/'
+      '/viewKnowledge/',
+
     ];
 
     if (specialRoutes.some(route => location.pathname.startsWith(route))) {

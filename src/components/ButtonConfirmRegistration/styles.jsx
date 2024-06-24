@@ -7,6 +7,7 @@ export const ButtonStyle = styled.div`
         color: var(--branco-secundario) !important;      
         border: none !important;
         transition: 0.3s;
+        font-size: ${({ theme }) => theme.font.size};
 
         &:hover{
             filter: brightness(0.8);

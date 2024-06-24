@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 export const ButtonRoutesStyle = styled(Button)`
     background-color: var(--verde-primario) ;
     color: var(--branco-secundario);
+    font-size: ${({ theme }) => theme.font.size};
     
     border: none;
     border-radius: 8px;

@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 export const PageHeaderContainerStyle = styled.div`
 
+
+    
     display: flex;
     align-items: center;
     justify-content: center;
@@ -12,7 +14,8 @@ export const PageHeaderContainerStyle = styled.div`
     height: 100px;
     
     span{
-        font-size: 2rem;        
+        font-size: ${({ theme, }) => theme.font.size};
+        
     }
 
     svg{

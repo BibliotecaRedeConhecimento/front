@@ -5,7 +5,7 @@ import { ButtonStyle } from "./style";
 
 function ButtonInative({ size, height, bgColor, textColor, action, alternativeText, children }) {
   return (
-    <ButtonStyle size={size} height={height} bgColor='var(--verde-primario)' textColor='--branco-secundario'>
+    <ButtonStyle size={size}  bgColor='var(--verde-primario)' textColor='--branco-secundario'>
       <Button
         role="button"
         aria-label={alternativeText}

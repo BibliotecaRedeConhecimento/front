@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col";
 import { PageHeaderContainerStyle } from "./style";
 import ButtonComponent from "../ButtonBack";
 
-function PageHeaderContainer({ title, icon, buttonback }) {
+function PageHeaderContainer({ title, icon, buttonback, fontSize}) {
   return (
     <Row>
       <Col>
@@ -17,7 +17,7 @@ function PageHeaderContainer({ title, icon, buttonback }) {
           </div>
           <div className="d-flex justify-content-center align-items-center mx-auto">
             {icon}
-            <span className="ml-2">{title}</span>
+            <span fontSize= '2rem' className="ml-2">{title}</span>
           </div>
           <div className="d-flex" style={{ visibility: 'hidden' }}>
             {buttonback}
