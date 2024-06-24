@@ -33,10 +33,16 @@ function FormLogin() {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleLogin(e);
+    }
+  };
+
   return (
     <ContainerFormLoginStyle>
-      <Form>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+      <Form onSubmit={handleLogin}>
+        <Form.Group className="mb-3" controlId="formBasicEmail" >
           <InputGroup className="mb-3">
             <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
             <Form.Control
@@ -49,18 +55,20 @@ function FormLogin() {
             <InputGroup.Text id="basic-addon2">@t2mlab.com</InputGroup.Text>
           </InputGroup>
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Group className="mb-3" controlId="formBasicPassword" >
           <InputGroup className="mb-3">
             <InputGroup.Text id="basic-addon1">
               <HiOutlineLockClosed />
             </InputGroup.Text>
             <Form.Control
+            
               type={showPassword ? "text" : "password"}
               placeholder="Digite sua senha"
               aria-label="Senha"
               aria-describedby="basic-addon2"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={handleKeyDown}
             />
             <InputGroup.Text
               id="basic-addon2"
@@ -73,6 +81,7 @@ function FormLogin() {
         <Row>
           <Col className="d-flex justify-content-center mt-3">
             <ButtonComponent
+              type="submit"
               size="18rem"
               disabled={loadingButton}
               bgColor="var(--verde-primario)"

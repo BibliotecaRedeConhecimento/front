@@ -3,7 +3,6 @@ import {ThemeProvider} from "styled-components";
 import GlobalStyle from "./style/GlobalStyle.js";
 import "react-toastify/dist/ReactToastify.css";
 import {ToastContainer} from "react-toastify";
-import VLibras from "@djpfs/react-vlibras/";
 import {useState} from "react";
 import Root from "./routes/root";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
@@ -41,7 +40,7 @@ function App() {
                         isDarkMode={darkMode}
                     />
 
-                    <VLibras forceOnload={true}/>
+                    
 
                     <ToastContainer
                         position="top-right"
