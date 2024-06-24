@@ -8,11 +8,14 @@ import { MdOutlineAddCircle } from "react-icons/md";
 import { Form } from "react-bootstrap";
 import "react-toastify/dist/ReactToastify.css";
 import ModalComponent from "../../components/ModalComponent";
-import { getCategoryById, updateCategory } from "../../servicesBack/CategoryServices";
+import {
+  getCategoryById,
+  updateCategory,
+} from "../../servicesBack/CategoryServices";
 import { getAllDomains } from "../../servicesBack/DomainServices";
 import ButtonComponent from "../../components/ButtonBack";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 import ButtonConfirmRegistration from "../../components/ButtonConfirmRegistration";
 
 function ChangeCategory({
@@ -43,9 +46,15 @@ function ChangeCategory({
   const handleEdit = async (event) => {
     event.preventDefault();
     try {
-      const response = await updateCategory(id, { name: categoryName, active: true, domains:[{
-        id: domainId
-      }] });
+      const response = await updateCategory(id, {
+        name: categoryName,
+        active: true,
+        domains: [
+          {
+            id: domainId,
+          },
+        ],
+      });
       if (response) {
         toast.success("Categoria alterada com sucesso!");
         handleCloseModal();
@@ -63,9 +72,9 @@ function ChangeCategory({
       try {
         const categoryResponse = await getCategoryById(id);
         setCategoryName(categoryResponse.data.name);
-        setDomainId(categoryResponse.data.domainId);
-
-        const domainResponse = await getAllDomains({filterName: null}, 100);
+        setDomainId(categoryResponse.data.domains[0].id);
+        console.log(categoryResponse.data.domains[0].id);
+        const domainResponse = await getAllDomains({ filterName: null }, 100);
         setDomain(domainResponse.data.content);
       } catch (error) {
         toast.error("Erro ao carregar dados.");
@@ -81,7 +90,8 @@ function ChangeCategory({
 
   const validateForm = () => {
     const newErrors = {};
-    if (!categoryName) newErrors.categoryName = "Nome da categoria é obrigatório";
+    if (!categoryName)
+      newErrors.categoryName = "Nome da categoria é obrigatório";
     if (!domainId) newErrors.domainId = "Domínio é obrigatório";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -96,17 +106,18 @@ function ChangeCategory({
       logOut={logOut}
     >
       <PageContainer>
-        <PageHeaderContainer 
-        buttonback={
-          <ButtonComponent
-            size="8rem"
-            //bgColor="var(--cinza-primario)"
-            textColor="white"
-            alternativeText="Voltar"
-          ></ButtonComponent>
-        }
-        icon={<MdOutlineAddCircle style={{ width: 34, marginRight: 5 }} />} 
-        title={`Alterar Categoria`} />
+        <PageHeaderContainer
+          buttonback={
+            <ButtonComponent
+              size="8rem"
+              //bgColor="var(--cinza-primario)"
+              textColor="white"
+              alternativeText="Voltar"
+            ></ButtonComponent>
+          }
+          icon={<MdOutlineAddCircle style={{ width: 34, marginRight: 5 }} />}
+          title={`Alterar Categoria`}
+        />
         <PageContentContainer>
           <Form onSubmit={handleOpenModal}>
             <Form.Group controlId="NameCategory" className="mb-3">
@@ -143,7 +154,6 @@ function ChangeCategory({
               </Form.Control.Feedback>
             </Form.Group>
             <div className="d-flex justify-content-end mt-auto">
-              
               <ButtonConfirmRegistration
                 size="10rem"
                 bgColor="var(--verde-primario)"
