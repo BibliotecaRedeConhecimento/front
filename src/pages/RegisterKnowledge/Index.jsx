@@ -119,6 +119,7 @@ const RegisterKnowledge = ({
             Description: "",
           });
           setThumbnailUrl("");
+          setValidated(false);
         } else {
           toast.error("Erro ao cadastrar conhecimento.");
         }
@@ -311,16 +312,7 @@ const RegisterKnowledge = ({
                   </Form.Group>
                 </Col>
               </Row>
-              <div className="d-flex justify-content-between mt-3">
-                <ButtonComponent
-                  size="10rem"
-                  bgColor="var(--cinza-primario)"
-                  textColor="white"
-                  alternativeText="Voltar"
-                >
-                  <IoIosArrowBack style={{ marginRight: 5, width: 12 }} />
-                  Voltar
-                </ButtonComponent>
+              <div className="d-flex justify-content-end mt-3">
                 <ButtonConfirmRegistration
                   size="10rem"
                   bgColor="var(--verde-primario)"

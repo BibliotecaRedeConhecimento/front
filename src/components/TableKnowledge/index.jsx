@@ -231,10 +231,13 @@ function TableKnowledge() {
                                                         </Button>
                                                     </td>
                                                     <td style={{paddingRight: 40}}
-                                                        className="action-column"
+                                                        className="action-column">
+                                                        <Button variant="link"
                                                         onClick={() => handleOpenModal(knowledge.id)}
-                                                    >
+                                                        >
+                                                    
                                                         <RiDeleteBin6Line className="delete-icon"/>
+                                                        </Button>
                                                     </td>
                                                 </>
                                             )}

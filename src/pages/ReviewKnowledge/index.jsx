@@ -58,15 +58,6 @@ function ReviewKnowledge({
 
                     <TableReviewKnowledge knowledge={knowledgeData} />
 
-                    <div style={{ marginTop: 20 }}>
-                        <ButtonComponent
-                            size="10rem"
-                            bgColor="var(--cinza-primario)"
-                            textColor="white"
-                            alternativeText="Voltar">
-                            <IoIosArrowBack style={{ marginRight: 5, width: 12 }} />
-                            Voltar</ButtonComponent>
-                    </div>
 
 
                 </PageContentContainer>
