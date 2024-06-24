@@ -44,8 +44,8 @@ function HomeKnowledge({
         } />
         <PageContentContainer width="100%" flexDirection='column' justifyContent='center' alignItems='center' display='flex' >
 
-          <ButtonRoutes buttonText="Cadastrar Conhecimento" onClick={() => navigateTo("/cadastrarConhecimento")} />
-          <ButtonRoutes buttonText="Buscar Conhecimento" onClick={() => navigateTo("/buscarConhecimento")} />
+          <ButtonRoutes buttonText="Cadastrar Conhecimento" alternativeText="Cadastrar Conhecimento" onClick={() => navigateTo("/cadastrarConhecimento")} />
+          <ButtonRoutes buttonText="Buscar Conhecimento" alternativeText="Buscar Conhecimento" onClick={() => navigateTo("/buscarConhecimento")} />
 
         </PageContentContainer>
       </PageContainer>

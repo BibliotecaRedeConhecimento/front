@@ -156,7 +156,7 @@ const RegisterCategory = ({
                 type="button"
                 size="10rem"
                 bgColor="var(--verde-primario)"
-                alternativeText="Cadastrar"
+                alternativeText="Cadastrar Categoria"
                 onClick={handleOpenModal}
               >
                 Cadastrar

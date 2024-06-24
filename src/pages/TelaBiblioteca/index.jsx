@@ -37,9 +37,9 @@ function TelaBiblioteca({
         <PageHeaderContainer  icon={<CgHome style={{width: 34, marginRight: 15}} />} title={`Sistema Biblioteca`} />
         <PageContentContainer width="100%" flexDirection= 'column' justifyContent='center' alignItems='center' display='flex' >
 
-          <ButtonRoutes buttonText="Domínio" onClick={() => navigateTo("/menuDominio")} />
-          <ButtonRoutes buttonText="Categoria" onClick={() => navigateTo("/menuCategoria")} />
-          <ButtonRoutes buttonText="Conhecimento" onClick={() => navigateTo("/menuConhecimento")} />
+          <ButtonRoutes buttonText="Domínio" alternativeText="Menu Domínio" onClick={() => navigateTo("/menuDominio")} />
+          <ButtonRoutes buttonText="Categoria" alternativeText="Menu Categoria" onClick={() => navigateTo("/menuCategoria")} />
+          <ButtonRoutes buttonText="Conhecimento" alternativeText="Menu Conhecimento" onClick={() => navigateTo("/menuConhecimento")} />
 
         </PageContentContainer>
       </PageContainer>

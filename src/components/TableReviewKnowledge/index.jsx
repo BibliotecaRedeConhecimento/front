@@ -44,19 +44,29 @@ function TableReviewKnowledge() {
         navigate(path);
     };
     const fetchKnowledgesForReview = async () => {
+        
+
         const response = await getAllNeedsReviewKnowledges(elementsValue, page);
         setInactiveKnowledgeData(response.data.content);
         setData(response.data)
+        
     };
 
     useEffect(() => {
         fetchKnowledgesForReview();
     }, [filterTitle, elementsValue, page]);
 
-    const handleAccept = async id => {
-        await acceptKnowledge(id);
-        fetchKnowledgesForReview();
+    const handleAccept = async (id) => {
+        try {
+            await acceptKnowledge(id);
+            fetchKnowledgesForReview();
+            toast.success("Conhecimento adicionado com sucesso.");
+            handleCloseModal();
+        } catch (error) {
+            toast.error("Erro ao adicionar o conhecimento.");
+        }
     };
+    
 
     useEffect(() => {
         if (inactiveKnowledgeData.length === 0 && page > 0) {
@@ -142,7 +152,7 @@ function TableReviewKnowledge() {
                         ))}
                         </tbody>
                         <ModalComponent
-                            confirmButton="Reativar"
+                            confirmButton="Aceitar"
                             tabIndex="-1"
                             bodyContent={"Deseja aceitar esse conhecimento?"}
                             show={showModal}

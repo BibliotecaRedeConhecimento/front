@@ -51,12 +51,12 @@ export const inactivateCategory = async (id) => {
     }
 };
 
-export const getAllInactiveCategory = async (name, size, page) => {
+export const getAllInactiveCategory = async (filterName, size, page) => {
     try {
         const response = await api.get(`/categories`, {
             params: {
                 active: false,
-                ...(name ? {name: filterName} : {}),
+                ...(filterName ? {name: filterName} : {}),
                 ...(size ? {size: size} : {}),
                 ...(page ? {page: page} : {}),
             }

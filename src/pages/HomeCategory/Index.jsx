@@ -47,11 +47,11 @@ function HomeCategory({
         <PageContentContainer width="100%" flexDirection= 'column' justifyContent='center' alignItems='center' display='flex' >
 
           { isManager() ?
-              <ButtonRoutes buttonText="Cadastrar Categoria" onClick={() => navigateTo("/cadastrarCategoria")} />
+              <ButtonRoutes buttonText="Cadastrar Categoria" alternativeText="Cadastrar Categoria" onClick={() => navigateTo("/cadastrarCategoria")} />
               : null
           }
 
-          <ButtonRoutes buttonText="Buscar Categoria" onClick={() => navigateTo("/buscarCategoria")} />
+          <ButtonRoutes buttonText="Buscar Categoria" alternativeText="Buscar Categoria" onClick={() => navigateTo("/buscarCategoria")} />
 
                  
 

@@ -5,11 +5,11 @@ import { ButtonRoutesStyle } from './styles';
 
 
 
-function ButtonRoutes({ buttonText, onClick }) {
+function ButtonRoutes({ buttonText, onClick, alternativeText }) {
   return (
     <Container fluid>
       <Row className="justify-content-center">
-        <ButtonRoutesStyle  size="lg"  className="ButtonRoutes" onClick={onClick}>{buttonText}</ButtonRoutesStyle>
+        <ButtonRoutesStyle aria-label={alternativeText} size="lg"  className="ButtonRoutes" onClick={onClick}>{buttonText}</ButtonRoutesStyle>
       </Row>
     </Container>
   );

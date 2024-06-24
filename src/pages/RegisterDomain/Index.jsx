@@ -111,7 +111,7 @@ const RegisterDomain = ({
                   size="10rem"
                   bgColor="var(--verde-primario)"
                   
-                  alternativeText="Cadastrar"
+                  alternativeText="Cadastrar Domínio"
                   onClick={handleOpenModal}
                 >
                   Cadastrar

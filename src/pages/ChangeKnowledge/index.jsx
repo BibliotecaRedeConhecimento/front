@@ -221,6 +221,7 @@ function ChangeKnowledge({
                   <Form.Control
                     as="textarea"
                     placeholder="Introdução do conhecimento..."
+                    rows={5}
                     value={formData.Introduction}
                     onChange={handleChange}
                     required
@@ -312,7 +313,7 @@ function ChangeKnowledge({
                   <Form.Label>Descrição</Form.Label>
                   <Form.Control
                     as="textarea"
-                    rows={3}
+                    rows={5}
                     placeholder="Descrição detalhada..."
                     value={formData.Description}
                     onChange={handleChange}
@@ -338,7 +339,7 @@ function ChangeKnowledge({
                 size="10rem"
                 bgColor="var(--verde-primario)"
                 textColor="white"
-                alternativeText="Cadastrar"
+                alternativeText="Confirmar alteração"
                 onClick={handleOpenModal}
               >
                 Alterar

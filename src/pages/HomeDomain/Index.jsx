@@ -58,12 +58,14 @@ function HomeDomain({
           {isManager() ? (
             <ButtonRoutes
               buttonText="Cadastrar Domínio"
+              alternativeText="Cadastrar Domínio"
               onClick={() => navigateTo("/cadastrarDominio")}
             />
           ) : null}
 
           <ButtonRoutes
             buttonText="Buscar Domínio"
+            alternativeText="Buscar Domínio"
             onClick={() => navigateTo("/buscarDominio")}
           />
 

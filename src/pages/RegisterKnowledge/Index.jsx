@@ -317,7 +317,7 @@ const RegisterKnowledge = ({
                   size="10rem"
                   bgColor="var(--verde-primario)"
                   textColor="white"
-                  alternativeText="Cadastrar"
+                  alternativeText="Cadastrar Conhecimento"
                   onClick={handleOpenModal}
                 >
                   Cadastrar

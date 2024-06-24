@@ -60,12 +60,12 @@ export const inactivateDomain = async (id) => {
     }
 };
 
-export const getAllInactiveDomain = async (name, size, page) => {
+export const getAllInactiveDomain = async (filterName, size, page) => {
     try {
         const response = await api.get(`/domains`, {
             params: {
                 active: false,
-                ...(name ? {name: filterName} : {}),
+                ...(filterName ? {name: filterName} : {}),
                 ...(size ? {size: size} : {}),
                 ...(page ? {page: page} : {}),
             }
