@@ -1,30 +1,47 @@
-//testando a aplicação de um modal
+import { Modal } from "react-bootstrap";
+import ButtonComponent from "../Button";
 
-// import Button from 'react-bootstrap/Button';
-// import Modal from 'react-bootstrap/Modal';
+export const ModalComponent = ({
+  showModal,
+  setShowModal,
+  action,
+  header,
+  title,
+  cancelText,
+  acceptText,
+}) => {
+  return (
+    <Modal show={showModal} onHide={() => setShowModal(false)}>
+      <Modal.Header
+        style={{ backgroundColor: "var(--branco)" }}
+        closeButton
+        onClick={() => setShowModal(false)}
+      >
+        <Modal.Title>{title}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body style={{ backgroundColor: "var(--branco)" }}>
+        {header}
+      </Modal.Body>
+      <Modal.Footer style={{ backgroundColor: "var(--branco)" }}>
+        <ButtonComponent
+          tamanho="7rem"
+          bgColor="var(--cinza-primario)"
+          textColor="var(--branco)"
+          action={() => setShowModal(false)}
+        >
+          {" "}
+          {cancelText}
+        </ButtonComponent>
 
-// function Modal() {
-//   return (
-//     <div
-//       className="modal show"
-//       style={{ display: 'block', position: 'initial' }}
-//     >
-//       <Modal.Dialog>
-//         <Modal.Header closeButton>
-//           <Modal.Title>Modal teste</Modal.Title>
-//         </Modal.Header>
-
-//         <Modal.Body>
-//           <p>deseja testar.</p>
-//         </Modal.Body>
-
-//         <Modal.Footer>
-//           <Button variant="secondary">nao</Button>
-//           <Button variant="primary">sim</Button>
-//         </Modal.Footer>
-//       </Modal.Dialog>
-//     </div>
-//   );
-// }
-
-// export default Modal;
+        <ButtonComponent
+          tamanho="10rem"
+          bgColor="var(--verde-primario2)"
+          textColor="#FFF"
+          action={() => action()}
+        >
+          {acceptText}
+        </ButtonComponent>
+      </Modal.Footer>
+    </Modal>
+  );
+};

@@ -1,176 +1,268 @@
-import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
-import LogoT2m from "../../assets/logo_t2m.png";
-
+import React, { useState, useEffect, useContext, useCallback } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { BsArrowBarRight, BsArrowBarLeft } from "react-icons/bs";
 import { CgHome } from "react-icons/cg";
 import { MdOutlineExitToApp } from "react-icons/md";
-import { BiUserCircle } from "react-icons/bi";
-import { BiBookOpen } from "react-icons/bi";
-import { MdOutlineTextIncrease } from "react-icons/md";
-import { MdOutlineTextDecrease } from "react-icons/md";
-import { IoMdContrast } from "react-icons/io";
-
+import { MdContrast, MdOutlineTextDecrease, MdOutlineTextIncrease } from "react-icons/md";
+import { BiUserCircle, BiCategoryAlt } from "react-icons/bi";
+import { IoLibraryOutline } from "react-icons/io5";
+import { SlBookOpen } from "react-icons/sl";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { SidebarStyle } from "./style.js";
+import { SideBarItem } from "../SideBarItem/index.jsx";
+import { AuthenticationContext } from "../../services/context/AuthContext";
+import { SystemInfo } from "../../utils/SystemInfo.jsx";
 
-import { SidebarStyle } from "./styles.jsx";
-import SidebarMobile from "../SideBarMobile/index.jsx";
-import { FontSizeContext } from "../../Context/FontSizeProvider.jsx";
-
-function Sidebar({ logOut, windowSize }) {
+function Sidebar({
+  logOut,
+  windowSize,
+  HandledarkMode,
+  isDarkMode,
+  decreaseFontSize,
+  increaseFontSize,
+}) {
   const [sideBarCollapse, setSideBarCollapse] = useState(true);
-  const { increaseFontSize, decreaseFontSize } = useContext(FontSizeContext);
-  
+  const [items, setItems] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
+  const { user } = useContext(AuthenticationContext);
 
-  function navigateTo(route) {
+  const navigateTo = useCallback((route) => {
     setSideBarCollapse(true);
     window.scrollTo(0, 0);
     navigate(route);
-  }
+  }, [navigate]);
 
-  const isMobile = windowSize <= 768;
+  const handleSidebarCollapse = () => {
+    setSideBarCollapse(!sideBarCollapse);
+  };
 
+  const showRoleName = (role) => {
+    switch (role) {
+      case "COLLABORATOR":
+        return "Colaborador";
+      case "ADMINISTRATIVE_DEPARTMENT":
+        return "Departamento Administrativo";
+      case "SYSTEM_ADMINISTRATOR":
+        return "Administrador do Sistema";
+      case "MANAGER":
+        return "Gestor";
+      default:
+        return "";
+    }
+  };
+
+  const SystemLogo = () => {
+    return (
+      <div className="logo-area">
+        {isDarkMode ? (
+          <img
+            src={SystemInfo.logoWhite}
+            alt="T2M"
+            onClick={() => navigateTo("/")}
+          />
+        ) : (
+          <img
+            src={SystemInfo.logo}
+            alt="T2M"
+            onClick={() => navigateTo("/")}
+          />
+        )}
+        {sideBarCollapse ? (
+          <div className="system-title">
+            <strong>{SystemInfo.abbreviation}</strong>
+          </div>
+        ) : (
+          <div style={{fontSize: SystemInfo.titleFontSize}} className="system-title">{SystemInfo.title}</div>
+        )}
+      </div>
+    );
+  };
+
+  const UserInfo = () => {
+    return (
+      <div className="user-container">
+        {sideBarCollapse ? (
+          <SideBarItem
+            index={9}
+            smallText={"Perfil"}
+            bigText={"Perfil"}
+            action={navigateTo}
+            value={"/"}
+            icon={<BiUserCircle title="Perfil" />}
+            sideBarCollapse={sideBarCollapse}
+          />
+        ) : (
+          <>
+            <BiUserCircle className="user-icon" size={28} title="Perfil" />
+            <div className="user-info">
+              {sideBarCollapse ? (
+                ""
+              ) : (
+                <span title="Usuário" className="label-sidebar">
+                  {user.fullName}
+                </span>
+              )}
+              {sideBarCollapse ? (
+                ""
+              ) : (
+                <span
+                  id="user-department"
+                  className="label-sidebar"
+                  title="Departamento Pessoal"
+                >
+                  {showRoleName(user.role)}
+                </span>
+              )}
+            </div>
+          </>
+        )}
+      </div>
+    );
+  };
+
+  useEffect(() => {
+    const commonItems = [
+      {
+        index: 1,
+        smallText: "Contraste",
+        bigText: "Alto Contraste",
+        action: HandledarkMode,
+        icon: <MdContrast title="Alto Contraste" size={24} />,
+      },
+      {
+        index: 2,
+        smallText: "Aumentar",
+        bigText: "Aumentar Fonte",
+        action: increaseFontSize,
+        icon: <MdOutlineTextIncrease title="Aumentar Fonte" size={24} />,
+      },
+      {
+        index: 3,
+        smallText: "Diminuir",
+        bigText: "Diminuir Fonte",
+        action: decreaseFontSize,
+        icon: <MdOutlineTextDecrease title="Diminuir Fonte" size={24} />,
+      },
+      {
+        index: 4,
+        smallText: sideBarCollapse ? "Expandir" : "Retrair",
+        bigText: sideBarCollapse ? "Expandir" : "Retrair",
+        action: handleSidebarCollapse,
+        icon: sideBarCollapse ? (
+          <BsArrowBarRight title="Expandir" size={24} />
+        ) : (
+          <BsArrowBarLeft title="Retrair" size={24} />
+        ),
+      },
+      {
+        index: 5,
+        smallText: "Início",
+        bigText: "Início",
+        action: navigateTo,
+        value: "/",
+        icon: <CgHome title="Início" />,
+      },
+    ];
+
+    const specialRoutes = [
+      '/',
+      '/biblioteca',
+      '/menuDominio',
+      '/menuCategoria',
+      '/menuConhecimento',
+      '/cadastrarCategoria',
+      '/buscarCategoria',
+      '/categoriaInativa',
+      '/buscarCategoria/ChangeCategory/',
+      '/cadastrarDominio',
+      '/buscarDominio',
+      '/dominioInativo',
+      '/buscarDominio/ChangeDomain/',
+      '/cadastrarConhecimento',
+      '/buscarConhecimento',
+      '/conhecimentoInativo',
+      '/buscarConhecimento/changeKnowledge/',
+      '/revisarConhecimento',
+      '/viewKnowledge/',
+
+    ];
+
+    if (specialRoutes.some(route => location.pathname.startsWith(route))) {
+      setItems([
+        ...commonItems,
+        {
+          index: 6,
+          smallText: "Domínio",
+          bigText: "Domínio",
+          action: navigateTo,
+          value: "/menuDominio",
+          icon: <IoLibraryOutline title="Domínio" size={24} />,
+        },
+        {
+          index: 7,
+          smallText: "Categoria",
+          bigText: "Categoria",
+          action: navigateTo,
+          value: "/menuCategoria",
+          icon: <BiCategoryAlt title="Categoria" size={24} />,
+        },
+        {
+          index: 8,
+          smallText: "Conhecimento",
+          bigText: "Conhecimento",
+          action: navigateTo,
+          value: "/menuConhecimento",
+          icon: <SlBookOpen title="Conhecimento" size={24} />,
+        },
+      ]);
+      
+      {SystemInfo.abbreviation = "SB"};
+      {SystemInfo.title = "Sistema Biblioteca"};
+    } else {
+      setItems(commonItems);
+      {SystemInfo.abbreviation = "SGC"};
+      {SystemInfo.title = "Sistema de Gestão de Competência"};
+      
+    }
+  }, [location.pathname, sideBarCollapse, HandledarkMode, increaseFontSize, decreaseFontSize, navigateTo]);
 
   return (
-    <div>
-      {isMobile ? (
-        <SidebarMobile />
-      ) : (
-        <Col className={windowSize >= 992 ? "px-0 col-1" : "px-0 col-0"}>
-          <SidebarStyle collapse={sideBarCollapse}>
-            <Row>
-              <Col className="column-container">
-                <div className="logo-area">
-                  <img src={LogoT2m} alt="Logo T2M" />
-                  {sideBarCollapse ? <span>SB</span> : <span>Sistema de Biblioteca</span>}
-                </div>
-                <div className="sidebar-nav">
-                  <div className="mt-2 sidebar-nav-item">
-                    {sideBarCollapse ? (
-                      <div className="area-icons-label">
-                      <BsArrowBarRight title="Expandir"
-                        onClick={() => setSideBarCollapse(!sideBarCollapse)}
-                      />
-                      </div>
-                    ) : (
-                      <div className="area-icons-label">
-                      <BsArrowBarLeft title="Retrair"
-                        onClick={() => setSideBarCollapse(!sideBarCollapse)}
-                      />
-                      <span className="label-sidebar">Retrair</span>
-                      </div>
-                    )}
-                    </div>
-
-                  <div className="mt-2 sidebar-nav-item">
-                    <div onClick={() => navigateTo("/")}>
-                      <div className="area-icons-label">
-                        <CgHome title="Início" />
-                        {sideBarCollapse ? (
-                          ""
-                        ) : (
-                          <span className="label-sidebar">Início</span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="sidebar-nav-item">
-                    <div onClick={() => navigateTo("/tabela")}>
-                      <div className="area-icons-label">
-                        <BiBookOpen title="Conhecimento" />
-                        {sideBarCollapse ? (
-                          ""
-                        ) : (
-                          <span className="label-sidebar">Conhecimento</span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="user-container">
-                  <BiUserCircle title="Larissa S." />
-                  <div className="user-info">
-                    {sideBarCollapse ? (
-                      ""
-                    ) : (
-                      <span title="Larissa Santos" className="label-sidebar">
-                        Larissa S.
-                      </span>
-                    )}
-                    {sideBarCollapse ? (
-                      ""
-                    ) : (
-                      <span
-                        id="user-department"
-                        className="label-sidebar"
-                        title="Departamento Pessoal"
-                      >
-                        Departamento pessoal
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="sidebar-nav">
-                <div className="sidebar-nav-item">
-                    <div onClick={increaseFontSize}>
-                      <div className="area-icons-label">
-                        <MdOutlineTextIncrease title="Aumentar" />
-                        {sideBarCollapse ? (
-                          ""
-                        ) : (
-                          <span className="label-sidebar">Aumentar</span>
-                        )}{" "}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="sidebar-nav-item">
-                    <div onClick={decreaseFontSize}>
-                      <div className="area-icons-label">
-                        <MdOutlineTextDecrease title="Diminuir" />
-                        {sideBarCollapse ? (
-                          ""
-                        ) : (
-                          <span className="label-sidebar">Diminuir</span>
-                        )}{" "}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="sidebar-nav-item">
-                    <div onClick={() => logOut()}>
-                      <div className="area-icons-label">
-                        <IoMdContrast title="Contraste" />
-                        {sideBarCollapse ? (
-                          ""
-                        ) : (
-                          <span className="label-sidebar">Contraste</span>
-                        )}{" "}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="sidebar-nav-item">
-                    <div onClick={() => logOut()}>
-                      <div className="area-icons-label">
-                        <MdOutlineExitToApp title="Sair" />
-                        {sideBarCollapse ? (
-                          ""
-                        ) : (
-                          <span className="label-sidebar">Sair</span>
-                        )}{" "}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </Col>
-            </Row>
-          </SidebarStyle>
-        </Col>
-      )}
-    </div>
+    <Col className={windowSize >= 992 ? "px-0 col-1" : "px-0 col-0"}>
+      <SidebarStyle collapse={sideBarCollapse}>
+        <Row>
+          <Col className="column-container">
+            <SystemLogo />
+            <div className="sidebar-nav">
+              {items.map((item, index) => (
+                <SideBarItem
+                  key={index}
+                  index={item.index}
+                  smallText={item.smallText}
+                  bigText={item.bigText}
+                  action={item.action}
+                  value={item.value}
+                  icon={item.icon}
+                  sideBarCollapse={sideBarCollapse}
+                />
+              ))}
+            </div>
+            <UserInfo />
+            <div className="sidebar-nav">
+              <SideBarItem
+                index={10}
+                smallText={"Sair"}
+                bigText={"Sair"}
+                action={logOut}
+                icon={<MdOutlineExitToApp title="Sair" />}
+                sideBarCollapse={sideBarCollapse}
+              />
+            </div>
+          </Col>
+        </Row>
+      </SidebarStyle>
+    </Col>
   );
 }
 

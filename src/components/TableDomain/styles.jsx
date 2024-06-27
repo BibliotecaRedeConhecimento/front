@@ -1,11 +1,10 @@
 import styled from "styled-components";
-import '../../Global.css'
-import '../../css/colors.css'
+
 
 export const TableStyle = styled.div`
   .table-area {
     width: 100%;
-    background-color: var(--branco) !important;
+    
     overflow-x: auto; /* Permite rolagem horizontal em telas menores */
     
   }
@@ -13,35 +12,45 @@ export const TableStyle = styled.div`
   .table {
     width: 100%;
     min-width: 600px;
+    
     thead {
         th {
           text-align: left;
-          background-color: #CDE8E9;
-          
+          color: var(--preto-primario) !important;
         }
       }
+
+    
+
     tbody {
+
+    
+    
+
       tr {
         td {
+          color: var(--preto-primario) !important;
           border-bottom: none !important;
-        }        
+        }
       }
 
       .action-column {
         text-align: center;
+          width: 10%;
+         white-space: nowrap; 
 
-        #delete-icon {
-          color: var(--vermelho-perigo);
-          &:hover {
-            color: var(--verde-primario);
-            cursor: pointer;
-          }
-        }
+        .edit-icon {
+        color: var(--preto-primario); 
+  }
+
+      .delete-icon {
+         color: var(--vermelho-constraste); 
+  }
 
         svg {
           font-size: 24px;
           &:hover {
-            color: var(--verde-primario);
+            color: var(--preto-primario2);
             cursor: pointer;
           }
         }

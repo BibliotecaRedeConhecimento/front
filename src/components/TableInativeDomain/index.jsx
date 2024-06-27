@@ -1,65 +1,160 @@
 import Table from "react-bootstrap/Table";
-
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { CiEdit } from "react-icons/ci";
-import { BsEye } from "react-icons/bs";
+import { Button, Container, Spinner } from "react-bootstrap";
+import { MdAddCircleOutline } from "react-icons/md";
+import { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 import { TableStyle } from "./styles.jsx";
 import PaginationComponent from "../TablePagination/index.jsx";
-import SearchComponentCategory from "../SearchCategory/index.jsx";
-import SearchComponentDomain from "../SelectDomain/index.jsx";
-import { Col, Container, Row } from "react-bootstrap";
-import { useContext } from "react";
-import { FontSizeContext } from "../../Context/FontSizeProvider.jsx";
+import { AuthenticationContext } from "../../services/context/AuthContext";
+import {
+  getAllInactiveDomain,
+  inactivateDomain,
+} from "../../servicesBack/DomainServices.js";
+import SearchComponentDomain from "../SearchBarDomain/index.jsx";
+import ModalComponent from "../../components/ModalComponent";
 
-function TableComponent() {
-  const { fontSize } = useContext(FontSizeContext);
+function TableInativeDomain() {
+  const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { isManager } = useContext(AuthenticationContext);
+  const [inactiveDomainData, setInactiveDomainData] = useState([]);
+  const [data, setData] = useState([]);
+  const [elementsValue, setElementsValue] = useState(10);
+  const [page, setPage] = useState(0);
+  const [filterName, setFilterName] = useState("");
+  const [selectedInativeDomainId, setSelectedInativeDomainId] = useState(null);
+  const [noResults, setNoResults] = useState(false);
+
+  const handleOpenModal = (id) => {
+    setSelectedInativeDomainId(id);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedInativeDomainId(null);
+  };
+
+  const fetchInactiveDomain = async () => {
+    setLoading(true);
+    try {
+      const response = await getAllInactiveDomain(
+        filterName,
+        elementsValue,
+        page
+      );
+      setInactiveDomainData(response.data.content);
+      setData(response.data);
+      if (response.data.content.length === 0 && filterName.trim() !== "") {
+        setNoResults(true); // Define true se a busca não retornar resultados
+        toast.error("Nenhum domínio encontrado.");
+      } else {
+        setNoResults(false);
+      }
+    } catch (error) {
+      console.error("Erro ao buscar um domínio.", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchInactiveDomain();
+  }, [filterName, elementsValue, page]);
+
+  useEffect(() => {
+    if (inactiveDomainData.length === 0 && page > 0) {
+      setPage(page - 1);
+    }
+  }, [inactiveDomainData]);
+
+  const handleActivate = async (id) => {
+    try {
+      await inactivateDomain(id);
+      fetchInactiveDomain();
+      toast.success("Domínio ativado com sucesso.");
+      handleCloseModal();
+    } catch (error) {
+      toast.error("Erro ao ativar domínio.");
+    }
+  };
+
+  const handleElementValue = (elementsNumber) => {
+    setElementsValue(elementsNumber);
+  };
+
+  const handlePagination = (pageNumber) => {
+    setPage(pageNumber);
+  };
 
   return (
     <>
-     <Container fluid>
-      <Row>
-        <Col xs={12} md={6}>
-          <SearchComponentCategory />
-        </Col>
-        <Col xs={12} md={6}>
-          <SearchComponentDomain />
-        </Col>
-      </Row>
-    </Container>
-    <TableStyle>
-      <div style={{ fontSize: `${fontSize}px`}} className="table-area">
-        <Table striped hover responsive>
-          <thead>
-            <tr>
-              <th colSpan="1">Categoria</th>
-              <th colSpan="1">Domínio</th>
-              <th colSpan="1">Conhecimento</th>
-              <th style={{paddingLeft:20}} colSpan="3">Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Automação de Testes</td>
-              <td>Testes de Software</td>
-              <td>Cucumber - BDD</td>
-              <td className="action-column">
-                <BsEye />
-              </td>
-              <td className="action-column">
-                <CiEdit />
-              </td>
-              <td className="action-column">
-                <RiDeleteBin6Line id="delete-icon" />
-              </td>
-            </tr>
-          </tbody>
-        </Table>
-      </div>
-    </TableStyle>
-    <PaginationComponent/>
+      <Container fluid>
+        <SearchComponentDomain onSearch={setFilterName} />
+      </Container>
+      <TableStyle>
+        <div className="table-area">
+          {loading ? (
+            <div className="text-center my-5">
+              <Spinner animation="border" role="status">
+                <span className="visually-hidden">Carregando...</span>
+              </Spinner>
+            </div>
+          ) : (
+            <Table striped hover responsive>
+              <thead>
+                <tr>
+                  <th>Domínio</th>
+                  {isManager() ? (
+                    <th style={{ textAlign: "center" }} colSpan="3">
+                      Ações
+                    </th>
+                  ) : null}
+                </tr>
+              </thead>
+              <tbody>
+                {Array.isArray(inactiveDomainData) &&
+                  inactiveDomainData.map((item) => (
+                    <tr key={item.id}>
+                      <td>{item.name}</td>
+                      <td className="action-column">
+                        {isManager() ? (
+                          <Button
+                            variant="link"
+                            onClick={() => handleOpenModal(item.id)}
+                          >
+                            <MdAddCircleOutline />
+                          </Button>
+                        ) : null}
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+
+              <ModalComponent
+                confirmButton="Reativar"
+                tabIndex="-1"
+                bodyContent="Deseja reativar o domínio?"
+                show={showModal}
+                handleClose={handleCloseModal}
+                confirm={() => handleActivate(selectedInativeDomainId)}
+                cancel={() => {
+                  handleCloseModal();
+                  toast.error("Operação cancelada pelo usuário.");
+                }}
+              />
+            </Table>
+          )}
+        </div>
+      </TableStyle>
+      <PaginationComponent
+        changeElementsNumber={handleElementValue}
+        changePage={handlePagination}
+        data={data}
+      />
     </>
   );
 }
 
-export default TableComponent;
+export default TableInativeDomain;

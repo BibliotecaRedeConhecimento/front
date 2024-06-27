@@ -1,9 +1,19 @@
-import {PageContentContainerStyle} from "./styles.jsx";
+import { React } from "react";
+import {PageContentContainerStyle} from "./style";
 
-function PageContentContainer(props) {
+function PageContentContainer({width, padding, display, flexDirection, justifyContent, alignItems, children, height, scrollable}) {
     return(
-        <PageContentContainerStyle>
-            {props.children}
+        <PageContentContainerStyle 
+            width={width} 
+            height={height} 
+            padding={padding} 
+            display={display} 
+            flexDirection={flexDirection} 
+            justifyContent={justifyContent} 
+            alignItems={alignItems}
+            scrollable={scrollable}
+        >
+            {children}
         </PageContentContainerStyle>
     );
 }

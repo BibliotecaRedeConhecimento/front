@@ -1,22 +1,64 @@
-import './Global.css'
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import { Outlet } from 'react-router-dom';
-import Slidebar from './components/SideBar';
+import React from "react";
+import {ThemeProvider} from "styled-components";
+import GlobalStyle from "./style/GlobalStyle.js";
+import "react-toastify/dist/ReactToastify.css";
+import {ToastContainer} from "react-toastify";
+import {useState} from "react";
+import Root from "./routes/root";
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import useFontSize from "./utils/hooks/useFontSize";
+import {darkTheme, lightTheme} from "./utils/Themes";
+import {AuthenticationProvider} from "./services/context/AuthContext.jsx";
+import {ReviewContext, ReviewProvider} from "./services/context/ReviewContext";
 
 function App() {
-  
+    const savedDarkMode = localStorage.getItem("darkMode");
+    const [darkMode, setDarkMode] = useState(savedDarkMode === "true");
+    const {size, increaseFontSize, decreaseFontSize} = useFontSize();
 
-  return (
-    <div className='App'>
-    {/* Tudo que estiver fora de outlet, será persistido em todas as telas/rotas do projeto */}
+    const HandledarkMode = () => {
+        setDarkMode(!darkMode);
+    };
 
-    <Slidebar  />
-    {/* Tudo dentro de Outlet, será considerado children, declarado na main.jsx, e será reutilizado as rotas com base nisso */}
-      <Outlet />
-      
+    const theme = {
+        ...(darkMode ? darkTheme : lightTheme),
+        font: {
+            size: `${size}px`,
+            header: '2rem',
+        },
+    };
 
-    </div>
-  )
+    return (
+        <AuthenticationProvider>
+            <ThemeProvider theme={theme}>
+                <ReviewProvider>
+                    <GlobalStyle/>
+
+                    <Root
+                        increaseFontSize={increaseFontSize}
+                        decreaseFontSize={decreaseFontSize}
+                        HandledarkMode={HandledarkMode}
+                        isDarkMode={darkMode}
+                    />
+
+                    
+
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={2500}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="colored"
+                    />
+                </ReviewProvider>
+            </ThemeProvider>
+        </AuthenticationProvider>
+    );
 }
 
-export default App
+export default App;

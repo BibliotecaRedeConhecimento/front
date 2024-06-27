@@ -1,9 +1,24 @@
-// Aqui vai conter os botões que levam para as pages: RegisterKnowledge e SearchKnowledge
+import { React, useContext } from "react";
 
-import React from "react";
+import PageContainer from "../../components/PageContainer";
+import PageHeaderContainer from "../../components/PageHeaderContainer";
+import PageContentContainer from "../../components/PageContentContainer";
+
+import { ContainerWithSidebar } from "../../components/ContainerWithSidebar";
+import ButtonRoutes from "../../components/ButtonRoutes";
 import { useNavigate } from "react-router-dom";
 
-const HomeKnowledge = () => {
+import { IoIosArrowBack } from "react-icons/io";
+import ButtonComponent from "../../components/ButtonBack";
+
+function HomeKnowledge({
+  HandledarkMode,
+  isDarkMode,
+  decreaseFontSize,
+  increaseFontSize,
+  logOut,
+}) {
+
   const navigate = useNavigate();
 
   const navigateTo = (path) => {
@@ -11,16 +26,31 @@ const HomeKnowledge = () => {
   };
 
   return (
-    <div>
-      <h1>ESSA É O HOMEKNOWLEDGE(conhecimento)</h1>
-      <button onClick={() => navigateTo("/registerKnowledge")}>
-        RegisterKnowledge
-      </button>
-      <button onClick={() => navigateTo("/searchKnowledge")}>
-        SearchKnowledge
-      </button>
-    </div>
+    <ContainerWithSidebar
+      increaseFontSize={increaseFontSize}
+      decreaseFontSize={decreaseFontSize}
+      HandledarkMode={HandledarkMode}
+      isDarkMode={isDarkMode}
+      logOut={logOut}
+    >
+      <PageContainer>
+        <PageHeaderContainer title={`Menu de Conhecimento`} buttonback={
+          <ButtonComponent
+            size="8rem"
+            //bgColor="var(--cinza-primario)"
+            textColor="white"
+            alternativeText="Voltar"
+          ></ButtonComponent>
+        } />
+        <PageContentContainer width="100%" flexDirection='column' justifyContent='center' alignItems='center' display='flex' >
+
+          <ButtonRoutes buttonText="Cadastrar Conhecimento" alternativeText="Cadastrar Conhecimento" onClick={() => navigateTo("/cadastrarConhecimento")} />
+          <ButtonRoutes buttonText="Buscar Conhecimento" alternativeText="Buscar Conhecimento" onClick={() => navigateTo("/buscarConhecimento")} />
+
+        </PageContentContainer>
+      </PageContainer>
+    </ContainerWithSidebar>
   );
-};
+}
 
 export default HomeKnowledge;

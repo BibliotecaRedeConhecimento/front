@@ -1,27 +1,79 @@
-// Aqui vai conter os botões que levam para as pages: RegisterDomain e SearchDomain
+import { React, useContext } from "react";
 
-import React from "react";
-import {useNavigate} from "react-router-dom"
+import PageContainer from "../../components/PageContainer";
+import PageHeaderContainer from "../../components/PageHeaderContainer";
+import PageContentContainer from "../../components/PageContentContainer";
 
-const HomeDomain = () => {
+import { ContainerWithSidebar } from "../../components/ContainerWithSidebar";
+import ButtonRoutes from "../../components/ButtonRoutes";
+import { useNavigate } from "react-router-dom";
 
-    const navigate = useNavigate();
+import { IoIosArrowBack } from "react-icons/io";
+import ButtonComponent from "../../components/ButtonBack";
+import { AuthenticationContext } from "../../services/context/AuthContext";
 
-    const navigateTo = (path) => {
-        navigate(path);
-    }
+function HomeDomain({
+  HandledarkMode,
+  isDarkMode,
+  decreaseFontSize,
+  increaseFontSize,
+  logOut,
+}) {
+  const navigate = useNavigate();
 
-    return (
-        <div>
-            <h1>ESSE É A HOMEDOMAIN(domínio)</h1>
-            <button onClick = {() => navigateTo('/registerDomain')}>
-        RegisterDomain
-      </button>
-      <button onClick = {() => navigateTo('/searchDomain')}>
-        SearchDomain
-      </button>
-        </div>
-    );
-};
+  const navigateTo = (path) => {
+    navigate(path);
+  };
+
+  const { isManager } = useContext(AuthenticationContext);
+
+  return (
+    <ContainerWithSidebar
+      increaseFontSize={increaseFontSize}
+      decreaseFontSize={decreaseFontSize}
+      HandledarkMode={HandledarkMode}
+      isDarkMode={isDarkMode}
+      logOut={logOut}
+    >
+      <PageContainer>
+        <PageHeaderContainer
+          
+          title={`Menu de Domínio`}
+          buttonback={
+            <ButtonComponent
+              size="8rem"
+              //bgColor="var(--cinza-primario)"
+              textColor="white"
+              alternativeText="Voltar"
+            ></ButtonComponent>
+          }
+        />
+        <PageContentContainer
+          width="100%"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+          display="flex"
+        >
+          {isManager() ? (
+            <ButtonRoutes
+              buttonText="Cadastrar Domínio"
+              alternativeText="Cadastrar Domínio"
+              onClick={() => navigateTo("/cadastrarDominio")}
+            />
+          ) : null}
+
+          <ButtonRoutes
+            buttonText="Buscar Domínio"
+            alternativeText="Buscar Domínio"
+            onClick={() => navigateTo("/buscarDominio")}
+          />
+
+          
+        </PageContentContainer>
+      </PageContainer>
+    </ContainerWithSidebar>
+  );
+}
 
 export default HomeDomain;
